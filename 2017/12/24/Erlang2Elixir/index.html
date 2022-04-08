@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Erlang to Elixir  基础  原子有冒号 :ok 或者 Atom 变量ok &quot;hello&quot; 是bianry ，&#39;hello&#39; 是list   ❗️ 所有定义比如def defp 等等以p结束的都是私有的   对应 Erlang的宏定义：@is_running false record 定义 defrecordp  defrecord 结构体体是字典的特殊形式，它们的键是预定义的，一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Erlang to Elixir">
+<meta property="og:url" content="http://example.com/2017/12/24/Erlang2Elixir/index.html">
+<meta property="og:site_name" content="mars315">
+<meta property="og:description" content="Erlang to Elixir  基础  原子有冒号 :ok 或者 Atom 变量ok &quot;hello&quot; 是bianry ，&#39;hello&#39; 是list   ❗️ 所有定义比如def defp 等等以p结束的都是私有的   对应 Erlang的宏定义：@is_running false record 定义 defrecordp  defrecord 结构体体是字典的特殊形式，它们的键是预定义的，一">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-12-24T15:29:53.000Z">
+<meta property="article:modified_time" content="2021-05-26T02:32:15.543Z">
+<meta property="article:author" content="mars315">
+<meta property="article:tag" content="Erlang">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2017/12/24/Erlang2Elixir/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Erlang to Elixir | mars315</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="mars315" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">mars315</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/Erlang2Elixir/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时间匆匆，万物变幻，这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Erlang to Elixir
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-24 23:29:53" itemprop="dateCreated datePublished" datetime="2017-12-24T23:29:53+08:00">2017-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-26 10:32:15" itemprop="dateModified" datetime="2021-05-26T10:32:15+08:00">2021-05-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/" itemprop="url" rel="index"><span itemprop="name">Erlang</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="erlang-to-elixir"><a class="markdownIt-Anchor" href="#erlang-to-elixir"></a> Erlang to Elixir</h1>
+<h2 id="基础"><a class="markdownIt-Anchor" href="#基础"></a> 基础</h2>
+<ul>
+<li>原子有冒号 <code>:ok</code> 或者 <code>Atom</code></li>
+<li>变量<code>ok</code></li>
+<li><code>"hello"</code> 是<code>bianry</code> ，<code>'hello'</code> 是<code>list</code></li>
+</ul>
+<blockquote>
+<p>❗️ 所有定义比如<code>def</code> <code>defp</code> 等等以<code>p</code>结束的都是私有的</p>
+</blockquote>
+<ul>
+<li>对应 Erlang的宏定义：<code>@is_running false</code></li>
+<li>record 定义 <code>defrecordp</code>  <code>defrecord</code></li>
+<li>结构体体是字典的特殊形式，它们的键是预定义的，一般都有默认值。结构体必须定义在某个模块内部，因此也必须通过模块的命名空间来访问。定义一个结构体，我们使用 <code>defstruct</code> 关键字，后面跟着关键字列表和默认值 (通俗的将就是键在编译时就确定了的map)</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   <span class="class"><span class="keyword">defmodule</span>  <span class="title">Example.User</span></span>  <span class="keyword">do</span>  </span><br><span class="line">    defstruct  <span class="symbol">name:</span>  <span class="string">"Sean"</span>,  <span class="symbol">roles:</span>  []  </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">iex&gt;  %Example.User{}</span><br><span class="line">iex&gt;  steve  =  <span class="comment">#Example.User&lt;name: "Steve", roles: []&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>模块定义 <code>defmodule</code></li>
+<li>elixir里面的<code>宏</code>(<code>defmacro</code>)跟erlang里的<code>宏</code>完全不同,涉及到元编程</li>
+<li>抛异常不用<code>throw</code> 用<code>raise</code></li>
+<li>elixir 一切定义都必须包含在 模块里<code>defmoudlue XXX do ... end</code></li>
+<li>elixir有四个关键字很重要  <code>alias</code>  <code>require</code> <code>import</code> <code>use</code>具体意义参考官方说明文档</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Alias the module so it can be called as Bar instead of Foo.Bar</span></span><br><span class="line"><span class="keyword">alias</span> Foo.Bar, <span class="symbol">as:</span> Bar</span><br><span class="line"></span><br><span class="line"><span class="comment"># Require the module in order to use its macros</span></span><br><span class="line"><span class="keyword">require</span> Foo</span><br><span class="line"></span><br><span class="line"><span class="comment"># Import functions from Foo so they can be called without the `Foo.` prefix</span></span><br><span class="line"><span class="keyword">import</span> Foo</span><br><span class="line"></span><br><span class="line"><span class="comment"># Invokes the custom code defined in Foo as an extension point</span></span><br><span class="line"><span class="keyword">use</span> Foo</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>控制结构在erlang中有 <code>case</code> <code>if</code>，Elixir中有 <code>case</code> <code>if else</code> <code>unless</code> <code>cond</code> <code>with</code></li>
+</ul>
+<blockquote>
+<p><code>cond</code> 类似于 erlang中的<code>if</code></p>
+</blockquote>
+<figure class="highlight elixir"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重点说明with的用法，简化代码</span></span><br><span class="line"><span class="keyword">case</span> read_line(socket) <span class="keyword">do</span>  </span><br><span class="line"> {<span class="symbol">:ok</span>, data} -&gt;  </span><br><span class="line">	 <span class="keyword">case</span> KVServer.Command.parse(data) <span class="keyword">do</span>  </span><br><span class="line">		 {<span class="symbol">:ok</span>, command} -&gt;  </span><br><span class="line">				 KVServer.Command.run(command)  </span><br><span class="line">		 {<span class="symbol">:error</span>, _} = err -&gt;  </span><br><span class="line">				  err  </span><br><span class="line">    <span class="keyword">end</span>  </span><br><span class="line"> {<span class="symbol">:error</span>, _} = err -&gt;  </span><br><span class="line">  err  </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment"># 使用with简化下</span></span><br><span class="line"> <span class="keyword">with</span> {<span class="symbol">:ok</span>, data} &lt;- read_line(socket),</span><br><span class="line">         {<span class="symbol">:ok</span>, command} &lt;- KVServer.Command.parse(data),</span><br><span class="line">         <span class="symbol">do:</span> KVServer.Command.run(command)</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>字符串插值与字符串拼接<code>&lt;&gt;</code></li>
+</ul>
+<blockquote>
+<p>iex&gt;  name  =  “Sean”<br>
+iex&gt;  “Hello #{name}”<br>
+“Hello Sean”<br>
+"Hello "  &lt;&gt;  name<br>
+“Hello Sean”</p>
+</blockquote>
+<ul>
+<li>elixir  没有<code>andalso</code> <code>orelse</code> ；<code>and</code>  <code>or</code>  意义与erlang不同</li>
+<li><code>and</code>  <code>or</code>  <code>||</code> <code>&amp;&amp;</code></li>
+<li><code>and</code>，<code>or</code> 对应Erlang中的 <code>andalso</code> 和 <code>orelse</code> 操作符。所以它们不会计算第一个参数的值，而只会计算第二个参数</li>
+<li><code>and</code>、<code>or</code>、<code>not</code>，它们的第一个参数_必须_是布尔类型（<code>true</code> 和 <code>false</code>）</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">true</span> || <span class="string">"runtime error"</span>  <span class="comment"># true</span></span><br><span class="line"><span class="keyword">false</span> || <span class="string">"runtime error"</span> <span class="comment"># "runtime error"</span></span><br><span class="line"><span class="keyword">true</span> &amp;&amp; <span class="string">"runtime error"</span> <span class="comment">#  "runtime error"</span></span><br><span class="line"><span class="keyword">false</span> &amp;&amp; <span class="string">"runtime error"</span> <span class="comment"># false </span></span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>map</li>
+</ul>
+ <figure class="highlight elixir"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> Erlang</span><br><span class="line"> M = <span class="comment">#{a =&gt; 1, 1 =&gt; 1000}.</span></span><br><span class="line"> <span class="comment">#{a := X, X := Z} = M</span></span><br><span class="line"> </span><br><span class="line"> Elixir</span><br><span class="line"> m = %{<span class="symbol">:a</span> =&gt; <span class="number">1</span>, <span class="number">1</span> =&gt; <span class="number">1000</span>}</span><br><span class="line"> m[m.a]</span><br><span class="line">存储键只有原子的映射，可以不用 `=&gt;`，直接使用关键字列表的语法：</span><br><span class="line"> x = %{<span class="symbol">foo:</span>  <span class="string">"bar"</span>,  <span class="symbol">hello:</span>  <span class="string">"world"</span>}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>^</code> 操作符, 使用 pin 操作符，我们就是用已经绑定的值去匹配，而不是重新绑定一个新值</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">iex&gt;  x  =  <span class="number">1</span>  </span><br><span class="line"><span class="number">1</span>  </span><br><span class="line">iex&gt;  ^x  =  <span class="number">2</span>  </span><br><span class="line">**  (MatchError)  no  match  of  right  hand  side  <span class="symbol">value:</span>  <span class="number">2</span>  </span><br><span class="line">iex&gt;  {x,  ^x}  =  {<span class="number">2</span>,  <span class="number">1</span>}  </span><br><span class="line">{<span class="number">2</span>,  <span class="number">1</span>} </span><br><span class="line">iex&gt;  x  </span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="函数"><a class="markdownIt-Anchor" href="#函数"></a> 函数</h2>
+<ul>
+<li>函数可以省略掉括号比如 fn x, y -&gt; x + y end</li>
+<li>匿名函数</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f =  <span class="keyword">fn</span>(x, y) -&gt; x + y <span class="keyword">end</span>;</span><br><span class="line">a = &amp;(&amp;<span class="number">1</span> + &amp;<span class="number">2</span>)</span><br><span class="line">f.(<span class="number">1</span>,<span class="number">2</span>)   </span><br><span class="line">a.(<span class="number">1</span>,<span class="number">2</span>)</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>模块名首字母大写 Server.Listener</li>
+<li>函数名后有?表示返回值为boolean 比如 def is_ok? -&gt; true end</li>
+<li>函数名后有!</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 `var!/2` 可以让某个变量的操作变成对上下文变量的操作。</span></span><br><span class="line"><span class="comment"># `var!/2`，我们可以直接操作 `val` 变量而不需要它作为参数传递给宏。宏的这种使用方式应该尽少使用，引入 `var!/2` 会增加变量冲突的风险</span></span><br><span class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Example</span></span> <span class="keyword">do</span></span><br><span class="line">  <span class="function"><span class="keyword">defmacro</span> <span class="title">hygienic</span></span> <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">quote</span> <span class="symbol">do:</span> val = <span class="number">-1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">defmacro</span> <span class="title">unhygienic</span></span> <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">quote</span> <span class="symbol">do:</span> var!(val) = <span class="number">-1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">然后比较一下它们是怎么和代码的上下文交互的：</span><br><span class="line">iex&gt; <span class="keyword">require</span> Example</span><br><span class="line"><span class="keyword">nil</span></span><br><span class="line">iex&gt; val = <span class="number">42</span></span><br><span class="line"><span class="number">42</span></span><br><span class="line">iex&gt; Example.hygienic</span><br><span class="line"><span class="number">-1</span></span><br><span class="line">iex&gt; val</span><br><span class="line"><span class="number">42</span></span><br><span class="line">iex&gt; Example.unhygienic</span><br><span class="line"><span class="number">-1</span></span><br><span class="line">iex&gt; val</span><br><span class="line"><span class="number">-1</span></span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>访问Erlang函数 :erlang:length([])</li>
+<li>模块的函数不需要export，使用def定义为公共访问 defp 为私有</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Example</span></span> <span class="keyword">do</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">of_public</span></span> <span class="keyword">do</span></span><br><span class="line">		IO.puts <span class="string">"public funtcion"</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="function"><span class="keyword">defp</span> <span class="title">of_private</span></span> <span class="keyword">do</span></span><br><span class="line">		IO.puts <span class="string">"private function"</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">Example.of_public <span class="comment"># "public funtcion"</span></span><br><span class="line">Example.of_private  <span class="comment"># ** (UndefinedFunctionError) function Example.of_private/0 is undefined or </span></span><br><span class="line"><span class="comment"># private Example.of_private()</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id=""><a class="markdownIt-Anchor" href="#"></a> 👍</h2>
+<ul>
+<li>pipeline</li>
+</ul>
+<h2 id="-2"><a class="markdownIt-Anchor" href="#-2"></a> 👎</h2>
+<ul>
+<li>调用匿名函数需要加个<code>.</code></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Erlang/" rel="tag"># Erlang</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/12/24/ErlangGarbageCollection/" rel="prev" title="Erlang Garbage Collection">
+      <i class="fa fa-chevron-left"></i> Erlang Garbage Collection
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/12/24/Erlang/" rel="next" title="Eralng系列文章">
+      Eralng系列文章 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#erlang-to-elixir"><span class="nav-number">1.</span> <span class="nav-text"> Erlang to Elixir</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.</span> <span class="nav-text"> 基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text"> 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text"> 👍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-2"><span class="nav-number">1.4.</span> <span class="nav-text"> 👎</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mars315"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">mars315</p>
+  <div class="site-description" itemprop="description">时间匆匆，万物变幻，这世间，我曾停留过。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mars315</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
