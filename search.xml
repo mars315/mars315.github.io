@@ -66,99 +66,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Erlang to Elixir</title>
-    <url>/2017/12/24/Erlang2Elixir/</url>
-    <content><![CDATA[<h1 id="erlang-to-elixir"><a class="markdownIt-Anchor" href="#erlang-to-elixir"></a> Erlang to Elixir</h1>
-<h2 id="基础"><a class="markdownIt-Anchor" href="#基础"></a> 基础</h2>
-<ul>
-<li>原子有冒号 <code>:ok</code> 或者 <code>Atom</code></li>
-<li>变量<code>ok</code></li>
-<li><code>"hello"</code> 是<code>bianry</code> ，<code>'hello'</code> 是<code>list</code></li>
-</ul>
-<blockquote>
-<p>❗️ 所有定义比如<code>def</code> <code>defp</code> 等等以<code>p</code>结束的都是私有的</p>
-</blockquote>
-<ul>
-<li>对应 Erlang的宏定义：<code>@is_running false</code></li>
-<li>record 定义 <code>defrecordp</code>  <code>defrecord</code></li>
-<li>结构体体是字典的特殊形式，它们的键是预定义的，一般都有默认值。结构体必须定义在某个模块内部，因此也必须通过模块的命名空间来访问。定义一个结构体，我们使用 <code>defstruct</code> 关键字，后面跟着关键字列表和默认值 (通俗的将就是键在编译时就确定了的map)</li>
-</ul>
-<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line">   <span class="class"><span class="keyword">defmodule</span>  <span class="title">Example.User</span></span>  <span class="keyword">do</span>  </span><br><span class="line">    <span class="keyword">defstruct</span>  <span class="symbol">name:</span>  <span class="string">"Sean"</span>,  <span class="symbol">roles:</span>  []  </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">iex&gt;  %<span class="title class_">Example</span>.<span class="title class_">User</span>{}</span><br><span class="line">iex&gt;  steve  =  <span class="comment">#Example.User&lt;name: "Steve", roles: []&gt;</span></span><br></pre></td></tr></tbody></table></figure>
-<span id="more"></span>
-<ul>
-<li>模块定义 <code>defmodule</code></li>
-<li>elixir里面的<code>宏</code>(<code>defmacro</code>)跟erlang里的<code>宏</code>完全不同,涉及到元编程</li>
-<li>抛异常不用<code>throw</code> 用<code>raise</code></li>
-<li>elixir 一切定义都必须包含在 模块里<code>defmoudlue XXX do ... end</code></li>
-<li>elixir有四个关键字很重要  <code>alias</code>  <code>require</code> <code>import</code> <code>use</code>具体意义参考官方说明文档</li>
-</ul>
-<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># Alias the module so it can be called as Bar instead of Foo.Bar</span></span><br><span class="line"><span class="keyword">alias</span> <span class="title class_">Foo</span>.<span class="title class_">Bar</span>, <span class="symbol">as:</span> <span class="title class_">Bar</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Require the module in order to use its macros</span></span><br><span class="line"><span class="keyword">require</span> <span class="title class_">Foo</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Import functions from Foo so they can be called without the `Foo.` prefix</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Foo</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Invokes the custom code defined in Foo as an extension point</span></span><br><span class="line"><span class="keyword">use</span> <span class="title class_">Foo</span></span><br></pre></td></tr></tbody></table></figure>
-<ul>
-<li>控制结构在erlang中有 <code>case</code> <code>if</code>，Elixir中有 <code>case</code> <code>if else</code> <code>unless</code> <code>cond</code> <code>with</code></li>
-</ul>
-<blockquote>
-<p><code>cond</code> 类似于 erlang中的<code>if</code></p>
-</blockquote>
-<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># 重点说明with的用法，简化代码</span></span><br><span class="line"><span class="keyword">case</span> read_line(socket) <span class="keyword">do</span>  </span><br><span class="line"> {<span class="symbol">:ok</span>, data} -&gt;  </span><br><span class="line">	 <span class="keyword">case</span> <span class="title class_">KVServer</span>.<span class="title class_">Command</span>.parse(data) <span class="keyword">do</span>  </span><br><span class="line">		 {<span class="symbol">:ok</span>, command} -&gt;  </span><br><span class="line">				 <span class="title class_">KVServer</span>.<span class="title class_">Command</span>.run(command)  </span><br><span class="line">		 {<span class="symbol">:error</span>, _} = err -&gt;  </span><br><span class="line">				  err  </span><br><span class="line">    <span class="keyword">end</span>  </span><br><span class="line"> {<span class="symbol">:error</span>, _} = err -&gt;  </span><br><span class="line">  err  </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment"># 使用with简化下</span></span><br><span class="line"> <span class="keyword">with</span> {<span class="symbol">:ok</span>, data} &lt;- read_line(socket),</span><br><span class="line">         {<span class="symbol">:ok</span>, command} &lt;- <span class="title class_">KVServer</span>.<span class="title class_">Command</span>.parse(data),</span><br><span class="line">         <span class="symbol">do:</span> <span class="title class_">KVServer</span>.<span class="title class_">Command</span>.run(command)</span><br></pre></td></tr></tbody></table></figure>
-<ul>
-<li>字符串插值与字符串拼接<code>&lt;&gt;</code></li>
-</ul>
-<blockquote>
-<p>iex&gt;  name  =  “Sean”<br>
-iex&gt;  “Hello #{name}”<br>
-“Hello Sean”<br>
-"Hello "  &lt;&gt;  name<br>
-“Hello Sean”</p>
-</blockquote>
-<ul>
-<li>elixir  没有<code>andalso</code> <code>orelse</code> ；<code>and</code>  <code>or</code>  意义与erlang不同</li>
-<li><code>and</code>  <code>or</code>  <code>||</code> <code>&amp;&amp;</code></li>
-<li><code>and</code>，<code>or</code> 对应Erlang中的 <code>andalso</code> 和 <code>orelse</code> 操作符。所以它们不会计算第一个参数的值，而只会计算第二个参数</li>
-<li><code>and</code>、<code>or</code>、<code>not</code>，它们的第一个参数_必须_是布尔类型（<code>true</code> 和 <code>false</code>）</li>
-</ul>
-<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line"><span class="literal">true</span> || <span class="string">"runtime error"</span>  <span class="comment"># true</span></span><br><span class="line"><span class="literal">false</span> || <span class="string">"runtime error"</span> <span class="comment"># "runtime error"</span></span><br><span class="line"><span class="literal">true</span> &amp;&amp; <span class="string">"runtime error"</span> <span class="comment">#  "runtime error"</span></span><br><span class="line"><span class="literal">false</span> &amp;&amp; <span class="string">"runtime error"</span> <span class="comment"># false </span></span><br></pre></td></tr></tbody></table></figure>
-<ul>
-<li>map</li>
-</ul>
- <figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line"> <span class="title class_">Erlang</span></span><br><span class="line"> M = <span class="comment">#{a =&gt; 1, 1 =&gt; 1000}.</span></span><br><span class="line"> <span class="comment">#{a := X, X := Z} = M</span></span><br><span class="line"> </span><br><span class="line"> <span class="title class_">Elixir</span></span><br><span class="line"> m = %{<span class="symbol">:a</span> =&gt; <span class="number">1</span>, <span class="number">1</span> =&gt; <span class="number">1000</span>}</span><br><span class="line"> m[m.a]</span><br><span class="line">存储键只有原子的映射，可以不用 `=&gt;`，直接使用关键字列表的语法：</span><br><span class="line"> x = %{<span class="symbol">foo:</span>  <span class="string">"bar"</span>,  <span class="symbol">hello:</span>  <span class="string">"world"</span>}</span><br></pre></td></tr></tbody></table></figure>
-<ul>
-<li><code>^</code> 操作符, 使用 pin 操作符，我们就是用已经绑定的值去匹配，而不是重新绑定一个新值</li>
-</ul>
-<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line">iex&gt;  x  =  <span class="number">1</span>  </span><br><span class="line"><span class="number">1</span>  </span><br><span class="line">iex&gt;  ^x  =  <span class="number">2</span>  </span><br><span class="line">**  (<span class="title class_">MatchError</span>)  no  match  of  right  hand  side  <span class="symbol">value:</span>  <span class="number">2</span>  </span><br><span class="line">iex&gt;  {x,  ^x}  =  {<span class="number">2</span>,  <span class="number">1</span>}  </span><br><span class="line">{<span class="number">2</span>,  <span class="number">1</span>} </span><br><span class="line">iex&gt;  x  </span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></tbody></table></figure>
-<h2 id="函数"><a class="markdownIt-Anchor" href="#函数"></a> 函数</h2>
-<ul>
-<li>函数可以省略掉括号比如 fn x, y -&gt; x + y end</li>
-<li>匿名函数</li>
-</ul>
-<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line">f =  <span class="keyword">fn</span>(x, y) -&gt; x + y <span class="keyword">end</span>;</span><br><span class="line">a = &amp;(&amp;<span class="number">1</span> + &amp;<span class="number">2</span>)</span><br><span class="line">f.(<span class="number">1</span>,<span class="number">2</span>)   </span><br><span class="line">a.(<span class="number">1</span>,<span class="number">2</span>)</span><br></pre></td></tr></tbody></table></figure>
-<ul>
-<li>模块名首字母大写 Server.Listener</li>
-<li>函数名后有?表示返回值为boolean 比如 def is_ok? -&gt; true end</li>
-<li>函数名后有!</li>
-</ul>
-<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 `var!/2` 可以让某个变量的操作变成对上下文变量的操作。</span></span><br><span class="line"><span class="comment"># `var!/2`，我们可以直接操作 `val` 变量而不需要它作为参数传递给宏。宏的这种使用方式应该尽少使用，引入 `var!/2` 会增加变量冲突的风险</span></span><br><span class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Example</span></span> <span class="keyword">do</span></span><br><span class="line">  <span class="function"><span class="keyword">defmacro</span> <span class="title">hygienic</span></span> <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">quote</span> <span class="symbol">do:</span> val = <span class="number">-1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">defmacro</span> <span class="title">unhygienic</span></span> <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">quote</span> <span class="symbol">do:</span> var!(val) = <span class="number">-1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">然后比较一下它们是怎么和代码的上下文交互的：</span><br><span class="line">iex&gt; <span class="keyword">require</span> <span class="title class_">Example</span></span><br><span class="line"><span class="literal">nil</span></span><br><span class="line">iex&gt; val = <span class="number">42</span></span><br><span class="line"><span class="number">42</span></span><br><span class="line">iex&gt; <span class="title class_">Example</span>.hygienic</span><br><span class="line"><span class="number">-1</span></span><br><span class="line">iex&gt; val</span><br><span class="line"><span class="number">42</span></span><br><span class="line">iex&gt; <span class="title class_">Example</span>.unhygienic</span><br><span class="line"><span class="number">-1</span></span><br><span class="line">iex&gt; val</span><br><span class="line"><span class="number">-1</span></span><br></pre></td></tr></tbody></table></figure>
-<ul>
-<li>访问Erlang函数 :erlang:length([])</li>
-<li>模块的函数不需要export，使用def定义为公共访问 defp 为私有</li>
-</ul>
-<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Example</span></span> <span class="keyword">do</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">of_public</span></span> <span class="keyword">do</span></span><br><span class="line">		<span class="title class_">IO</span>.puts <span class="string">"public funtcion"</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="function"><span class="keyword">defp</span> <span class="title">of_private</span></span> <span class="keyword">do</span></span><br><span class="line">		<span class="title class_">IO</span>.puts <span class="string">"private function"</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Example</span>.of_public <span class="comment"># "public funtcion"</span></span><br><span class="line"><span class="title class_">Example</span>.of_private  <span class="comment"># ** (UndefinedFunctionError) function Example.of_private/0 is undefined or </span></span><br><span class="line"><span class="comment"># private Example.of_private()</span></span><br></pre></td></tr></tbody></table></figure>
-<h2 id=""><a class="markdownIt-Anchor" href="#"></a> 👍</h2>
-<ul>
-<li>pipeline</li>
-</ul>
-<h2 id="-2"><a class="markdownIt-Anchor" href="#-2"></a> 👎</h2>
-<ul>
-<li>调用匿名函数需要加个<code>.</code></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Erlang</category>
-      </categories>
-      <tags>
-        <tag>Erlang</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Erlang Garbage Collection</title>
     <url>/2017/12/24/ErlangGarbageCollection/</url>
     <content><![CDATA[<h1 id="garbage-collection"><a class="markdownIt-Anchor" href="#garbage-collection"></a> Garbage Collection</h1>
@@ -414,6 +321,66 @@ carriers_size 可以理解成Erlang向系统申请的内存</p>
       </tags>
   </entry>
   <entry>
+    <title>Erlang节点互联</title>
+    <url>/2017/12/24/ErlangNodeConnect/</url>
+    <content><![CDATA[<h1 id="erlang节点互联"><a class="markdownIt-Anchor" href="#erlang节点互联"></a> Erlang节点互联</h1>
+<h2 id="epmd"><a class="markdownIt-Anchor" href="#epmd"></a> epmd</h2>
+<ul>
+<li>Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT=XXX或者 erl -epmd_port NNNN 来修改次端口</li>
+<li>epmd文档：<a href="http://www.erlang.org/doc/man/epmd.html">这里</a></li>
+<li>epmd协议：<a href="http://www.erlang.org/doc/apps/erts/erl_dist_protocol.html">这里</a></li>
+</ul>
+<blockquote>
+<p><img src="http://erlang.org/doc/apps/erts/erl_ext_fig.gif" alt="enter image description here"><br>
+<img src="/images/epmd.png" alt="enter image description here"></p>
+</blockquote>
+<ul>
+<li>net_kernel会启动proto_dist比如说inet_tcp_dist监听端口,同时把端口报到epmd. 这时候erts就准备好了节点通讯。这时候另外一个节点要和我们通讯的时候，首先要连接，流程大概是这样的：</li>
+</ul>
+<ol>
+<li>根据节点名找到节点地址。</li>
+<li>查询节点的4369端口,也就是epmd,向它要节点对应的inet_tcp_dist监听的端口。</li>
+<li>发起连接, 握手，cookie认证，如果未授权就失败。</li>
+<li>记录节点名称和响应的信息。</li>
+</ol>
+<span id="more"></span>
+<h2 id="net_kernel"><a class="markdownIt-Anchor" href="#net_kernel"></a> net_kernel</h2>
+<ul>
+<li>重点关注 <strong>net_ticktime</strong>参数</li>
+</ul>
+<blockquote>
+<p>节点会在每TickTime/4 秒检查一下连接的节点是不是正常，如果连续4次没有收到(TickTime时间内)没有收到心跳消息，就会认为这个节点挂了</p>
+</blockquote>
+<p>Specifies the net_kernel tick time. TickTime is given in seconds. Once every TickTime/4 second, all connected nodes are ticked (if anything else has been written to a node) and if nothing has been received from another node within the last four (4) tick times that node is considered to be down. This ensures that nodes which are not responding, for reasons such as hardware errors, are considered to be down.<br>
+The time T, in which a node that is not responding is detected, is calculated as: MinT &lt; T &lt; MaxT where:<br>
+MinT = TickTime - TickTime / 4<br>
+MaxT = TickTime + TickTime / 4<br>
+TickTime is by default 60 (seconds). Thus, 45 &lt; T &lt; 75 seconds.<br>
+<strong>Note:</strong>  All communicating nodes should have the same TickTime value specified.<br>
+<strong>Note:</strong>  Normally, a terminating node is detected immediately.</p>
+<p><a href="http://erlang.org/doc/man/net_kernel.html">net_kernel</a><br>
+<a href="http://www.erlang.org/doc/man/kernel_app.html">kernel_app</a></p>
+<h2 id="节点互联失败排查"><a class="markdownIt-Anchor" href="#节点互联失败排查"></a> 节点互联失败排查</h2>
+<blockquote>
+<p>检查节点cookie<br>
+检查otp版本<br>
+检查机器网络<br>
+检查epmd端口<br>
+检查节点是否被禁用net_kernel:allowed()</p>
+</blockquote>
+<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
+<p><a href="http://blog.yufeng.info/archives/539">Erlang epmd的角色以及使用</a><br>
+<a href="https://www.cnblogs.com/zhongwencool/p/erlang_nodedown.html">怎样模拟节点互连后的各种失败情况</a><br>
+<a href="https://mryufeng.iteye.com/blog/120666">net_adm:ping(Node)发生了什么</a></p>
+]]></content>
+      <categories>
+        <category>Erlang</category>
+      </categories>
+      <tags>
+        <tag>Erlang</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Erlang Process</title>
     <url>/2017/12/24/ErlangProcess/</url>
     <content><![CDATA[<h1 id="process"><a class="markdownIt-Anchor" href="#process"></a> Process</h1>
@@ -467,66 +434,6 @@ hipe_bifs:show_pcb/1、 hipe_bifs:show_term/1</p>
 <p><img src="/images/ProcessStateMachine.png" alt="进程状态机"></p>
 <h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
 <p><a href="https://happi.github.io/theBeamBook">The Beam Book</a></p>
-]]></content>
-      <categories>
-        <category>Erlang</category>
-      </categories>
-      <tags>
-        <tag>Erlang</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Erlang节点互联</title>
-    <url>/2017/12/24/ErlangNodeConnect/</url>
-    <content><![CDATA[<h1 id="erlang节点互联"><a class="markdownIt-Anchor" href="#erlang节点互联"></a> Erlang节点互联</h1>
-<h2 id="epmd"><a class="markdownIt-Anchor" href="#epmd"></a> epmd</h2>
-<ul>
-<li>Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT=XXX或者 erl -epmd_port NNNN 来修改次端口</li>
-<li>epmd文档：<a href="http://www.erlang.org/doc/man/epmd.html">这里</a></li>
-<li>epmd协议：<a href="http://www.erlang.org/doc/apps/erts/erl_dist_protocol.html">这里</a></li>
-</ul>
-<blockquote>
-<p><img src="http://erlang.org/doc/apps/erts/erl_ext_fig.gif" alt="enter image description here"><br>
-<img src="/images/epmd.png" alt="enter image description here"></p>
-</blockquote>
-<ul>
-<li>net_kernel会启动proto_dist比如说inet_tcp_dist监听端口,同时把端口报到epmd. 这时候erts就准备好了节点通讯。这时候另外一个节点要和我们通讯的时候，首先要连接，流程大概是这样的：</li>
-</ul>
-<ol>
-<li>根据节点名找到节点地址。</li>
-<li>查询节点的4369端口,也就是epmd,向它要节点对应的inet_tcp_dist监听的端口。</li>
-<li>发起连接, 握手，cookie认证，如果未授权就失败。</li>
-<li>记录节点名称和响应的信息。</li>
-</ol>
-<span id="more"></span>
-<h2 id="net_kernel"><a class="markdownIt-Anchor" href="#net_kernel"></a> net_kernel</h2>
-<ul>
-<li>重点关注 <strong>net_ticktime</strong>参数</li>
-</ul>
-<blockquote>
-<p>节点会在每TickTime/4 秒检查一下连接的节点是不是正常，如果连续4次没有收到(TickTime时间内)没有收到心跳消息，就会认为这个节点挂了</p>
-</blockquote>
-<p>Specifies the net_kernel tick time. TickTime is given in seconds. Once every TickTime/4 second, all connected nodes are ticked (if anything else has been written to a node) and if nothing has been received from another node within the last four (4) tick times that node is considered to be down. This ensures that nodes which are not responding, for reasons such as hardware errors, are considered to be down.<br>
-The time T, in which a node that is not responding is detected, is calculated as: MinT &lt; T &lt; MaxT where:<br>
-MinT = TickTime - TickTime / 4<br>
-MaxT = TickTime + TickTime / 4<br>
-TickTime is by default 60 (seconds). Thus, 45 &lt; T &lt; 75 seconds.<br>
-<strong>Note:</strong>  All communicating nodes should have the same TickTime value specified.<br>
-<strong>Note:</strong>  Normally, a terminating node is detected immediately.</p>
-<p><a href="http://erlang.org/doc/man/net_kernel.html">net_kernel</a><br>
-<a href="http://www.erlang.org/doc/man/kernel_app.html">kernel_app</a></p>
-<h2 id="节点互联失败排查"><a class="markdownIt-Anchor" href="#节点互联失败排查"></a> 节点互联失败排查</h2>
-<blockquote>
-<p>检查节点cookie<br>
-检查otp版本<br>
-检查机器网络<br>
-检查epmd端口<br>
-检查节点是否被禁用net_kernel:allowed()</p>
-</blockquote>
-<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
-<p><a href="http://blog.yufeng.info/archives/539">Erlang epmd的角色以及使用</a><br>
-<a href="https://www.cnblogs.com/zhongwencool/p/erlang_nodedown.html">怎样模拟节点互连后的各种失败情况</a><br>
-<a href="https://mryufeng.iteye.com/blog/120666">net_adm:ping(Node)发生了什么</a></p>
 ]]></content>
       <categories>
         <category>Erlang</category>
@@ -881,6 +788,99 @@ but dirty IO not used by OTP today<br>
       </categories>
       <tags>
         <tag>项目</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Erlang to Elixir</title>
+    <url>/2017/12/24/Erlang2Elixir/</url>
+    <content><![CDATA[<h1 id="erlang-to-elixir"><a class="markdownIt-Anchor" href="#erlang-to-elixir"></a> Erlang to Elixir</h1>
+<h2 id="基础"><a class="markdownIt-Anchor" href="#基础"></a> 基础</h2>
+<ul>
+<li>原子有冒号 <code>:ok</code> 或者 <code>Atom</code></li>
+<li>变量<code>ok</code></li>
+<li><code>"hello"</code> 是<code>bianry</code> ，<code>'hello'</code> 是<code>list</code></li>
+</ul>
+<blockquote>
+<p>❗️ 所有定义比如<code>def</code> <code>defp</code> 等等以<code>p</code>结束的都是私有的</p>
+</blockquote>
+<ul>
+<li>对应 Erlang的宏定义：<code>@is_running false</code></li>
+<li>record 定义 <code>defrecordp</code>  <code>defrecord</code></li>
+<li>结构体体是字典的特殊形式，它们的键是预定义的，一般都有默认值。结构体必须定义在某个模块内部，因此也必须通过模块的命名空间来访问。定义一个结构体，我们使用 <code>defstruct</code> 关键字，后面跟着关键字列表和默认值 (通俗的将就是键在编译时就确定了的map)</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line">   <span class="class"><span class="keyword">defmodule</span>  <span class="title">Example.User</span></span>  <span class="keyword">do</span>  </span><br><span class="line">    <span class="keyword">defstruct</span>  <span class="symbol">name:</span>  <span class="string">"Sean"</span>,  <span class="symbol">roles:</span>  []  </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">iex&gt;  %<span class="title class_">Example</span>.<span class="title class_">User</span>{}</span><br><span class="line">iex&gt;  steve  =  <span class="comment">#Example.User&lt;name: "Steve", roles: []&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<span id="more"></span>
+<ul>
+<li>模块定义 <code>defmodule</code></li>
+<li>elixir里面的<code>宏</code>(<code>defmacro</code>)跟erlang里的<code>宏</code>完全不同,涉及到元编程</li>
+<li>抛异常不用<code>throw</code> 用<code>raise</code></li>
+<li>elixir 一切定义都必须包含在 模块里<code>defmoudlue XXX do ... end</code></li>
+<li>elixir有四个关键字很重要  <code>alias</code>  <code>require</code> <code>import</code> <code>use</code>具体意义参考官方说明文档</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># Alias the module so it can be called as Bar instead of Foo.Bar</span></span><br><span class="line"><span class="keyword">alias</span> <span class="title class_">Foo</span>.<span class="title class_">Bar</span>, <span class="symbol">as:</span> <span class="title class_">Bar</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Require the module in order to use its macros</span></span><br><span class="line"><span class="keyword">require</span> <span class="title class_">Foo</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Import functions from Foo so they can be called without the `Foo.` prefix</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Foo</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Invokes the custom code defined in Foo as an extension point</span></span><br><span class="line"><span class="keyword">use</span> <span class="title class_">Foo</span></span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>控制结构在erlang中有 <code>case</code> <code>if</code>，Elixir中有 <code>case</code> <code>if else</code> <code>unless</code> <code>cond</code> <code>with</code></li>
+</ul>
+<blockquote>
+<p><code>cond</code> 类似于 erlang中的<code>if</code></p>
+</blockquote>
+<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># 重点说明with的用法，简化代码</span></span><br><span class="line"><span class="keyword">case</span> read_line(socket) <span class="keyword">do</span>  </span><br><span class="line"> {<span class="symbol">:ok</span>, data} -&gt;  </span><br><span class="line">	 <span class="keyword">case</span> <span class="title class_">KVServer</span>.<span class="title class_">Command</span>.parse(data) <span class="keyword">do</span>  </span><br><span class="line">		 {<span class="symbol">:ok</span>, command} -&gt;  </span><br><span class="line">				 <span class="title class_">KVServer</span>.<span class="title class_">Command</span>.run(command)  </span><br><span class="line">		 {<span class="symbol">:error</span>, _} = err -&gt;  </span><br><span class="line">				  err  </span><br><span class="line">    <span class="keyword">end</span>  </span><br><span class="line"> {<span class="symbol">:error</span>, _} = err -&gt;  </span><br><span class="line">  err  </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment"># 使用with简化下</span></span><br><span class="line"> <span class="keyword">with</span> {<span class="symbol">:ok</span>, data} &lt;- read_line(socket),</span><br><span class="line">         {<span class="symbol">:ok</span>, command} &lt;- <span class="title class_">KVServer</span>.<span class="title class_">Command</span>.parse(data),</span><br><span class="line">         <span class="symbol">do:</span> <span class="title class_">KVServer</span>.<span class="title class_">Command</span>.run(command)</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>字符串插值与字符串拼接<code>&lt;&gt;</code></li>
+</ul>
+<blockquote>
+<p>iex&gt;  name  =  “Sean”<br>
+iex&gt;  “Hello #{name}”<br>
+“Hello Sean”<br>
+"Hello "  &lt;&gt;  name<br>
+“Hello Sean”</p>
+</blockquote>
+<ul>
+<li>elixir  没有<code>andalso</code> <code>orelse</code> ；<code>and</code>  <code>or</code>  意义与erlang不同</li>
+<li><code>and</code>  <code>or</code>  <code>||</code> <code>&amp;&amp;</code></li>
+<li><code>and</code>，<code>or</code> 对应Erlang中的 <code>andalso</code> 和 <code>orelse</code> 操作符。所以它们不会计算第一个参数的值，而只会计算第二个参数</li>
+<li><code>and</code>、<code>or</code>、<code>not</code>，它们的第一个参数_必须_是布尔类型（<code>true</code> 和 <code>false</code>）</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line"><span class="literal">true</span> || <span class="string">"runtime error"</span>  <span class="comment"># true</span></span><br><span class="line"><span class="literal">false</span> || <span class="string">"runtime error"</span> <span class="comment"># "runtime error"</span></span><br><span class="line"><span class="literal">true</span> &amp;&amp; <span class="string">"runtime error"</span> <span class="comment">#  "runtime error"</span></span><br><span class="line"><span class="literal">false</span> &amp;&amp; <span class="string">"runtime error"</span> <span class="comment"># false </span></span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>map</li>
+</ul>
+ <figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line"> <span class="title class_">Erlang</span></span><br><span class="line"> M = <span class="comment">#{a =&gt; 1, 1 =&gt; 1000}.</span></span><br><span class="line"> <span class="comment">#{a := X, X := Z} = M</span></span><br><span class="line"> </span><br><span class="line"> <span class="title class_">Elixir</span></span><br><span class="line"> m = %{<span class="symbol">:a</span> =&gt; <span class="number">1</span>, <span class="number">1</span> =&gt; <span class="number">1000</span>}</span><br><span class="line"> m[m.a]</span><br><span class="line">存储键只有原子的映射，可以不用 `=&gt;`，直接使用关键字列表的语法：</span><br><span class="line"> x = %{<span class="symbol">foo:</span>  <span class="string">"bar"</span>,  <span class="symbol">hello:</span>  <span class="string">"world"</span>}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>^</code> 操作符, 使用 pin 操作符，我们就是用已经绑定的值去匹配，而不是重新绑定一个新值</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line">iex&gt;  x  =  <span class="number">1</span>  </span><br><span class="line"><span class="number">1</span>  </span><br><span class="line">iex&gt;  ^x  =  <span class="number">2</span>  </span><br><span class="line">**  (<span class="title class_">MatchError</span>)  no  match  of  right  hand  side  <span class="symbol">value:</span>  <span class="number">2</span>  </span><br><span class="line">iex&gt;  {x,  ^x}  =  {<span class="number">2</span>,  <span class="number">1</span>}  </span><br><span class="line">{<span class="number">2</span>,  <span class="number">1</span>} </span><br><span class="line">iex&gt;  x  </span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="函数"><a class="markdownIt-Anchor" href="#函数"></a> 函数</h2>
+<ul>
+<li>函数可以省略掉括号比如 fn x, y -&gt; x + y end</li>
+<li>匿名函数</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line">f =  <span class="keyword">fn</span>(x, y) -&gt; x + y <span class="keyword">end</span>;</span><br><span class="line">a = &amp;(&amp;<span class="number">1</span> + &amp;<span class="number">2</span>)</span><br><span class="line">f.(<span class="number">1</span>,<span class="number">2</span>)   </span><br><span class="line">a.(<span class="number">1</span>,<span class="number">2</span>)</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>模块名首字母大写 Server.Listener</li>
+<li>函数名后有?表示返回值为boolean 比如 def is_ok? -&gt; true end</li>
+<li>函数名后有!</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 `var!/2` 可以让某个变量的操作变成对上下文变量的操作。</span></span><br><span class="line"><span class="comment"># `var!/2`，我们可以直接操作 `val` 变量而不需要它作为参数传递给宏。宏的这种使用方式应该尽少使用，引入 `var!/2` 会增加变量冲突的风险</span></span><br><span class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Example</span></span> <span class="keyword">do</span></span><br><span class="line">  <span class="function"><span class="keyword">defmacro</span> <span class="title">hygienic</span></span> <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">quote</span> <span class="symbol">do:</span> val = <span class="number">-1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">  <span class="function"><span class="keyword">defmacro</span> <span class="title">unhygienic</span></span> <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">quote</span> <span class="symbol">do:</span> var!(val) = <span class="number">-1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">然后比较一下它们是怎么和代码的上下文交互的：</span><br><span class="line">iex&gt; <span class="keyword">require</span> <span class="title class_">Example</span></span><br><span class="line"><span class="literal">nil</span></span><br><span class="line">iex&gt; val = <span class="number">42</span></span><br><span class="line"><span class="number">42</span></span><br><span class="line">iex&gt; <span class="title class_">Example</span>.hygienic</span><br><span class="line"><span class="number">-1</span></span><br><span class="line">iex&gt; val</span><br><span class="line"><span class="number">42</span></span><br><span class="line">iex&gt; <span class="title class_">Example</span>.unhygienic</span><br><span class="line"><span class="number">-1</span></span><br><span class="line">iex&gt; val</span><br><span class="line"><span class="number">-1</span></span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>访问Erlang函数 :erlang:length([])</li>
+<li>模块的函数不需要export，使用def定义为公共访问 defp 为私有</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">defmodule</span> <span class="title">Example</span></span> <span class="keyword">do</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">of_public</span></span> <span class="keyword">do</span></span><br><span class="line">		<span class="title class_">IO</span>.puts <span class="string">"public funtcion"</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	<span class="function"><span class="keyword">defp</span> <span class="title">of_private</span></span> <span class="keyword">do</span></span><br><span class="line">		<span class="title class_">IO</span>.puts <span class="string">"private function"</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Example</span>.of_public <span class="comment"># "public funtcion"</span></span><br><span class="line"><span class="title class_">Example</span>.of_private  <span class="comment"># ** (UndefinedFunctionError) function Example.of_private/0 is undefined or </span></span><br><span class="line"><span class="comment"># private Example.of_private()</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id=""><a class="markdownIt-Anchor" href="#"></a> 👍</h2>
+<ul>
+<li>pipeline</li>
+</ul>
+<h2 id="-2"><a class="markdownIt-Anchor" href="#-2"></a> 👎</h2>
+<ul>
+<li>调用匿名函数需要加个<code>.</code></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Erlang</category>
+      </categories>
+      <tags>
+        <tag>Erlang</tag>
       </tags>
   </entry>
   <entry>
