@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Erlang节点互联  epmd  Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT&#x3D;XXX或者 erl -epmd_port NNNN 来修改次端口 epmd文档：这里 epmd协议：这里       net_kernel">
+  <meta name="description" content="Erlang节点互联 epmd  Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT&#x3D;XXX或者 erl -epmd_port NNNN 来修改次端口 epmd文档：这里 epmd协议：这里       net_kernel会启">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Erlang节点互联">
 <meta property="og:url" content="http://example.com/2017/12/24/ErlangNodeConnect/index.html">
 <meta property="og:site_name" content="mars315">
-<meta property="og:description" content="Erlang节点互联  epmd  Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT&#x3D;XXX或者 erl -epmd_port NNNN 来修改次端口 epmd文档：这里 epmd协议：这里       net_kernel">
+<meta property="og:description" content="Erlang节点互联 epmd  Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT&#x3D;XXX或者 erl -epmd_port NNNN 来修改次端口 epmd文档：这里 epmd协议：这里       net_kernel会启">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://erlang.org/doc/apps/erts/erl_ext_fig.gif">
 <meta property="og:image" content="http://example.com/images/epmd.png">
@@ -274,8 +274,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="erlang节点互联"><a class="markdownIt-Anchor" href="#erlang节点互联"></a> Erlang节点互联</h1>
-<h2 id="epmd"><a class="markdownIt-Anchor" href="#epmd"></a> epmd</h2>
+        <h1>Erlang节点互联</h1>
+<h2 id="epmd">epmd</h2>
 <ul>
 <li>Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT=XXX或者 erl -epmd_port NNNN 来修改次端口</li>
 <li>epmd文档：<a target="_blank" rel="noopener" href="http://www.erlang.org/doc/man/epmd.html">这里</a></li>
@@ -295,7 +295,7 @@
 <li>记录节点名称和响应的信息。</li>
 </ol>
 <span id="more"></span>
-<h2 id="net_kernel"><a class="markdownIt-Anchor" href="#net_kernel"></a> net_kernel</h2>
+<h2 id="net-kernel">net_kernel</h2>
 <ul>
 <li>重点关注 <strong>net_ticktime</strong>参数</li>
 </ul>
@@ -311,7 +311,7 @@ TickTime is by default 60 (seconds). Thus, 45 &lt; T &lt; 75 seconds.<br>
 <strong>Note:</strong>  Normally, a terminating node is detected immediately.</p>
 <p><a target="_blank" rel="noopener" href="http://erlang.org/doc/man/net_kernel.html">net_kernel</a><br>
 <a target="_blank" rel="noopener" href="http://www.erlang.org/doc/man/kernel_app.html">kernel_app</a></p>
-<h2 id="节点互联失败排查"><a class="markdownIt-Anchor" href="#节点互联失败排查"></a> 节点互联失败排查</h2>
+<h2 id="节点互联失败排查">节点互联失败排查</h2>
 <blockquote>
 <p>检查节点cookie<br>
 检查otp版本<br>
@@ -319,7 +319,7 @@ TickTime is by default 60 (seconds). Thus, 45 &lt; T &lt; 75 seconds.<br>
 检查epmd端口<br>
 检查节点是否被禁用net_kernel:allowed()</p>
 </blockquote>
-<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
+<h2 id="参考">参考</h2>
 <p><a target="_blank" rel="noopener" href="http://blog.yufeng.info/archives/539">Erlang epmd的角色以及使用</a><br>
 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhongwencool/p/erlang_nodedown.html">怎样模拟节点互连后的各种失败情况</a><br>
 <a target="_blank" rel="noopener" href="https://mryufeng.iteye.com/blog/120666">net_adm:ping(Node)发生了什么</a></p>
@@ -360,12 +360,12 @@ TickTime is by default 60 (seconds). Thus, 45 &lt; T &lt; 75 seconds.<br>
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2017/12/24/ErlangProcess/" rel="prev" title="Erlang Process">
-      <i class="fa fa-chevron-left"></i> Erlang Process
+    <a href="/2017/12/24/ErlangMemoryAllocator/" rel="prev" title="Memory Allocator">
+      <i class="fa fa-chevron-left"></i> Memory Allocator
     </a></div>
       <div class="post-nav-item">
-    <a href="/2017/12/24/ErlangMemoryAllocator/" rel="next" title="Memory Allocator">
-      Memory Allocator <i class="fa fa-chevron-right"></i>
+    <a href="/2017/12/24/ErlangGarbageCollection/" rel="next" title="Erlang Garbage Collection">
+      Erlang Garbage Collection <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -446,7 +446,7 @@ TickTime is by default 60 (seconds). Thus, 45 &lt; T &lt; 75 seconds.<br>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#erlang%E8%8A%82%E7%82%B9%E4%BA%92%E8%81%94"><span class="nav-number">1.</span> <span class="nav-text"> Erlang节点互联</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#epmd"><span class="nav-number">1.1.</span> <span class="nav-text"> epmd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#net_kernel"><span class="nav-number">1.2.</span> <span class="nav-text"> net_kernel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E4%BA%92%E8%81%94%E5%A4%B1%E8%B4%A5%E6%8E%92%E6%9F%A5"><span class="nav-number">1.3.</span> <span class="nav-text"> 节点互联失败排查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.4.</span> <span class="nav-text"> 参考</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Erlang节点互联</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#epmd"><span class="nav-number">1.1.</span> <span class="nav-text">epmd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#net-kernel"><span class="nav-number">1.2.</span> <span class="nav-text">net_kernel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E4%BA%92%E8%81%94%E5%A4%B1%E8%B4%A5%E6%8E%92%E6%9F%A5"><span class="nav-number">1.3.</span> <span class="nav-text">节点互联失败排查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.4.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -519,7 +519,7 @@ TickTime is by default 60 (seconds). Thus, 45 &lt; T &lt; 75 seconds.<br>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:16</span>
+    <span title="站点阅读时长">1:17</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

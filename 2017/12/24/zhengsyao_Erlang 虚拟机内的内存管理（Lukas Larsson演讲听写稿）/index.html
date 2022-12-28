@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Erlang 虚拟机内的内存管理（Lukas Larsson演讲听写稿） Erlang核心开发者Lukas Larsson在2014年3月份Erlang Factory上的一个演讲详细介绍了Erlang内存体系的原理以及调优案例： http:&#x2F;&#x2F;www.erlang-factory.com&#x2F;conference&#x2F;show&#x2F;conference-6&#x2F;home&#x2F;#lukas-larsson 在这里可">
+  <meta name="description" content="Erlang 虚拟机内的内存管理（Lukas Larsson演讲听写稿） Erlang核心开发者Lukas Larsson在2014年3月份Erlang Factory上的一个演讲详细介绍了Erlang内存体系的原理以及调优案例： http:&#x2F;&#x2F;www.erlang-factory.com&#x2F;conference&#x2F;show&#x2F;conference-6&#x2F;home&#x2F;#lukas-larsson 在这里可以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Erlang 虚拟机内的内存管理">
 <meta property="og:url" content="http://example.com/2017/12/24/zhengsyao_Erlang%20%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%86%85%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%EF%BC%88Lukas%20Larsson%E6%BC%94%E8%AE%B2%E5%90%AC%E5%86%99%E7%A8%BF%EF%BC%89/index.html">
 <meta property="og:site_name" content="mars315">
-<meta property="og:description" content="Erlang 虚拟机内的内存管理（Lukas Larsson演讲听写稿） Erlang核心开发者Lukas Larsson在2014年3月份Erlang Factory上的一个演讲详细介绍了Erlang内存体系的原理以及调优案例： http:&#x2F;&#x2F;www.erlang-factory.com&#x2F;conference&#x2F;show&#x2F;conference-6&#x2F;home&#x2F;#lukas-larsson 在这里可">
+<meta property="og:description" content="Erlang 虚拟机内的内存管理（Lukas Larsson演讲听写稿） Erlang核心开发者Lukas Larsson在2014年3月份Erlang Factory上的一个演讲详细介绍了Erlang内存体系的原理以及调优案例： http:&#x2F;&#x2F;www.erlang-factory.com&#x2F;conference&#x2F;show&#x2F;conference-6&#x2F;home&#x2F;#lukas-larsson 在这里可以">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-12-24T15:29:53.000Z">
 <meta property="article:modified_time" content="2022-12-06T10:58:45.669Z">
@@ -271,7 +271,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="erlang-虚拟机内的内存管理lukas-larsson演讲听写稿"><a class="markdownIt-Anchor" href="#erlang-虚拟机内的内存管理lukas-larsson演讲听写稿"></a> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhengsyao/p/erts_allocators_speech_by_lukas_larsson.html">Erlang 虚拟机内的内存管理（Lukas Larsson演讲听写稿）</a></h1>
+        <h1><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhengsyao/p/erts_allocators_speech_by_lukas_larsson.html">Erlang 虚拟机内的内存管理（Lukas Larsson演讲听写稿）</a></h1>
 <p>Erlang核心开发者Lukas Larsson在2014年3月份Erlang Factory上的一个演讲详细介绍了Erlang内存体系的原理以及调优案例：</p>
 <p><a target="_blank" rel="noopener" href="http://www.erlang-factory.com/conference/show/conference-6/home/#lukas-larsson">http://www.erlang-factory.com/conference/show/conference-6/home/#lukas-larsson</a></p>
 <p>在这里可以下载slides和观看视频（为了方便不方便科学上网的同学，我把视频搬运到了 <a target="_blank" rel="noopener" href="http://v.youku.com/v_show/id_XNzA1MjA0OTEy.html">http://v.youku.com/v_show/id_XNzA1MjA0OTEy.html</a> ）</p>
@@ -319,7 +319,7 @@ And if you have small blocks, you want to put them into the same carrier, this i
 <p>The default is half MB, which seems to work for most situations. So if you have a block of some sort that’s smaller than 512 KB, then it’s placed on multiblock carrier, if it’s bigger, then it’s placed on single block carrier.</p>
 <p>And you control that by single block carrier threshold.</p>
 <p>Normally you want to have most of your data in multiblock carriers.<br>
-So in a normal system that you are running you have most … I don’t know … 80<sub>85</sub>90% of your data to be part of multiblock carrier.</p>
+So in a normal system that you are running you have most … I don’t know … 80~85~90% of your data to be part of multiblock carrier.</p>
 <p>So if you realize in a system that you are running that you have a lot of singleblock carriers, not a lot of multiblock carriers, you might want to raise the limit to see, ok , so I know from my code that I’m reading 1 MB messages from TCP socket all the time, this becomes 1 MB binaries, and that’s bigger than 512 KB, those are always put into singleblock carriers, so I might want to just adjust the threshold to 1.5 MB, and then , they put all those blocks into multiblock carriers, and hopefully your system will be a lot faster.</p>
 <p>When manipulating the threshold you probably also want to change the size of carriers that are being allocated. So if you are increasing the size of individual blocks, you will wanting increase the actual carriers that are being created. So if you increase the threshold to 1 MB, the… I believe the default size of multiblock carriers is 2 MB, the smallest one, and it grows up into 8 MB, depending on how many carriers you have.</p>
 <p>Since you doubled the initial amount, you might want to double the next one as well, so you started at 4 MB might grow up to 16 MB, or something of that effect.</p>
@@ -619,7 +619,7 @@ With lot of documentation explaining all of these stuff, the documentation is al
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#erlang-%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%86%85%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86lukas-larsson%E6%BC%94%E8%AE%B2%E5%90%AC%E5%86%99%E7%A8%BF"><span class="nav-number">1.</span> <span class="nav-text"> Erlang 虚拟机内的内存管理（Lukas Larsson演讲听写稿）</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Erlang 虚拟机内的内存管理（Lukas Larsson演讲听写稿）</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -692,7 +692,7 @@ With lot of documentation explaining all of these stuff, the documentation is al
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:16</span>
+    <span title="站点阅读时长">1:17</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Memory Allocator  blocks block是Erlang VM需要的一块连续的内存，比如向ets中插入的数据会变成一个block，Erlang进程的stack和heap 也是一个block；进程间发送的消息在block内被复制。总是block就是一块连续的C 内存。block也是Erlang Allocator内存分配的基本单位。  carriers carriers 是一个包">
+  <meta name="description" content="Memory Allocator blocks block是Erlang VM需要的一块连续的内存，比如向ets中插入的数据会变成一个block，Erlang进程的stack和heap 也是一个block；进程间发送的消息在block内被复制。总是block就是一块连续的C 内存。block也是Erlang Allocator内存分配的基本单位。 carriers carriers 是一个包含一个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Memory Allocator">
 <meta property="og:url" content="http://example.com/2017/12/24/ErlangMemoryAllocator/index.html">
 <meta property="og:site_name" content="mars315">
-<meta property="og:description" content="Memory Allocator  blocks block是Erlang VM需要的一块连续的内存，比如向ets中插入的数据会变成一个block，Erlang进程的stack和heap 也是一个block；进程间发送的消息在block内被复制。总是block就是一块连续的C 内存。block也是Erlang Allocator内存分配的基本单位。  carriers carriers 是一个包">
+<meta property="og:description" content="Memory Allocator blocks block是Erlang VM需要的一块连续的内存，比如向ets中插入的数据会变成一个block，Erlang进程的stack和heap 也是一个block；进程间发送的消息在block内被复制。总是block就是一块连续的C 内存。block也是Erlang Allocator内存分配的基本单位。 carriers carriers 是一个包含一个">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/Allocators.png">
 <meta property="og:image" content="http://example.com/images/MemoryArchitecture.png">
@@ -278,13 +278,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="memory-allocator"><a class="markdownIt-Anchor" href="#memory-allocator"></a> Memory Allocator</h1>
-<h3 id="blocks"><a class="markdownIt-Anchor" href="#blocks"></a> blocks</h3>
+        <h1>Memory Allocator</h1>
+<h3 id="blocks">blocks</h3>
 <p>block是Erlang VM需要的一块连续的内存，比如向ets中插入的数据会变成一个block，Erlang进程的stack和heap 也是一个block；进程间发送的消息在block内被复制。总是block就是一块连续的C 内存。block也是Erlang Allocator内存分配的基本单位。</p>
-<h3 id="carriers"><a class="markdownIt-Anchor" href="#carriers"></a> carriers</h3>
+<h3 id="carriers">carriers</h3>
 <p>carriers 是一个包含一个或者多个block的容器，carrier结构中有个头部，用于标识carrier的类型等等<br>
 carrier是18bit对齐的（所以最小值是256KB）</p>
-<h3 id="single-block-carriers-and-multi-block-carriers"><a class="markdownIt-Anchor" href="#single-block-carriers-and-multi-block-carriers"></a> single-block carriers and multi-block carriers</h3>
+<h3 id="single-block-carriers-and-multi-block-carriers">single-block carriers and multi-block carriers</h3>
 <blockquote>
 <p>single-block carrier 就是只包含一个block的carrier<br>
 multi-block carrier 包含多个block的carrier<br>
@@ -293,16 +293,16 @@ multi-block carrier 包含多个block的carrier<br>
 </blockquote>
 <span id="more"></span>
 <p><code>When manipulating the threshold you probably also want to change the size of carriers that are being   allocated. So if you are increasing the size of individual blocks, you will wanting increase the actual   carriers that are being created. So if you increase the threshold to 1 MB, the.. I believe the default size   of multiblock carriers is 2 MB, the smallest one, and it grows up into 8 MB, depending on how many carriers   you have.Since you doubled the initial amount, you might want to double the next one as well, so you   started at 4 MB might grow up to 16 MB, or something of that effect.  </code></p>
-<h3 id="main-multi-block-carrier"><a class="markdownIt-Anchor" href="#main-multi-block-carrier"></a> main multi-block carrier</h3>
+<h3 id="main-multi-block-carrier">main multi-block carrier</h3>
 <p>每个allocator实例都有创建 一个 不会被销毁的 “main multiblock carrier”, 这个carrier的大小由mmbcs指定</p>
-<h3 id="super-carrier"><a class="markdownIt-Anchor" href="#super-carrier"></a> super carrier</h3>
+<h3 id="super-carrier">super carrier</h3>
 <p>在R16B03加入，在启动时分配很大一块内存供虚拟机使用的 <strong>+MMsc系列参数设定</strong></p>
 <blockquote>
 <p>加入这个的原因参考- <a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhengsyao/p/erts_allocators_speech_by_lukas_larsson.html">Erlang 虚拟机内的内存管理_Lukas Larsson）</a>,大概是一个客户在启动阶段调用malloc耗时20秒</p>
 </blockquote>
-<h3 id="内存carrier迁移"><a class="markdownIt-Anchor" href="#内存carrier迁移"></a> 内存carrier迁移</h3>
+<h3 id="内存carrier迁移">内存carrier迁移</h3>
 <p><a target="_blank" rel="noopener" href="https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/CarrierMigration.md">More</a></p>
-<h3 id="allocators"><a class="markdownIt-Anchor" href="#allocators"></a> allocators</h3>
+<h3 id="allocators">allocators</h3>
 <p><img src="/images/Allocators.png" alt="system allocators"></p>
 <ul>
 <li>eheap_alloc(heap)、binary_alloc(binary)、driver_alloc(driver)、ets_alloc(ets) 这几个分配器可供我们调优</li>
@@ -363,7 +363,7 @@ multi-block carrier 包含多个block的carrier<br>
 </tr>
 </tbody>
 </table>
-<h3 id="分配策略"><a class="markdownIt-Anchor" href="#分配策略"></a> 分配策略</h3>
+<h3 id="分配策略">分配策略</h3>
 <table>
 <thead>
 <tr>
@@ -394,12 +394,12 @@ multi-block carrier 包含多个block的carrier<br>
 </tr>
 </tbody>
 </table>
-<h3 id="carrier-allocators"><a class="markdownIt-Anchor" href="#carrier-allocators"></a> Carrier Allocators</h3>
+<h3 id="Carrier-Allocators">Carrier Allocators</h3>
 <ul>
 <li>mseg_alloc</li>
 <li>sys_alloc</li>
 </ul>
-<h3 id="statistics"><a class="markdownIt-Anchor" href="#statistics"></a> Statistics</h3>
+<h3 id="Statistics">Statistics</h3>
 <ul>
 <li>erlang:system_info({allocator,Type})</li>
 </ul>
@@ -409,7 +409,7 @@ blocks、blocks_size、carriers、carriers_size 都是一个三元组{_, Current
 block_size 可以理解成使用的内存<br>
 carriers_size 可以理解成Erlang向系统申请的内存</p>
 </blockquote>
-<h3 id="mbcs_pool以及carrier-迁移"><a class="markdownIt-Anchor" href="#mbcs_pool以及carrier-迁移"></a> mbcs_pool以及Carrier 迁移</h3>
+<h3 id="mbcs-pool以及Carrier-迁移">mbcs_pool以及Carrier 迁移</h3>
 <blockquote>
 <p>carrier迁移只能同类型的分配器之间进行(Migration of carriers of same type )</p>
 </blockquote>
@@ -431,14 +431,14 @@ carriers_size 可以理解成Erlang向系统申请的内存</p>
 <li>更详细解释在<a target="_blank" rel="noopener" href="https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/CarrierMigration.md">这里</a><br>
 <img src="/images/MemoryArchitecture.png" alt="Memory Architecture"></li>
 </ul>
-<h3 id="其他零碎"><a class="markdownIt-Anchor" href="#其他零碎"></a> 其他零碎</h3>
+<h3 id="其他零碎">其他零碎</h3>
 <ul>
 <li>每种类型的分配器在每个调度器里都有个实例(参考<a href="#mbcs_pool">mbcs_pool</a>）</li>
 <li>ID为0分配器实例是异步线程(async threads)使用的全局分配器</li>
 <li>ID为1分配器实例是调度器1(scheduler 1)的实例，以此类推</li>
 <li></li>
 </ul>
-<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<h3 id="参考资料">参考资料</h3>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/CarrierMigration.md">CarrierMigration</a></li>
 <li><a target="_blank" rel="noopener" href="http://erlang.org/doc/man/erts_alloc.html">erts_alloc</a></li>
@@ -484,12 +484,12 @@ carriers_size 可以理解成Erlang向系统申请的内存</p>
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2017/12/24/ErlangNodeConnect/" rel="prev" title="Erlang节点互联">
-      <i class="fa fa-chevron-left"></i> Erlang节点互联
+    <a href="/2017/12/24/ErlangProcess/" rel="prev" title="Erlang Process">
+      <i class="fa fa-chevron-left"></i> Erlang Process
     </a></div>
       <div class="post-nav-item">
-    <a href="/2017/12/24/Erlang/" rel="next" title="Eralng系列文章">
-      Eralng系列文章 <i class="fa fa-chevron-right"></i>
+    <a href="/2017/12/24/ErlangNodeConnect/" rel="next" title="Erlang节点互联">
+      Erlang节点互联 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -570,7 +570,7 @@ carriers_size 可以理解成Erlang向系统申请的内存</p>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#memory-allocator"><span class="nav-number">1.</span> <span class="nav-text"> Memory Allocator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#blocks"><span class="nav-number">1.0.1.</span> <span class="nav-text"> blocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#carriers"><span class="nav-number">1.0.2.</span> <span class="nav-text"> carriers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#single-block-carriers-and-multi-block-carriers"><span class="nav-number">1.0.3.</span> <span class="nav-text"> single-block carriers and multi-block carriers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main-multi-block-carrier"><span class="nav-number">1.0.4.</span> <span class="nav-text"> main multi-block carrier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#super-carrier"><span class="nav-number">1.0.5.</span> <span class="nav-text"> super carrier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98carrier%E8%BF%81%E7%A7%BB"><span class="nav-number">1.0.6.</span> <span class="nav-text"> 内存carrier迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#allocators"><span class="nav-number">1.0.7.</span> <span class="nav-text"> allocators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5"><span class="nav-number">1.0.8.</span> <span class="nav-text"> 分配策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#carrier-allocators"><span class="nav-number">1.0.9.</span> <span class="nav-text"> Carrier Allocators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#statistics"><span class="nav-number">1.0.10.</span> <span class="nav-text"> Statistics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mbcs_pool%E4%BB%A5%E5%8F%8Acarrier-%E8%BF%81%E7%A7%BB"><span class="nav-number">1.0.11.</span> <span class="nav-text"> mbcs_pool以及Carrier 迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%9B%B6%E7%A2%8E"><span class="nav-number">1.0.12.</span> <span class="nav-text"> 其他零碎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.0.13.</span> <span class="nav-text"> 参考资料</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Memory Allocator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#blocks"><span class="nav-number">1.0.1.</span> <span class="nav-text">blocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#carriers"><span class="nav-number">1.0.2.</span> <span class="nav-text">carriers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#single-block-carriers-and-multi-block-carriers"><span class="nav-number">1.0.3.</span> <span class="nav-text">single-block carriers and multi-block carriers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main-multi-block-carrier"><span class="nav-number">1.0.4.</span> <span class="nav-text">main multi-block carrier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#super-carrier"><span class="nav-number">1.0.5.</span> <span class="nav-text">super carrier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98carrier%E8%BF%81%E7%A7%BB"><span class="nav-number">1.0.6.</span> <span class="nav-text">内存carrier迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#allocators"><span class="nav-number">1.0.7.</span> <span class="nav-text">allocators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5"><span class="nav-number">1.0.8.</span> <span class="nav-text">分配策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Carrier-Allocators"><span class="nav-number">1.0.9.</span> <span class="nav-text">Carrier Allocators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Statistics"><span class="nav-number">1.0.10.</span> <span class="nav-text">Statistics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mbcs-pool%E4%BB%A5%E5%8F%8ACarrier-%E8%BF%81%E7%A7%BB"><span class="nav-number">1.0.11.</span> <span class="nav-text">mbcs_pool以及Carrier 迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%9B%B6%E7%A2%8E"><span class="nav-number">1.0.12.</span> <span class="nav-text">其他零碎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.0.13.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -643,7 +643,7 @@ carriers_size 可以理解成Erlang向系统申请的内存</p>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:16</span>
+    <span title="站点阅读时长">1:17</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
