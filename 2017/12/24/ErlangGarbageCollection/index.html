@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Garbage Collection Erlang的GC是分代复制，还有一个引用计数型的GC运行在共享堆（Binary&gt;64字节）上 Private Heap GC 私有堆垃圾回收 私有堆的垃圾回收是分代的. 分代机制把进程的堆内存分为两个部分,年轻代和年老代. 区分是基于这样一个考虑, 如果一个对象在运行一次垃圾回收之后没有被回收,那么这个对象短期内被回收的可能性就很低. 所以, 年轻代就">
+  <meta name="description" content="Garbage Collection Erlang的GC是分代复制，还有一个引用计数型的GC运行在共享堆（Binary&gt;64字节）上  Private Heap GC 私有堆垃圾回收 私有堆的垃圾回收是分代的. 分代机制把进程的堆内存分为两个部分,年轻代和年老代. 区分是基于这样一个考虑, 如果一个对象在运行一次垃圾回收之后没有被回收,那么这个对象短期内被回收的可能性就很低. 所以, 年轻">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Erlang Garbage Collection">
 <meta property="og:url" content="http://example.com/2017/12/24/ErlangGarbageCollection/index.html">
 <meta property="og:site_name" content="mars315">
-<meta property="og:description" content="Garbage Collection Erlang的GC是分代复制，还有一个引用计数型的GC运行在共享堆（Binary&gt;64字节）上 Private Heap GC 私有堆垃圾回收 私有堆的垃圾回收是分代的. 分代机制把进程的堆内存分为两个部分,年轻代和年老代. 区分是基于这样一个考虑, 如果一个对象在运行一次垃圾回收之后没有被回收,那么这个对象短期内被回收的可能性就很低. 所以, 年轻代就">
+<meta property="og:description" content="Garbage Collection Erlang的GC是分代复制，还有一个引用计数型的GC运行在共享堆（Binary&gt;64字节）上  Private Heap GC 私有堆垃圾回收 私有堆的垃圾回收是分代的. 分代机制把进程的堆内存分为两个部分,年轻代和年老代. 区分是基于这样一个考虑, 如果一个对象在运行一次垃圾回收之后没有被回收,那么这个对象短期内被回收的可能性就很低. 所以, 年轻">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/MinorCollection.png">
 <meta property="og:image" content="http://example.com/images/MajorCollectin.png">
@@ -279,9 +279,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1>Garbage Collection</h1>
+        <h1 id="garbage-collection"><a class="markdownIt-Anchor" href="#garbage-collection"></a> Garbage Collection</h1>
 <p>Erlang的GC是分代复制，还有一个引用计数型的GC运行在共享堆（Binary&gt;64字节）上</p>
-<h3 id="Private-Heap-GC-私有堆垃圾回收">Private Heap GC 私有堆垃圾回收</h3>
+<h3 id="private-heap-gc-私有堆垃圾回收"><a class="markdownIt-Anchor" href="#private-heap-gc-私有堆垃圾回收"></a> Private Heap GC 私有堆垃圾回收</h3>
 <p>私有堆的垃圾回收是分代的. 分代机制把进程的堆内存分为两个部分,年轻代和年老代. 区分是基于这样一个考虑, 如果一个对象在运行一次垃圾回收之后没有被回收,那么这个对象短期内被回收的可能性就很低. 所以, 年轻代就用来存储新分配的数据,年老代就用来存放运行一定次数的垃圾回收之后依然幸存的数据. 这样的区分可以帮助GC减少对那些很可能还不是垃圾的数据不必要的扫描. 对应于此, Erlang的GC扫描有两个策略, Generational(Minor) 和 Fullsweep(Major). Generational GC只回收年轻代的区域, 而Fullsweep则同时回收年轻代和年老代.</p>
 <p><strong>场景 1</strong>:</p>
 <figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; No GC &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
@@ -296,12 +296,12 @@
 <figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; Fullsweep &gt; Generational &gt; Fullsweep &gt; Increase Heap &gt; Fullsweep &gt; ... &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
 <p>假设在场景3里面,第二个fullsweep GC依然没有回收到足够的内存, 那么系统就会为进程增加堆内存, 然后该进程就回到第一个场景,像刚创建的进程一样首先开始一个fullsweep,然后循环往复.</p>
 <span id="more"></span>
-<h3 id="Shared-Heap-GC-共享堆垃圾回收">Shared Heap GC 共享堆垃圾回收</h3>
+<h3 id="shared-heap-gc-共享堆垃圾回收"><a class="markdownIt-Anchor" href="#shared-heap-gc-共享堆垃圾回收"></a> Shared Heap GC 共享堆垃圾回收</h3>
 <ul>
 <li>大于64个字节的二进制terms,被称为Reference Counted Binary。对Refc的binary进行sub binary的操作，是不会复制binary而是对二进制部分的引用，这种引用会增加原始bianry的引用计数，这可能会导致某些问题，比如有个100M的二进制，但是你只需要它的sub bianry 只有2M，因为sub binary 的原因会导致100M的二进制长时间释放不掉，这个时候最好使用copy，而不是使用sub binary相关的操作。</li>
 <li>另外一个问题是长事件存活的中间进程（用于请求控制或者消息路由），这样中间进程转发的每个ProcBin 类型的每次转发都会增加原始binary的引用计数，但是由于ProcBin类型在进程内部仅仅是一个指针，所有可能会很长时间不会被释放，从而导致原始binary的引用计数不会减少，进而导致原始binary长时间不能被释放。关于Refc binary内存泄漏可以查看<a target="_blank" rel="noopener" href="http://ferd.ca/">Fred Hebert</a> 的书 <a target="_blank" rel="noopener" href="http://www.erlang-in-anger.com/">Erlang in Anger</a></li>
 </ul>
-<h3 id="扩展阅读">扩展阅读</h3>
+<h3 id="扩展阅读"><a class="markdownIt-Anchor" href="#扩展阅读"></a> 扩展阅读</h3>
 <p>erlang使用young heap 和old heap来区分数据，young heap放新数据，old heap放旧数据，也就是gc后存活的数据。<br>
 <strong>浅扫描（minor collection）</strong><br>
 在young heap中，erlang使用了高水位线来区分标记一次以上的数据和未标记的数据，那么young heap移入old heap的就是超过高水位线的数据。<br>
@@ -309,7 +309,7 @@
 <p><strong>深扫描（major collection）</strong><br>
 深扫描是一般当old heap空间不足时触发，erlang会对young heap和old heap做扫描，把有用的数据放入新申请的young heap，删掉原来的heap。深扫描的触发条件还有手动执行gc，和gc次数超过fullsweep_after的参数限定。<br>
 <img src="/images/MajorCollectin.png" alt="minor collection"></p>
-<h3 id="二进制数据垃圾回收机制">二进制数据垃圾回收机制</h3>
+<h3 id="二进制数据垃圾回收机制"><a class="markdownIt-Anchor" href="#二进制数据垃圾回收机制"></a> 二进制数据垃圾回收机制</h3>
 <p>heap binaries（大小不到 64 bytes，就直接存在进程堆内）和refc binaries（超过了64 bytes，就被保存到进程外的共享堆里，可以给节点内所有进程共享）。</p>
 <ul>
 <li>heap binaries</li>
@@ -335,7 +335,7 @@
 <p>A sub binary is created by split_binary/2 and when a binary is matched out in a binary pattern. A sub binary is a reference into a part of another binary (refc or heap binary, never into a another sub binary). Therefore, matching out a binary is relatively cheap because the actual binary data is never copied.</p>
 <p>A match context is similar to a sub binary, but is optimized for binary matching; for instance, it contains a direct pointer to the binary data. For each field that is matched out of a binary, the position in the match context will be incremented.</p>
 </blockquote>
-<h3 id="参考资料">参考资料</h3>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
 <ul>
 <li>Erlang Garbage Collection Details and Why It Matters <a target="_blank" rel="noopener" href="https://hamidreza-s.github.io/erlang%20garbage%20collection%20memory%20layout%20soft%20realtime/2015/08/24/erlang-garbage-collection-details-and-why-it-matters.html">[原文]</a>   <a target="_blank" rel="noopener" href="https://blog.csdn.net/swedenfeng/article/details/53897789">[翻译]</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/mycwq/article/details/26613275">Erlang进程堆垃圾回收机制</a></li>
@@ -381,8 +381,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2017/12/24/ErlangMemoryAllocator/" rel="prev" title="Memory Allocator">
-      <i class="fa fa-chevron-left"></i> Memory Allocator
+    <a href="/2017/12/24/ErlangScheduler/" rel="prev" title="Erlang Scheduler">
+      <i class="fa fa-chevron-left"></i> Erlang Scheduler
     </a></div>
       <div class="post-nav-item">
     <a href="/2017/12/24/Erlang2Elixir/" rel="next" title="Erlang to Elixir">
@@ -467,7 +467,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Garbage Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Private-Heap-GC-%E7%A7%81%E6%9C%89%E5%A0%86%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">1.0.1.</span> <span class="nav-text">Private Heap GC 私有堆垃圾回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shared-Heap-GC-%E5%85%B1%E4%BA%AB%E5%A0%86%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">1.0.2.</span> <span class="nav-text">Shared Heap GC 共享堆垃圾回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB"><span class="nav-number">1.0.3.</span> <span class="nav-text">扩展阅读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E6%8D%AE%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6"><span class="nav-number">1.0.4.</span> <span class="nav-text">二进制数据垃圾回收机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.0.5.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#garbage-collection"><span class="nav-number">1.</span> <span class="nav-text"> Garbage Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#private-heap-gc-%E7%A7%81%E6%9C%89%E5%A0%86%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">1.0.1.</span> <span class="nav-text"> Private Heap GC 私有堆垃圾回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shared-heap-gc-%E5%85%B1%E4%BA%AB%E5%A0%86%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">1.0.2.</span> <span class="nav-text"> Shared Heap GC 共享堆垃圾回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB"><span class="nav-number">1.0.3.</span> <span class="nav-text"> 扩展阅读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E6%8D%AE%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6"><span class="nav-number">1.0.4.</span> <span class="nav-text"> 二进制数据垃圾回收机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.0.5.</span> <span class="nav-text"> 参考资料</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -540,7 +540,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:17</span>
+    <span title="站点阅读时长">1:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

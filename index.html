@@ -359,7 +359,7 @@
       
           <p><a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools:zh-cn">Dota 2 Workshop Tools:zh-cn</a>‎ | <a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools:zh-cn/Scripting:zh-cn">Scripting:zh-cn</a></p>
 <p>几乎所有在DOTA2中的技能都是使用C++来编写的，当查看所有这些技能的时候，npc_abilities.txt包含了一些技能元数据的KV(Key-Values)文件，暴露出了一些技能的键值，这里包含了几乎所有的元数据，使用数据驱动类技能系统能够为DOTA2创造一些自定义技能，能够为他们赋予特殊的数值和特定的触发事件。</p>
-<h2 id="一个简单的例子">一个简单的例子</h2>
+<h2 id="一个简单的例子"><a class="markdownIt-Anchor" href="#一个简单的例子"></a> 一个简单的例子</h2>
 <p>这是一个非常简单的技能，他是一个被动技能，给单位添加了一个粒子特效。</p>
 <figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">"fx_test_ability"</span><br><span class="line">{</span><br><span class="line">    // General</span><br><span class="line">    //-------------------------------------------------------------------------------------------------------------</span><br><span class="line">    "BaseClass"             "ability_datadriven"</span><br><span class="line">    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"</span><br><span class="line">    "AbilityTextureName"    "axe_battle_hunger"</span><br><span class="line"></span><br><span class="line">    // Modifiers</span><br><span class="line">    //-------------------------------------------------------------------------------------------------------------</span><br><span class="line">    "Modifiers"</span><br><span class="line">    {</span><br><span class="line">        "fx_test_modifier"</span><br><span class="line">        {</span><br><span class="line">            "Passive" "1"</span><br><span class="line">            "OnCreated"</span><br><span class="line">            {</span><br><span class="line">                "AttachEffect"</span><br><span class="line">                {</span><br><span class="line">                    "Target" "CASTER"</span><br><span class="line">                    "EffectName" "particles/econ/generic/generic_buff_1/generic_buff_1.vpcf"</span><br><span class="line">                    "EffectAttachType" "follow_overhead"</span><br><span class="line">                    "EffectLifeDurationScale" "1"</span><br><span class="line">                    "EffectColorA" "255 255 0"</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>其中，基类(“BaseClass”),技能行为(“AbilityBehavior”)和技能图标名称(“AbilityTextureName”)在所有技能中都是类似的。</p>
@@ -552,7 +552,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="组成">组成</h2>
+          <h2 id="组成"><a class="markdownIt-Anchor" href="#组成"></a> 组成</h2>
 <ul>
 <li>项目总是由形形色色的人构成，不同的专业研发、运营、运维等。重点说说研发，研发包括三个部分：
 <ol>
@@ -562,7 +562,7 @@
 </ol>
 </li>
 </ul>
-<h2 id="类型">类型</h2>
+<h2 id="类型"><a class="markdownIt-Anchor" href="#类型"></a> 类型</h2>
 <p>以下只区分程序、策划、美术三大的分类。在所见的团队中大致分为四类：</p>
 <ol>
 <li>要饭类型<br>
@@ -651,7 +651,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>816</span>
+              <span>812</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -670,7 +670,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1>Eralng系列文章</h1>
+          <h1 id="eralng系列文章"><a class="markdownIt-Anchor" href="#eralng系列文章"></a> Eralng系列文章</h1>
 <table>
 <thead>
 <tr>
@@ -685,8 +685,8 @@
 </tr>
 </tbody>
 </table>
-<h2 id="前言">前言</h2>
-<p>从业以来一直用C++，面对各种问题特别管理一个C++团队时在服务器健壮性、效率等等方面做的工作又多又繁琐，人工以及各种工具齐上阵，深感心力交瘁。后来机缘巧合接触到Erlang，初识Erlang感觉很神奇无不为其各种特性所折服。但随后实际项目的应用过程中还是出现了各种问题，虽然相对于C++难度有所降低，但是对于C++有多年的经验，在处理各种问题上都有相应的经验；但是Erlang运行于Erlang VM上还有各种封装，如果不了解一些内部细节在处理各种问题时真是摸不着头脑。我在工作中别人问的最多的问题或者我当初在写代码时最想知道的问题大概有如下几个：</p>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<p>从业以来一直用C++，面对各种问题特别管理一个C<ins>团队时在服务器健壮性、效率等等方面做的工作又多又繁琐，人工以及各种工具齐上阵，深感心力交瘁。后来机缘巧合接触到Erlang，初识Erlang感觉很神奇无不为其各种特性所折服。但随后实际项目的应用过程中还是出现了各种问题，虽然相对于C</ins>难度有所降低，但是对于C++有多年的经验，在处理各种问题上都有相应的经验；但是Erlang运行于Erlang VM上还有各种封装，如果不了解一些内部细节在处理各种问题时真是摸不着头脑。我在工作中别人问的最多的问题或者我当初在写代码时最想知道的问题大概有如下几个：</p>
 <blockquote>
 <p>为什么一个进程的消息队列堆积会导致真个VM效率下降?<br>
 变量在什么地方分配在堆？栈？还是什么地方？<br>
@@ -697,7 +697,7 @@
 …</p>
 </blockquote>
 <p>上面的这些问题如果不了Erlang的调度器、VM、内存管理策略、GC、以及进程的实现等等很难找准方向，在<a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考很多资料</a>，写了后面<a href="#%E6%96%87%E7%AB%A0">四个文档</a>用来对我看过的资料做个总结</p>
-<h2 id="文章">文章</h2>
+<h2 id="文章"><a class="markdownIt-Anchor" href="#文章"></a> 文章</h2>
 <ul>
 <li>
 <a href="/2017/12/24/ErlangScheduler/" title="[Eralng VM Scheduler]">[Eralng VM Scheduler]</a>  
@@ -712,7 +712,7 @@
 <a href="/2017/12/24/ErlangProcess/" title="[Eralng Process]">[Eralng Process]</a>
 </li>
 </ul>
-<h2 id="其他">其他</h2>
+<h2 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h2>
 <ul>
 <li>
 <a href="/2017/12/24/ErlangNodeConnect/" title="[Eralng 节点互联]">[Eralng 节点互联]</a>
@@ -724,7 +724,7 @@
 <a href="/2017/12/24/Erlang2Elixir/" title="[Eralng to Elixir]">[Eralng to Elixir]</a>
 </li>
 </ul>
-<h3 id="参考资料">参考资料</h3>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="http://blog.yufeng.info/">霸爷的博客</a><br>
 <a target="_blank" rel="noopener" href="https://happi.github.io/theBeamBook">The Beam Book</a><br>
@@ -825,15 +825,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1>Erlang to Elixir</h1>
-<h2 id="基础">基础</h2>
+          <h1 id="erlang-to-elixir"><a class="markdownIt-Anchor" href="#erlang-to-elixir"></a> Erlang to Elixir</h1>
+<h2 id="基础"><a class="markdownIt-Anchor" href="#基础"></a> 基础</h2>
 <ul>
 <li>原子有冒号 <code>:ok</code> 或者 <code>Atom</code></li>
 <li>变量<code>ok </code></li>
 <li><code>"hello"</code> 是<code>bianry</code> ，<code>'hello'</code> 是<code>list</code></li>
 </ul>
 <blockquote>
-<p><span class="github-emoji"><span>❗</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/2757.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span> 所有定义比如<code>def</code> <code>defp</code> 等等以<code>p</code>结束的都是私有的</p>
+<p>❗ 所有定义比如<code>def</code> <code>defp</code> 等等以<code>p</code>结束的都是私有的</p>
 </blockquote>
 <ul>
 <li>对应 Erlang的宏定义：<code>@is_running false</code></li>
@@ -939,9 +939,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1>Garbage Collection</h1>
+          <h1 id="garbage-collection"><a class="markdownIt-Anchor" href="#garbage-collection"></a> Garbage Collection</h1>
 <p>Erlang的GC是分代复制，还有一个引用计数型的GC运行在共享堆（Binary&gt;64字节）上</p>
-<h3 id="Private-Heap-GC-私有堆垃圾回收">Private Heap GC 私有堆垃圾回收</h3>
+<h3 id="private-heap-gc-私有堆垃圾回收"><a class="markdownIt-Anchor" href="#private-heap-gc-私有堆垃圾回收"></a> Private Heap GC 私有堆垃圾回收</h3>
 <p>私有堆的垃圾回收是分代的. 分代机制把进程的堆内存分为两个部分,年轻代和年老代. 区分是基于这样一个考虑, 如果一个对象在运行一次垃圾回收之后没有被回收,那么这个对象短期内被回收的可能性就很低. 所以, 年轻代就用来存储新分配的数据,年老代就用来存放运行一定次数的垃圾回收之后依然幸存的数据. 这样的区分可以帮助GC减少对那些很可能还不是垃圾的数据不必要的扫描. 对应于此, Erlang的GC扫描有两个策略, Generational(Minor) 和 Fullsweep(Major). Generational GC只回收年轻代的区域, 而Fullsweep则同时回收年轻代和年老代.</p>
 <p><strong>场景 1</strong>:</p>
 <figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; No GC &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
@@ -958,6 +958,145 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2017/12/24/ErlangGarbageCollection/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangScheduler/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/24/ErlangScheduler/" class="post-title-link" itemprop="url">Erlang Scheduler</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-24 23:29:53" itemprop="dateCreated datePublished" datetime="2017-12-24T23:29:53+08:00">2017-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/" itemprop="url" rel="index"><span itemprop="name">Erlang</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="erlang-scheduler"><a class="markdownIt-Anchor" href="#erlang-scheduler"></a> Erlang Scheduler</h1>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>snail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E-mail</td>
+<td>**@qq.com</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="目录"><a class="markdownIt-Anchor" href="#目录"></a> 目录</h2>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B0%83%E5%BA%A6">什么是调度</a></li>
+<li><a href="#Erlang%E8%B0%83%E5%BA%A6">Erlang调度</a></li>
+<li><a href="#%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E5%8E%86%E5%8F%B2">调度器的历史</a><br>
+- <a href="#Before-R11B">Before R11B</a><br>
+- <a href="#In-R11B-and-R12B">In R11B and R12B</a><br>
+- <a href="#After-R13B">After R13B</a><br>
+- <s><a href="#In-latest-Version">In latest Version</a></s></li>
+<li><a href="#%E8%B0%83%E5%BA%A6%E5%99%A8%E9%98%9F%E5%88%97">调度器队列</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E8%BF%81%E7%A7%BB/%E7%AA%83%E5%8F%96">进程迁移/窃取</a></li>
+<li><a href="#%E6%8E%A7%E5%88%B6%E5%8F%82%E6%95%B0%E4%B8%8EAPI">控制参数与API</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E9%9B%B6%E7%A2%8E">其他零碎</a><br>
+- <a href="#Reduction">Reduction </a><br>
+- <a href="#Port">Port</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+<hr>
+<p>❗本文档中调度器调度的基本单位使用程序、活、任务等等，其实可以理解成 <strong>Work</strong>，<em>Work</em>可以是处于<a href="(/md/priv/ProcessStateMachine.png)">就绪状态</a>的<a target="_blank" rel="noopener" href="http://erlang.org/doc/reference_manual/processes.html">进程</a>、 <a href="#Port">Port</a> 、系统事件等等</p>
+<hr>
+<h3 id="什么是调度"><a class="markdownIt-Anchor" href="#什么是调度"></a> 什么是调度</h3>
+<ul>
+<li>调度就是将工作分发给工作者，这些工作者可以是操作系统的线程<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Thread_%28computing%29">Native Threads</a>或<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Green_threads">Green Threads</a>。调度器分为两种：</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Preemption_%28computing%29">抢占式</a><br>
+<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cooperative_multitasking">协作式</a></p>
+</blockquote>
+<p>两种方式各有优劣，我们重点关注<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Preemption_%28computing%29">抢占式</a> ，因为Erlang就是使用的这种方式。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/12/24/ErlangScheduler/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1053,13 +1192,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1>Memory Allocator</h1>
-<h3 id="blocks">blocks</h3>
+          <h1 id="memory-allocator"><a class="markdownIt-Anchor" href="#memory-allocator"></a> Memory Allocator</h1>
+<h3 id="blocks"><a class="markdownIt-Anchor" href="#blocks"></a> blocks</h3>
 <p>block是Erlang VM需要的一块连续的内存，比如向ets中插入的数据会变成一个block，Erlang进程的stack和heap 也是一个block；进程间发送的消息在block内被复制。总是block就是一块连续的C 内存。block也是Erlang Allocator内存分配的基本单位。</p>
-<h3 id="carriers">carriers</h3>
+<h3 id="carriers"><a class="markdownIt-Anchor" href="#carriers"></a> carriers</h3>
 <p>carriers 是一个包含一个或者多个block的容器，carrier结构中有个头部，用于标识carrier的类型等等<br>
 carrier是18bit对齐的（所以最小值是256KB）</p>
-<h3 id="single-block-carriers-and-multi-block-carriers">single-block carriers and multi-block carriers</h3>
+<h3 id="single-block-carriers-and-multi-block-carriers"><a class="markdownIt-Anchor" href="#single-block-carriers-and-multi-block-carriers"></a> single-block carriers and multi-block carriers</h3>
 <blockquote>
 <p>single-block carrier 就是只包含一个block的carrier<br>
 multi-block carrier 包含多个block的carrier<br>
@@ -1160,8 +1299,8 @@ multi-block carrier 包含多个block的carrier<br>
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1>Erlang节点互联</h1>
-<h2 id="epmd">epmd</h2>
+          <h1 id="erlang节点互联"><a class="markdownIt-Anchor" href="#erlang节点互联"></a> Erlang节点互联</h1>
+<h2 id="epmd"><a class="markdownIt-Anchor" href="#epmd"></a> epmd</h2>
 <ul>
 <li>Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT=XXX或者 erl -epmd_port NNNN 来修改次端口</li>
 <li>epmd文档：<a target="_blank" rel="noopener" href="http://www.erlang.org/doc/man/epmd.html">这里</a></li>
@@ -1183,113 +1322,6 @@ multi-block carrier 包含多个block的carrier<br>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2017/12/24/ErlangNodeConnect/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangProcess/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="mars315">
-      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mars315">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/12/24/ErlangProcess/" class="post-title-link" itemprop="url">Erlang Process</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-12-24 23:29:53" itemprop="dateCreated datePublished" datetime="2017-12-24T23:29:53+08:00">2017-12-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Erlang/" itemprop="url" rel="index"><span itemprop="name">Erlang</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1>Process</h1>
-<h3 id="什么是进程">什么是进程</h3>
-<p>这里的进程不是指操作系统意义上的进程，而是一个孤立的实体，进程是运行你的代码的地方，通过将错误的影响隔离到执行错误代码的进程，进程可以保护系统免受代码错误的影响。</p>
-<h3 id="进程内存">进程内存</h3>
-<p>进程的内存分为四个部分：栈、堆、邮箱、进程控制块（Process Control Block）。</p>
-<blockquote>
-<p>可以用使用查看内部表示，但是这些仅仅用来调试或者理解内部机制用<br>
-hipe_bifs:show_estack/1、 hipe_bifs:show_nstack/1、hipe_bifs:show_heap/1、<br>
-hipe_bifs:show_pcb/1、 hipe_bifs:show_term/1</p>
-</blockquote>
-<ul>
-<li>可以参考下面两张图理解</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/12/24/ErlangProcess/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1437,7 +1469,7 @@ hipe_bifs:show_pcb/1、 hipe_bifs:show_term/1</p>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:17</span>
+    <span title="站点阅读时长">1:16</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
