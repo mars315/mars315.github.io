@@ -1,6 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Eralng系列文章</title>
+    <url>/2017/12/24/Erlang/</url>
+    <content><![CDATA[<h1>Eralng系列文章</h1>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>snail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E-mail</td>
+<td><a href="mailto:254262243@qq.com">254262243@qq.com</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="前言">前言</h2>
+<p>从业以来一直用C++，面对各种问题特别管理一个C++团队时在服务器健壮性、效率等等方面做的工作又多又繁琐，人工以及各种工具齐上阵，深感心力交瘁。后来机缘巧合接触到Erlang，初识Erlang感觉很神奇无不为其各种特性所折服。但随后实际项目的应用过程中还是出现了各种问题，虽然相对于C++难度有所降低，但是对于C++有多年的经验，在处理各种问题上都有相应的经验；但是Erlang运行于Erlang VM上还有各种封装，如果不了解一些内部细节在处理各种问题时真是摸不着头脑。我在工作中别人问的最多的问题或者我当初在写代码时最想知道的问题大概有如下几个：</p>
+<blockquote>
+<p>为什么一个进程的消息队列堆积会导致真个VM效率下降?<br>
+变量在什么地方分配在堆？栈？还是什么地方？<br>
+对于变量不可以变每次修改是否会重新分配?在哪里分配？效率怎么样?<br>
+进程什么时候GC？怎样做GC？GC堆进程影响？<br>
+进程内存(erlang:memory/1) 由哪些部分组成？<br>
+怎样调优VM以及自己逻辑的代码？<br>
+…</p>
+</blockquote>
+<p>上面的这些问题如果不了Erlang的调度器、VM、内存管理策略、GC、以及进程的实现等等很难找准方向，在<a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考很多资料</a>，写了后面<a href="#%E6%96%87%E7%AB%A0">四个文档</a>用来对我看过的资料做个总结</p>
+<h2 id="文章">文章</h2>
+<ul>
+<li>
+<a href="/2017/12/24/ErlangScheduler/" title="[Eralng VM Scheduler]">[Eralng VM Scheduler]</a>  
+</li>
+<li>
+<a href="/2017/12/24/ErlangMemoryAllocator/" title="[Eralng Memory Allocator]">[Eralng Memory Allocator]</a>
+</li>
+<li>
+<a href="/2017/12/24/ErlangGarbageCollection/" title="[Eralng Garbage Collection]">[Eralng Garbage Collection]</a>
+</li>
+<li>
+<a href="/2017/12/24/ErlangProcess/" title="[Eralng Process]">[Eralng Process]</a>
+</li>
+</ul>
+<h2 id="其他">其他</h2>
+<ul>
+<li>
+<a href="/2017/12/24/ErlangNodeConnect/" title="[Eralng 节点互联]">[Eralng 节点互联]</a>
+</li>
+<li>
+<a href="/2017/12/24/ReadingNotes/" title="[Eralng 读书笔记]">[Eralng 读书笔记]</a>
+</li>
+<li>
+<a href="/2017/12/24/Erlang2Elixir/" title="[Eralng to Elixir]">[Eralng to Elixir]</a>
+</li>
+</ul>
+<h3 id="参考资料">参考资料</h3>
+<blockquote>
+<p><a href="http://blog.yufeng.info/">霸爷的博客</a><br>
+<a href="https://happi.github.io/theBeamBook">The Beam Book</a><br>
+高伸缩性系统：Erlang/OTP大型分布式容错设计<br>
+<a href="https://github.com/ferd">Fred Hebert</a><br>
+<a href="https://github.com/garazdawi">Lukas Larsson</a><br>
+<a href="https://www.erlang-solutions.com/">Erlang solution</a><br>
+<a href="https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/">Erlang Otp Internal Doc</a><br>
+<a href="http://www.erlang-factory.com/">Erlang Factory</a><br>
+<a href="http://bit.ly/2FtbBAL">Code BEAM SF</a><br>
+<a href="https://codesync.global/">Code Sync</a><br>
+其他的博客、文档 等等</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Erlang</category>
+      </categories>
+      <tags>
+        <tag>Erlang</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Erlang to Elixir</title>
     <url>/2017/12/24/Erlang2Elixir/</url>
     <content><![CDATA[<h1>Erlang to Elixir</h1>
@@ -94,85 +173,6 @@ iex&gt;  “Hello #{name}”<br>
       </tags>
   </entry>
   <entry>
-    <title>Eralng系列文章</title>
-    <url>/2017/12/24/Erlang/</url>
-    <content><![CDATA[<h1>Eralng系列文章</h1>
-<table>
-<thead>
-<tr>
-<th>Author</th>
-<th>snail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>E-mail</td>
-<td><a href="mailto:254262243@qq.com">254262243@qq.com</a></td>
-</tr>
-</tbody>
-</table>
-<h2 id="前言">前言</h2>
-<p>从业以来一直用C++，面对各种问题特别管理一个C++团队时在服务器健壮性、效率等等方面做的工作又多又繁琐，人工以及各种工具齐上阵，深感心力交瘁。后来机缘巧合接触到Erlang，初识Erlang感觉很神奇无不为其各种特性所折服。但随后实际项目的应用过程中还是出现了各种问题，虽然相对于C++难度有所降低，但是对于C++有多年的经验，在处理各种问题上都有相应的经验；但是Erlang运行于Erlang VM上还有各种封装，如果不了解一些内部细节在处理各种问题时真是摸不着头脑。我在工作中别人问的最多的问题或者我当初在写代码时最想知道的问题大概有如下几个：</p>
-<blockquote>
-<p>为什么一个进程的消息队列堆积会导致真个VM效率下降?<br>
-变量在什么地方分配在堆？栈？还是什么地方？<br>
-对于变量不可以变每次修改是否会重新分配?在哪里分配？效率怎么样?<br>
-进程什么时候GC？怎样做GC？GC堆进程影响？<br>
-进程内存(erlang:memory/1) 由哪些部分组成？<br>
-怎样调优VM以及自己逻辑的代码？<br>
-…</p>
-</blockquote>
-<p>上面的这些问题如果不了Erlang的调度器、VM、内存管理策略、GC、以及进程的实现等等很难找准方向，在<a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考很多资料</a>，写了后面<a href="#%E6%96%87%E7%AB%A0">四个文档</a>用来对我看过的资料做个总结</p>
-<h2 id="文章">文章</h2>
-<ul>
-<li>
-<a href="/2017/12/24/ErlangScheduler/" title="[Eralng VM Scheduler]">[Eralng VM Scheduler]</a>  
-</li>
-<li>
-<a href="/2017/12/24/ErlangMemoryAllocator/" title="[Eralng Memory Allocator]">[Eralng Memory Allocator]</a>
-</li>
-<li>
-<a href="/2017/12/24/ErlangGarbageCollection/" title="[Eralng Garbage Collection]">[Eralng Garbage Collection]</a>
-</li>
-<li>
-<a href="/2017/12/24/ErlangProcess/" title="[Eralng Process]">[Eralng Process]</a>
-</li>
-</ul>
-<h2 id="其他">其他</h2>
-<ul>
-<li>
-<a href="/2017/12/24/ErlangNodeConnect/" title="[Eralng 节点互联]">[Eralng 节点互联]</a>
-</li>
-<li>
-<a href="/2017/12/24/ReadingNotes/" title="[Eralng 读书笔记]">[Eralng 读书笔记]</a>
-</li>
-<li>
-<a href="/2017/12/24/Erlang2Elixir/" title="[Eralng to Elixir]">[Eralng to Elixir]</a>
-</li>
-</ul>
-<h3 id="参考资料">参考资料</h3>
-<blockquote>
-<p><a href="http://blog.yufeng.info/">霸爷的博客</a><br>
-<a href="https://happi.github.io/theBeamBook">The Beam Book</a><br>
-高伸缩性系统：Erlang/OTP大型分布式容错设计<br>
-<a href="https://github.com/ferd">Fred Hebert</a><br>
-<a href="https://github.com/garazdawi">Lukas Larsson</a><br>
-<a href="https://www.erlang-solutions.com/">Erlang solution</a><br>
-<a href="https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/">Erlang Otp Internal Doc</a><br>
-<a href="http://www.erlang-factory.com/">Erlang Factory</a><br>
-<a href="http://bit.ly/2FtbBAL">Code BEAM SF</a><br>
-<a href="https://codesync.global/">Code Sync</a><br>
-其他的博客、文档 等等</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Erlang</category>
-      </categories>
-      <tags>
-        <tag>Erlang</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Erlang Garbage Collection</title>
     <url>/2017/12/24/ErlangGarbageCollection/</url>
     <content><![CDATA[<h1>Garbage Collection</h1>
@@ -247,66 +247,6 @@ iex&gt;  “Hello #{name}”<br>
       <tags>
         <tag>Erlang</tag>
         <tag>gc</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Erlang节点互联</title>
-    <url>/2017/12/24/ErlangNodeConnect/</url>
-    <content><![CDATA[<h1>Erlang节点互联</h1>
-<h2 id="epmd">epmd</h2>
-<ul>
-<li>Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT=XXX或者 erl -epmd_port NNNN 来修改次端口</li>
-<li>epmd文档：<a href="http://www.erlang.org/doc/man/epmd.html">这里</a></li>
-<li>epmd协议：<a href="http://www.erlang.org/doc/apps/erts/erl_dist_protocol.html">这里</a></li>
-</ul>
-<blockquote>
-<p><img src="http://erlang.org/doc/apps/erts/erl_ext_fig.gif" alt="enter image description here"><br>
-<img src="/images/epmd.png" alt="enter image description here"></p>
-</blockquote>
-<ul>
-<li>net_kernel会启动proto_dist比如说inet_tcp_dist监听端口,同时把端口报到epmd. 这时候erts就准备好了节点通讯。这时候另外一个节点要和我们通讯的时候，首先要连接，流程大概是这样的：</li>
-</ul>
-<ol>
-<li>根据节点名找到节点地址。</li>
-<li>查询节点的4369端口,也就是epmd,向它要节点对应的inet_tcp_dist监听的端口。</li>
-<li>发起连接, 握手，cookie认证，如果未授权就失败。</li>
-<li>记录节点名称和响应的信息。</li>
-</ol>
-<span id="more"></span>
-<h2 id="net-kernel">net_kernel</h2>
-<ul>
-<li>重点关注 <strong>net_ticktime</strong>参数</li>
-</ul>
-<blockquote>
-<p>节点会在每TickTime/4 秒检查一下连接的节点是不是正常，如果连续4次没有收到(TickTime时间内)没有收到心跳消息，就会认为这个节点挂了</p>
-</blockquote>
-<p>Specifies the net_kernel tick time. TickTime is given in seconds. Once every TickTime/4 second, all connected nodes are ticked (if anything else has been written to a node) and if nothing has been received from another node within the last four (4) tick times that node is considered to be down. This ensures that nodes which are not responding, for reasons such as hardware errors, are considered to be down.<br>
-The time T, in which a node that is not responding is detected, is calculated as: MinT &lt; T &lt; MaxT where:<br>
-MinT = TickTime - TickTime / 4<br>
-MaxT = TickTime + TickTime / 4<br>
-TickTime is by default 60 (seconds). Thus, 45 &lt; T &lt; 75 seconds.<br>
-<strong>Note:</strong>  All communicating nodes should have the same TickTime value specified.<br>
-<strong>Note:</strong>  Normally, a terminating node is detected immediately.</p>
-<p><a href="http://erlang.org/doc/man/net_kernel.html">net_kernel</a><br>
-<a href="http://www.erlang.org/doc/man/kernel_app.html">kernel_app</a></p>
-<h2 id="节点互联失败排查">节点互联失败排查</h2>
-<blockquote>
-<p>检查节点cookie<br>
-检查otp版本<br>
-检查机器网络<br>
-检查epmd端口<br>
-检查节点是否被禁用net_kernel:allowed()</p>
-</blockquote>
-<h2 id="参考">参考</h2>
-<p><a href="http://blog.yufeng.info/archives/539">Erlang epmd的角色以及使用</a><br>
-<a href="https://www.cnblogs.com/zhongwencool/p/erlang_nodedown.html">怎样模拟节点互连后的各种失败情况</a><br>
-<a href="https://mryufeng.iteye.com/blog/120666">net_adm:ping(Node)发生了什么</a></p>
-]]></content>
-      <categories>
-        <category>Erlang</category>
-      </categories>
-      <tags>
-        <tag>Erlang</tag>
       </tags>
   </entry>
   <entry>
@@ -485,6 +425,66 @@ carriers_size 可以理解成Erlang向系统申请的内存</p>
       <categories>
         <category>Erlang</category>
         <category>memory allocator</category>
+      </categories>
+      <tags>
+        <tag>Erlang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Erlang节点互联</title>
+    <url>/2017/12/24/ErlangNodeConnect/</url>
+    <content><![CDATA[<h1>Erlang节点互联</h1>
+<h2 id="epmd">epmd</h2>
+<ul>
+<li>Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT=XXX或者 erl -epmd_port NNNN 来修改次端口</li>
+<li>epmd文档：<a href="http://www.erlang.org/doc/man/epmd.html">这里</a></li>
+<li>epmd协议：<a href="http://www.erlang.org/doc/apps/erts/erl_dist_protocol.html">这里</a></li>
+</ul>
+<blockquote>
+<p><img src="http://erlang.org/doc/apps/erts/erl_ext_fig.gif" alt="enter image description here"><br>
+<img src="/images/epmd.png" alt="enter image description here"></p>
+</blockquote>
+<ul>
+<li>net_kernel会启动proto_dist比如说inet_tcp_dist监听端口,同时把端口报到epmd. 这时候erts就准备好了节点通讯。这时候另外一个节点要和我们通讯的时候，首先要连接，流程大概是这样的：</li>
+</ul>
+<ol>
+<li>根据节点名找到节点地址。</li>
+<li>查询节点的4369端口,也就是epmd,向它要节点对应的inet_tcp_dist监听的端口。</li>
+<li>发起连接, 握手，cookie认证，如果未授权就失败。</li>
+<li>记录节点名称和响应的信息。</li>
+</ol>
+<span id="more"></span>
+<h2 id="net-kernel">net_kernel</h2>
+<ul>
+<li>重点关注 <strong>net_ticktime</strong>参数</li>
+</ul>
+<blockquote>
+<p>节点会在每TickTime/4 秒检查一下连接的节点是不是正常，如果连续4次没有收到(TickTime时间内)没有收到心跳消息，就会认为这个节点挂了</p>
+</blockquote>
+<p>Specifies the net_kernel tick time. TickTime is given in seconds. Once every TickTime/4 second, all connected nodes are ticked (if anything else has been written to a node) and if nothing has been received from another node within the last four (4) tick times that node is considered to be down. This ensures that nodes which are not responding, for reasons such as hardware errors, are considered to be down.<br>
+The time T, in which a node that is not responding is detected, is calculated as: MinT &lt; T &lt; MaxT where:<br>
+MinT = TickTime - TickTime / 4<br>
+MaxT = TickTime + TickTime / 4<br>
+TickTime is by default 60 (seconds). Thus, 45 &lt; T &lt; 75 seconds.<br>
+<strong>Note:</strong>  All communicating nodes should have the same TickTime value specified.<br>
+<strong>Note:</strong>  Normally, a terminating node is detected immediately.</p>
+<p><a href="http://erlang.org/doc/man/net_kernel.html">net_kernel</a><br>
+<a href="http://www.erlang.org/doc/man/kernel_app.html">kernel_app</a></p>
+<h2 id="节点互联失败排查">节点互联失败排查</h2>
+<blockquote>
+<p>检查节点cookie<br>
+检查otp版本<br>
+检查机器网络<br>
+检查epmd端口<br>
+检查节点是否被禁用net_kernel:allowed()</p>
+</blockquote>
+<h2 id="参考">参考</h2>
+<p><a href="http://blog.yufeng.info/archives/539">Erlang epmd的角色以及使用</a><br>
+<a href="https://www.cnblogs.com/zhongwencool/p/erlang_nodedown.html">怎样模拟节点互连后的各种失败情况</a><br>
+<a href="https://mryufeng.iteye.com/blog/120666">net_adm:ping(Node)发生了什么</a></p>
+]]></content>
+      <categories>
+        <category>Erlang</category>
       </categories>
       <tags>
         <tag>Erlang</tag>
@@ -835,18 +835,6 @@ but dirty IO not used by OTP today<br>
       </categories>
       <tags>
         <tag>Erlang</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据库之分区、分片、分表</title>
-    <url>/2021/07/12/database-sharding-partitioning/</url>
-    <content><![CDATA[<span id="more"></span>]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>分片 分区 垂直扩展 水平扩展</category>
-      </categories>
-      <tags>
-        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -2379,6 +2367,69 @@ MzYyMzgzMF19
       </tags>
   </entry>
   <entry>
+    <title>项目往事之团队</title>
+    <url>/2021/06/01/project-member/</url>
+    <content><![CDATA[<h2 id="组成">组成</h2>
+<ul>
+<li>项目总是由形形色色的人构成，不同的专业研发、运营、运维等。重点说说研发，研发包括三个部分：
+<ol>
+<li>程序（一般分为前端/后端、客户端/服务器）。</li>
+<li>策划 (一般分为主策划、剧情、数值、文案，执行等)。</li>
+<li>美术 (一般分为3d,2d,原画，场景，模型，动画等)。</li>
+</ol>
+</li>
+</ul>
+<h2 id="类型">类型</h2>
+<p>以下只区分程序、策划、美术三大的分类。在所见的团队中大致分为四类：</p>
+<ol>
+<li>要饭类型<br>
+在这类型的团队中，策划是短板。其他成员都在做出盈利产品的所要求的的基准水平线以上。<br>
+策划低于或者稍高于基准线，这个就看天吃饭，让用户老爷们赏点饭吃，靠稳定的服务，运营、美术品质等捞取一点利润，基本上就是个苦逼项目组。</li>
+<li>体弱多病型<br>
+这类型团队中，程序是短板。举个不太恰当的例子，程序的稳定性效率等如同一个人身体的健康，策划的设计理念就是其梦想。梦想很大很好，身体很弱很虚。<br>
+发热、耗电、crash，服务器回档、宕机、卡顿等，这种团队基本就是过了今天没有明天，等死型，当然也有遇到神医，也能病去体健，再创辉煌。但是基本上是在有时间有钱的背景下，偶发的特殊情况。</li>
+<li>希望型<br>
+这种团队中大家能力都在做出盈利产品的所要求的的基准水平线以上，个别特别推出，这种团队基本上属于长期合作，有积累，有默契、有韧劲。离成功只差一个契机，这是大家想去的理想团队。</li>
+<li>无名氏<br>
+这种团队多见于临时拼凑，成立团队的目的各不相同，人员参差不齐，基本上战五渣，见光死。</li>
+</ol>
+<span id="more"></span>  
+<h2 id="经历">经历</h2>
+<p>第四种团队我在职业生涯经历一次，时长三个月，在我离开之后了解到发生了各种奇葩事情，没几个月解散了。<br>
+第三种团队我也经历过一次，做出了手游项目的第一个爆款RPG。<br>
+其他基本上都是第一种或者第二种团队，这两种中要饭型的团队更多些。我发现一个共同情况，作为项目总负责人PD，总是希望项目其他研发团队帮助项目的短板方，把短板方的工作尽量往其他团队那边转移，通过这样的方式来弥补项目短板，但。最终结果差强人意，导致大家都成了短板。在这过程中，我开始的做法是强烈要求短板方自己或者通过外部手段（招聘、培训等）来提高，但往往受领头人的思维、解决问题能力，更重要的所能调配的资源限制，无法展开，往往变成别人眼中的“喷子”，慢慢的也就躺平了。<br>
+一直在思考的这样的问题，在有限的资源下，怎么才能把事情做成，发挥最大能量？</p>
+<h2 id="谬论">谬论</h2>
+<ol>
+<li>放弃没希望的团队。一些团队一边不给资源(时间、人力等)，一边还高举高打，满嘴的愿景，对各种不合理视而不见，凡此种种，及时止损。</li>
+<li>部分团队有着明显的短板，但是受制于手中资源，无法做出改变，要仔细斟酌，以我的目的为优先做思考，为自己展开所有行为提供指引。</li>
+<li>对多努力还已有希望的团队适用，努力争取资源，试试蚂蚁啃大象的策略，先做出局部改变，并让握有资源的人看到，并逐渐把所有相关人员全部拉入解决问题的圈子里来，让我遇到的问题转化成大家都要面对的问题。</li>
+<li>谁的问题，就是谁的问题。对所有不符合产品所有要求的能力基准线以下的人，敦促其主动学习，通过集中培训等方式促进其提高，并对在规定时间仍不达标的人实施转岗、劝退等措施。</li>
+<li>招符合团队素质要求的人，宁缺毋滥，如果不能又快又好，优先选择好。当然适可而止。</li>
+</ol>
+<p><strong>在团队组建的初期就要拿到两样最重要的东西（人事权和钱），最基本的要拿到人事权，选谁用谁得自己说了算。只招复合团队素质的人，宁缺毋滥。</strong></p>
+]]></content>
+      <categories>
+        <category>项目</category>
+        <category>团队</category>
+      </categories>
+      <tags>
+        <tag>项目</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库之分区、分片、分表</title>
+    <url>/2021/07/12/database-sharding-partitioning/</url>
+    <content><![CDATA[<span id="more"></span>]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>分片 分区 垂直扩展 水平扩展</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Erlang 虚拟机内的内存管理</title>
     <url>/2017/12/24/zhengsyao_Erlang%20%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%86%85%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%EF%BC%88Lukas%20Larsson%E6%BC%94%E8%AE%B2%E5%90%AC%E5%86%99%E7%A8%BF%EF%BC%89/</url>
     <content><![CDATA[<h1><a href="https://www.cnblogs.com/zhengsyao/p/erts_allocators_speech_by_lukas_larsson.html">Erlang 虚拟机内的内存管理（Lukas Larsson演讲听写稿）</a></h1>
@@ -2615,57 +2666,6 @@ With lot of documentation explaining all of these stuff, the documentation is al
       </categories>
       <tags>
         <tag>Erlang</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>项目往事之团队</title>
-    <url>/2021/06/01/project-member/</url>
-    <content><![CDATA[<h2 id="组成">组成</h2>
-<ul>
-<li>项目总是由形形色色的人构成，不同的专业研发、运营、运维等。重点说说研发，研发包括三个部分：
-<ol>
-<li>程序（一般分为前端/后端、客户端/服务器）。</li>
-<li>策划 (一般分为主策划、剧情、数值、文案，执行等)。</li>
-<li>美术 (一般分为3d,2d,原画，场景，模型，动画等)。</li>
-</ol>
-</li>
-</ul>
-<h2 id="类型">类型</h2>
-<p>以下只区分程序、策划、美术三大的分类。在所见的团队中大致分为四类：</p>
-<ol>
-<li>要饭类型<br>
-在这类型的团队中，策划是短板。其他成员都在做出盈利产品的所要求的的基准水平线以上。<br>
-策划低于或者稍高于基准线，这个就看天吃饭，让用户老爷们赏点饭吃，靠稳定的服务，运营、美术品质等捞取一点利润，基本上就是个苦逼项目组。</li>
-<li>体弱多病型<br>
-这类型团队中，程序是短板。举个不太恰当的例子，程序的稳定性效率等如同一个人身体的健康，策划的设计理念就是其梦想。梦想很大很好，身体很弱很虚。<br>
-发热、耗电、crash，服务器回档、宕机、卡顿等，这种团队基本就是过了今天没有明天，等死型，当然也有遇到神医，也能病去体健，再创辉煌。但是基本上是在有时间有钱的背景下，偶发的特殊情况。</li>
-<li>希望型<br>
-这种团队中大家能力都在做出盈利产品的所要求的的基准水平线以上，个别特别推出，这种团队基本上属于长期合作，有积累，有默契、有韧劲。离成功只差一个契机，这是大家想去的理想团队。</li>
-<li>无名氏<br>
-这种团队多见于临时拼凑，成立团队的目的各不相同，人员参差不齐，基本上战五渣，见光死。</li>
-</ol>
-<span id="more"></span>  
-<h2 id="经历">经历</h2>
-<p>第四种团队我在职业生涯经历一次，时长三个月，在我离开之后了解到发生了各种奇葩事情，没几个月解散了。<br>
-第三种团队我也经历过一次，做出了手游项目的第一个爆款RPG。<br>
-其他基本上都是第一种或者第二种团队，这两种中要饭型的团队更多些。我发现一个共同情况，作为项目总负责人PD，总是希望项目其他研发团队帮助项目的短板方，把短板方的工作尽量往其他团队那边转移，通过这样的方式来弥补项目短板，但。最终结果差强人意，导致大家都成了短板。在这过程中，我开始的做法是强烈要求短板方自己或者通过外部手段（招聘、培训等）来提高，但往往受领头人的思维、解决问题能力，更重要的所能调配的资源限制，无法展开，往往变成别人眼中的“喷子”，慢慢的也就躺平了。<br>
-一直在思考的这样的问题，在有限的资源下，怎么才能把事情做成，发挥最大能量？</p>
-<h2 id="谬论">谬论</h2>
-<ol>
-<li>放弃没希望的团队。一些团队一边不给资源(时间、人力等)，一边还高举高打，满嘴的愿景，对各种不合理视而不见，凡此种种，及时止损。</li>
-<li>部分团队有着明显的短板，但是受制于手中资源，无法做出改变，要仔细斟酌，以我的目的为优先做思考，为自己展开所有行为提供指引。</li>
-<li>对多努力还已有希望的团队适用，努力争取资源，试试蚂蚁啃大象的策略，先做出局部改变，并让握有资源的人看到，并逐渐把所有相关人员全部拉入解决问题的圈子里来，让我遇到的问题转化成大家都要面对的问题。</li>
-<li>谁的问题，就是谁的问题。对所有不符合产品所有要求的能力基准线以下的人，敦促其主动学习，通过集中培训等方式促进其提高，并对在规定时间仍不达标的人实施转岗、劝退等措施。</li>
-<li>招符合团队素质要求的人，宁缺毋滥，如果不能又快又好，优先选择好。当然适可而止。</li>
-</ol>
-<p><strong>在团队组建的初期就要拿到两样最重要的东西（人事权和钱），最基本的要拿到人事权，选谁用谁得自己说了算。只招复合团队素质的人，宁缺毋滥。</strong></p>
-]]></content>
-      <categories>
-        <category>项目</category>
-        <category>团队</category>
-      </categories>
-      <tags>
-        <tag>项目</tag>
       </tags>
   </entry>
 </search>
