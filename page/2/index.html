@@ -200,7 +200,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangProcess/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangScheduler/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -214,7 +214,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2017/12/24/ErlangProcess/" class="post-title-link" itemprop="url">Erlang Process</a>
+            <a href="/2017/12/24/ErlangScheduler/" class="post-title-link" itemprop="url">Erlang Scheduler</a>
         </h2>
 
         <div class="post-meta">
@@ -249,14 +249,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.9k</span>
+              <span>5.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -268,22 +268,54 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="process"><a class="markdownIt-Anchor" href="#process"></a> Process</h1>
-<h3 id="什么是进程"><a class="markdownIt-Anchor" href="#什么是进程"></a> 什么是进程</h3>
-<p>这里的进程不是指操作系统意义上的进程，而是一个孤立的实体，进程是运行你的代码的地方，通过将错误的影响隔离到执行错误代码的进程，进程可以保护系统免受代码错误的影响。</p>
-<h3 id="进程内存"><a class="markdownIt-Anchor" href="#进程内存"></a> 进程内存</h3>
-<p>进程的内存分为四个部分：栈、堆、邮箱、进程控制块（Process Control Block）。</p>
-<blockquote>
-<p>可以用使用查看内部表示，但是这些仅仅用来调试或者理解内部机制用<br>
-hipe_bifs:show_estack/1、 hipe_bifs:show_nstack/1、hipe_bifs:show_heap/1、<br>
-hipe_bifs:show_pcb/1、 hipe_bifs:show_term/1</p>
-</blockquote>
+          <h1 id="erlang-scheduler"><a class="markdownIt-Anchor" href="#erlang-scheduler"></a> Erlang Scheduler</h1>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>snail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E-mail</td>
+<td>**@qq.com</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="目录"><a class="markdownIt-Anchor" href="#目录"></a> 目录</h2>
 <ul>
-<li>可以参考下面两张图理解</li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B0%83%E5%BA%A6">什么是调度</a></li>
+<li><a href="#Erlang%E8%B0%83%E5%BA%A6">Erlang调度</a></li>
+<li><a href="#%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E5%8E%86%E5%8F%B2">调度器的历史</a><br>
+- <a href="#Before-R11B">Before R11B</a><br>
+- <a href="#In-R11B-and-R12B">In R11B and R12B</a><br>
+- <a href="#After-R13B">After R13B</a><br>
+- <s><a href="#In-latest-Version">In latest Version</a></s></li>
+<li><a href="#%E8%B0%83%E5%BA%A6%E5%99%A8%E9%98%9F%E5%88%97">调度器队列</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E8%BF%81%E7%A7%BB/%E7%AA%83%E5%8F%96">进程迁移/窃取</a></li>
+<li><a href="#%E6%8E%A7%E5%88%B6%E5%8F%82%E6%95%B0%E4%B8%8EAPI">控制参数与API</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E9%9B%B6%E7%A2%8E">其他零碎</a><br>
+- <a href="#Reduction">Reduction </a><br>
+- <a href="#Port">Port</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
+<hr>
+<p>❗本文档中调度器调度的基本单位使用程序、活、任务等等，其实可以理解成 <strong>Work</strong>，<em>Work</em>可以是处于<a href="(/md/priv/ProcessStateMachine.png)">就绪状态</a>的<a target="_blank" rel="noopener" href="http://erlang.org/doc/reference_manual/processes.html">进程</a>、 <a href="#Port">Port</a> 、系统事件等等</p>
+<hr>
+<h3 id="什么是调度"><a class="markdownIt-Anchor" href="#什么是调度"></a> 什么是调度</h3>
+<ul>
+<li>调度就是将工作分发给工作者，这些工作者可以是操作系统的线程<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Thread_%28computing%29">Native Threads</a>或<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Green_threads">Green Threads</a>。调度器分为两种：</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Preemption_%28computing%29">抢占式</a><br>
+<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cooperative_multitasking">协作式</a></p>
+</blockquote>
+<p>两种方式各有优劣，我们重点关注<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Preemption_%28computing%29">抢占式</a> ，因为Erlang就是使用的这种方式。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2017/12/24/ErlangProcess/#more" rel="contents">
+              <a class="btn" href="/2017/12/24/ErlangScheduler/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

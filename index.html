@@ -602,6 +602,120 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangGarbageCollection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/24/ErlangGarbageCollection/" class="post-title-link" itemprop="url">Erlang Garbage Collection</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-24 23:29:53" itemprop="dateCreated datePublished" datetime="2017-12-24T23:29:53+08:00">2017-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/" itemprop="url" rel="index"><span itemprop="name">Erlang</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/gc/" itemprop="url" rel="index"><span itemprop="name">gc</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="garbage-collection"><a class="markdownIt-Anchor" href="#garbage-collection"></a> Garbage Collection</h1>
+<p>Erlang的GC是分代复制，还有一个引用计数型的GC运行在共享堆（Binary&gt;64字节）上</p>
+<h3 id="private-heap-gc-私有堆垃圾回收"><a class="markdownIt-Anchor" href="#private-heap-gc-私有堆垃圾回收"></a> Private Heap GC 私有堆垃圾回收</h3>
+<p>私有堆的垃圾回收是分代的. 分代机制把进程的堆内存分为两个部分,年轻代和年老代. 区分是基于这样一个考虑, 如果一个对象在运行一次垃圾回收之后没有被回收,那么这个对象短期内被回收的可能性就很低. 所以, 年轻代就用来存储新分配的数据,年老代就用来存放运行一定次数的垃圾回收之后依然幸存的数据. 这样的区分可以帮助GC减少对那些很可能还不是垃圾的数据不必要的扫描. 对应于此, Erlang的GC扫描有两个策略, Generational(Minor) 和 Fullsweep(Major). Generational GC只回收年轻代的区域, 而Fullsweep则同时回收年轻代和年老代.</p>
+<p><strong>场景 1</strong>:</p>
+<figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; No GC &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
+<p>假设一个生存期较短的进程, 在存活期间使用的堆内存也没有超过  _min_heap_size,_那么在进程结束是全部内存即被回收.</p>
+<p><strong><strong>场景</strong> 2</strong>:</p>
+<figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; Fullsweep &gt; Generational &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
+<p>假设一个新创建的进程,当进程的数据增长超过了_min_heap_size_时, fullsweep GC即被触发, 因为在此之前还没有任何GC被触发,所以堆区还没有被分成年轻代和年老代. 在第一次fullsweep GC结束以后, 堆区就会被分为年轻代和年老代了, 从这个时候起, GC的策略就被切换为 generational GC了, 直到进程结束.</p>
+<p><strong><strong>场景</strong> 3</strong>:</p>
+<figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; Fullsweep &gt; Generational &gt; Fullsweep &gt; Generational &gt; ... &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
+<p>在某些情景下, GC策略会从generation再切换回fullsweep. 一种情景是, 在运行了一定次数(fullsweep_after)的genereration GC之后,系统会再次切换回fullsweep. 这个参数fullsweep_after可以是全局的也可以是单进程的. 全局的值可以通过函数erlang:system_info(fullsweep_after)获取, 进程的可以通过函数erlang:process_info(self(),garbage_collection)来获取. 另外一种情景是, 当generation GC(minor GC)不能够收集到足够的内存空间时. 最后一种情况是, 当手动调用函数garbage_collector(PID)时. 在运行fullsweep之后, GC策略再次切换回generation GC直到以上的任意一个情景再次出现.</p>
+<p><strong><strong>场景</strong> 4</strong>:</p>
+<figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; Fullsweep &gt; Generational &gt; Fullsweep &gt; Increase Heap &gt; Fullsweep &gt; ... &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
+<p>假设在场景3里面,第二个fullsweep GC依然没有回收到足够的内存, 那么系统就会为进程增加堆内存, 然后该进程就回到第一个场景,像刚创建的进程一样首先开始一个fullsweep,然后循环往复.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/12/24/ErlangGarbageCollection/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/Erlang2Elixir/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -867,120 +981,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangGarbageCollection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="mars315">
-      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mars315">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/12/24/ErlangGarbageCollection/" class="post-title-link" itemprop="url">Erlang Garbage Collection</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-12-24 23:29:53" itemprop="dateCreated datePublished" datetime="2017-12-24T23:29:53+08:00">2017-12-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Erlang/" itemprop="url" rel="index"><span itemprop="name">Erlang</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Erlang/gc/" itemprop="url" rel="index"><span itemprop="name">gc</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="garbage-collection"><a class="markdownIt-Anchor" href="#garbage-collection"></a> Garbage Collection</h1>
-<p>Erlang的GC是分代复制，还有一个引用计数型的GC运行在共享堆（Binary&gt;64字节）上</p>
-<h3 id="private-heap-gc-私有堆垃圾回收"><a class="markdownIt-Anchor" href="#private-heap-gc-私有堆垃圾回收"></a> Private Heap GC 私有堆垃圾回收</h3>
-<p>私有堆的垃圾回收是分代的. 分代机制把进程的堆内存分为两个部分,年轻代和年老代. 区分是基于这样一个考虑, 如果一个对象在运行一次垃圾回收之后没有被回收,那么这个对象短期内被回收的可能性就很低. 所以, 年轻代就用来存储新分配的数据,年老代就用来存放运行一定次数的垃圾回收之后依然幸存的数据. 这样的区分可以帮助GC减少对那些很可能还不是垃圾的数据不必要的扫描. 对应于此, Erlang的GC扫描有两个策略, Generational(Minor) 和 Fullsweep(Major). Generational GC只回收年轻代的区域, 而Fullsweep则同时回收年轻代和年老代.</p>
-<p><strong>场景 1</strong>:</p>
-<figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; No GC &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
-<p>假设一个生存期较短的进程, 在存活期间使用的堆内存也没有超过  _min_heap_size,_那么在进程结束是全部内存即被回收.</p>
-<p><strong><strong>场景</strong> 2</strong>:</p>
-<figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; Fullsweep &gt; Generational &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
-<p>假设一个新创建的进程,当进程的数据增长超过了_min_heap_size_时, fullsweep GC即被触发, 因为在此之前还没有任何GC被触发,所以堆区还没有被分成年轻代和年老代. 在第一次fullsweep GC结束以后, 堆区就会被分为年轻代和年老代了, 从这个时候起, GC的策略就被切换为 generational GC了, 直到进程结束.</p>
-<p><strong><strong>场景</strong> 3</strong>:</p>
-<figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; Fullsweep &gt; Generational &gt; Fullsweep &gt; Generational &gt; ... &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
-<p>在某些情景下, GC策略会从generation再切换回fullsweep. 一种情景是, 在运行了一定次数(fullsweep_after)的genereration GC之后,系统会再次切换回fullsweep. 这个参数fullsweep_after可以是全局的也可以是单进程的. 全局的值可以通过函数erlang:system_info(fullsweep_after)获取, 进程的可以通过函数erlang:process_info(self(),garbage_collection)来获取. 另外一种情景是, 当generation GC(minor GC)不能够收集到足够的内存空间时. 最后一种情况是, 当手动调用函数garbage_collector(PID)时. 在运行fullsweep之后, GC策略再次切换回generation GC直到以上的任意一个情景再次出现.</p>
-<p><strong><strong>场景</strong> 4</strong>:</p>
-<figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; Fullsweep &gt; Generational &gt; Fullsweep &gt; Increase Heap &gt; Fullsweep &gt; ... &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
-<p>假设在场景3里面,第二个fullsweep GC依然没有回收到足够的内存, 那么系统就会为进程增加堆内存, 然后该进程就回到第一个场景,像刚创建的进程一样首先开始一个fullsweep,然后循环往复.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/12/24/ErlangGarbageCollection/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangMemoryAllocator/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1092,7 +1092,7 @@ multi-block carrier 包含多个block的carrier<br>
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangScheduler/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangProcess/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1106,7 +1106,7 @@ multi-block carrier 包含多个block的carrier<br>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2017/12/24/ErlangScheduler/" class="post-title-link" itemprop="url">Erlang Scheduler</a>
+            <a href="/2017/12/24/ErlangProcess/" class="post-title-link" itemprop="url">Erlang Process</a>
         </h2>
 
         <div class="post-meta">
@@ -1141,14 +1141,14 @@ multi-block carrier 包含多个block的carrier<br>
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.8k</span>
+              <span>4.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -1160,54 +1160,22 @@ multi-block carrier 包含多个block的carrier<br>
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="erlang-scheduler"><a class="markdownIt-Anchor" href="#erlang-scheduler"></a> Erlang Scheduler</h1>
-<table>
-<thead>
-<tr>
-<th>Author</th>
-<th>snail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>E-mail</td>
-<td>**@qq.com</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="目录"><a class="markdownIt-Anchor" href="#目录"></a> 目录</h2>
-<ul>
-<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B0%83%E5%BA%A6">什么是调度</a></li>
-<li><a href="#Erlang%E8%B0%83%E5%BA%A6">Erlang调度</a></li>
-<li><a href="#%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E5%8E%86%E5%8F%B2">调度器的历史</a><br>
-- <a href="#Before-R11B">Before R11B</a><br>
-- <a href="#In-R11B-and-R12B">In R11B and R12B</a><br>
-- <a href="#After-R13B">After R13B</a><br>
-- <s><a href="#In-latest-Version">In latest Version</a></s></li>
-<li><a href="#%E8%B0%83%E5%BA%A6%E5%99%A8%E9%98%9F%E5%88%97">调度器队列</a></li>
-<li><a href="#%E8%BF%9B%E7%A8%8B%E8%BF%81%E7%A7%BB/%E7%AA%83%E5%8F%96">进程迁移/窃取</a></li>
-<li><a href="#%E6%8E%A7%E5%88%B6%E5%8F%82%E6%95%B0%E4%B8%8EAPI">控制参数与API</a></li>
-<li><a href="#%E5%85%B6%E4%BB%96%E9%9B%B6%E7%A2%8E">其他零碎</a><br>
-- <a href="#Reduction">Reduction </a><br>
-- <a href="#Port">Port</a></li>
-<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
-</ul>
-<hr>
-<p>❗本文档中调度器调度的基本单位使用程序、活、任务等等，其实可以理解成 <strong>Work</strong>，<em>Work</em>可以是处于<a href="(/md/priv/ProcessStateMachine.png)">就绪状态</a>的<a target="_blank" rel="noopener" href="http://erlang.org/doc/reference_manual/processes.html">进程</a>、 <a href="#Port">Port</a> 、系统事件等等</p>
-<hr>
-<h3 id="什么是调度"><a class="markdownIt-Anchor" href="#什么是调度"></a> 什么是调度</h3>
-<ul>
-<li>调度就是将工作分发给工作者，这些工作者可以是操作系统的线程<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Thread_%28computing%29">Native Threads</a>或<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Green_threads">Green Threads</a>。调度器分为两种：</li>
-</ul>
+          <h1 id="process"><a class="markdownIt-Anchor" href="#process"></a> Process</h1>
+<h3 id="什么是进程"><a class="markdownIt-Anchor" href="#什么是进程"></a> 什么是进程</h3>
+<p>这里的进程不是指操作系统意义上的进程，而是一个孤立的实体，进程是运行你的代码的地方，通过将错误的影响隔离到执行错误代码的进程，进程可以保护系统免受代码错误的影响。</p>
+<h3 id="进程内存"><a class="markdownIt-Anchor" href="#进程内存"></a> 进程内存</h3>
+<p>进程的内存分为四个部分：栈、堆、邮箱、进程控制块（Process Control Block）。</p>
 <blockquote>
-<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Preemption_%28computing%29">抢占式</a><br>
-<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cooperative_multitasking">协作式</a></p>
+<p>可以用使用查看内部表示，但是这些仅仅用来调试或者理解内部机制用<br>
+hipe_bifs:show_estack/1、 hipe_bifs:show_nstack/1、hipe_bifs:show_heap/1、<br>
+hipe_bifs:show_pcb/1、 hipe_bifs:show_term/1</p>
 </blockquote>
-<p>两种方式各有优劣，我们重点关注<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Preemption_%28computing%29">抢占式</a> ，因为Erlang就是使用的这种方式。</p>
+<ul>
+<li>可以参考下面两张图理解</li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2017/12/24/ErlangScheduler/#more" rel="contents">
+              <a class="btn" href="/2017/12/24/ErlangProcess/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
