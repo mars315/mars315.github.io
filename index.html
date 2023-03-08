@@ -231,7 +231,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-08 10:33:20" itemprop="dateModified" datetime="2023-03-08T10:33:20+08:00">2023-03-08</time>
+                <time title="修改时间：2023-03-08 10:39:14" itemprop="dateModified" datetime="2023-03-08T10:39:14+08:00">2023-03-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -268,8 +268,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="如何开发-protoc-插件"><a class="markdownIt-Anchor" href="#如何开发-protoc-插件"></a> 如何开发 protoc 插件</h1>
-<p><a target="_blank" rel="noopener" href="https://taoshu.in/go/create-protoc-plugin.html">原文</a></p>
+          <p><a target="_blank" rel="noopener" href="https://taoshu.in/go/create-protoc-plugin.html">原文</a><br>
+<a target="_blank" rel="noopener" href="https://github.com/mars315/protoc-gen-hip">另外一个可参考的仓库</a></p>
 <p>Protocol Buffers 是谷歌推出的编码标准，它在传输效率和编解码性能上都要优于 JSON。但其代价则是需要依赖中间描述语言（IDL）来定义数据（和服务）的结构（通过  <code>*.proto</code>  文件），并且需要一整套的工具链（protoc 及其插件）来生成对应的序列化和反序列化代码。除了谷歌官方提供的工具和插件（比如生成 go 代码的 protoc-gen-go）外，我们还可以开发或定制自己的插件，根据业务需要按照 proto 文件的定义生成代码或者文档。由 IDL 生成代码或者文档是元编程的一种形式，可以极大的解放程序员的生产力，建议每一位开发者都能掌握这一技能。今天就生成 markdown 文档为例讲解如何开发 protoc 插件。</p>
 <h2 id="protobuf-idl"><a class="markdownIt-Anchor" href="#protobuf-idl"></a> Protobuf IDL</h2>
 <p>在开始之前，我们简单过一下 Protocol Buffers 的 IDL（关于底层编码可以参考我的另一篇文章<a target="_blank" rel="noopener" href="https://taoshu.in/pb-encoding.html">Protocol Buffers 编码</a>）。IDL 文件的扩展名为 proto，后面我们统称为 proto 文件，典型的 proto 文档结构如下：</p>
@@ -1179,117 +1179,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangMemoryAllocator/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="mars315">
-      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="mars315">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/12/24/ErlangMemoryAllocator/" class="post-title-link" itemprop="url">Memory Allocator</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-12-24 23:29:53" itemprop="dateCreated datePublished" datetime="2017-12-24T23:29:53+08:00">2017-12-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Erlang/" itemprop="url" rel="index"><span itemprop="name">Erlang</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Erlang/memory-allocator/" itemprop="url" rel="index"><span itemprop="name">memory allocator</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="memory-allocator"><a class="markdownIt-Anchor" href="#memory-allocator"></a> Memory Allocator</h1>
-<h3 id="blocks"><a class="markdownIt-Anchor" href="#blocks"></a> blocks</h3>
-<p>block是Erlang VM需要的一块连续的内存，比如向ets中插入的数据会变成一个block，Erlang进程的stack和heap 也是一个block；进程间发送的消息在block内被复制。总是block就是一块连续的C 内存。block也是Erlang Allocator内存分配的基本单位。</p>
-<h3 id="carriers"><a class="markdownIt-Anchor" href="#carriers"></a> carriers</h3>
-<p>carriers 是一个包含一个或者多个block的容器，carrier结构中有个头部，用于标识carrier的类型等等<br>
-carrier是18bit对齐的（所以最小值是256KB）</p>
-<h3 id="single-block-carriers-and-multi-block-carriers"><a class="markdownIt-Anchor" href="#single-block-carriers-and-multi-block-carriers"></a> single-block carriers and multi-block carriers</h3>
-<blockquote>
-<p>single-block carrier 就是只包含一个block的carrier<br>
-multi-block carrier 包含多个block的carrier<br>
-将大小超过一定阈值（ +sbct(single block carrier threshol)）的block放于一个single-block carrier；否则block会被放于一个 multi-block carrier中，这个阈值多大算大，是根据各个实际应用场景来决定的，有些情况下256字节就算很大，有些情况下可能5MB才算大；所以要根据应用场景来调整该值。默认值是512KB(The default is half MB)<br>
-一般情况来讲，所有至少80%-90%的数据的都应该在multi-block carrier，</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/12/24/ErlangMemoryAllocator/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangNodeConnect/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1381,6 +1270,117 @@ multi-block carrier 包含多个block的carrier<br>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2017/12/24/ErlangNodeConnect/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangMemoryAllocator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/24/ErlangMemoryAllocator/" class="post-title-link" itemprop="url">Memory Allocator</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-24 23:29:53" itemprop="dateCreated datePublished" datetime="2017-12-24T23:29:53+08:00">2017-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/" itemprop="url" rel="index"><span itemprop="name">Erlang</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/memory-allocator/" itemprop="url" rel="index"><span itemprop="name">memory allocator</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="memory-allocator"><a class="markdownIt-Anchor" href="#memory-allocator"></a> Memory Allocator</h1>
+<h3 id="blocks"><a class="markdownIt-Anchor" href="#blocks"></a> blocks</h3>
+<p>block是Erlang VM需要的一块连续的内存，比如向ets中插入的数据会变成一个block，Erlang进程的stack和heap 也是一个block；进程间发送的消息在block内被复制。总是block就是一块连续的C 内存。block也是Erlang Allocator内存分配的基本单位。</p>
+<h3 id="carriers"><a class="markdownIt-Anchor" href="#carriers"></a> carriers</h3>
+<p>carriers 是一个包含一个或者多个block的容器，carrier结构中有个头部，用于标识carrier的类型等等<br>
+carrier是18bit对齐的（所以最小值是256KB）</p>
+<h3 id="single-block-carriers-and-multi-block-carriers"><a class="markdownIt-Anchor" href="#single-block-carriers-and-multi-block-carriers"></a> single-block carriers and multi-block carriers</h3>
+<blockquote>
+<p>single-block carrier 就是只包含一个block的carrier<br>
+multi-block carrier 包含多个block的carrier<br>
+将大小超过一定阈值（ +sbct(single block carrier threshol)）的block放于一个single-block carrier；否则block会被放于一个 multi-block carrier中，这个阈值多大算大，是根据各个实际应用场景来决定的，有些情况下256字节就算很大，有些情况下可能5MB才算大；所以要根据应用场景来调整该值。默认值是512KB(The default is half MB)<br>
+一般情况来讲，所有至少80%-90%的数据的都应该在multi-block carrier，</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/12/24/ErlangMemoryAllocator/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

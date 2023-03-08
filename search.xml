@@ -250,6 +250,66 @@ iex&gt;  “Hello #{name}”<br>
       </tags>
   </entry>
   <entry>
+    <title>Erlang节点互联</title>
+    <url>/2017/12/24/ErlangNodeConnect/</url>
+    <content><![CDATA[<h1 id="erlang节点互联"><a class="markdownIt-Anchor" href="#erlang节点互联"></a> Erlang节点互联</h1>
+<h2 id="epmd"><a class="markdownIt-Anchor" href="#epmd"></a> epmd</h2>
+<ul>
+<li>Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT=XXX或者 erl -epmd_port NNNN 来修改次端口</li>
+<li>epmd文档：<a href="http://www.erlang.org/doc/man/epmd.html">这里</a></li>
+<li>epmd协议：<a href="http://www.erlang.org/doc/apps/erts/erl_dist_protocol.html">这里</a></li>
+</ul>
+<blockquote>
+<p><img src="http://erlang.org/doc/apps/erts/erl_ext_fig.gif" alt="enter image description here"><br>
+<img src="/images/epmd.png" alt="enter image description here"></p>
+</blockquote>
+<ul>
+<li>net_kernel会启动proto_dist比如说inet_tcp_dist监听端口,同时把端口报到epmd. 这时候erts就准备好了节点通讯。这时候另外一个节点要和我们通讯的时候，首先要连接，流程大概是这样的：</li>
+</ul>
+<ol>
+<li>根据节点名找到节点地址。</li>
+<li>查询节点的4369端口,也就是epmd,向它要节点对应的inet_tcp_dist监听的端口。</li>
+<li>发起连接, 握手，cookie认证，如果未授权就失败。</li>
+<li>记录节点名称和响应的信息。</li>
+</ol>
+<span id="more"></span>
+<h2 id="net_kernel"><a class="markdownIt-Anchor" href="#net_kernel"></a> net_kernel</h2>
+<ul>
+<li>重点关注 <strong>net_ticktime</strong>参数</li>
+</ul>
+<blockquote>
+<p>节点会在每TickTime/4 秒检查一下连接的节点是不是正常，如果连续4次没有收到(TickTime时间内)没有收到心跳消息，就会认为这个节点挂了</p>
+</blockquote>
+<p>Specifies the net_kernel tick time. TickTime is given in seconds. Once every TickTime/4 second, all connected nodes are ticked (if anything else has been written to a node) and if nothing has been received from another node within the last four (4) tick times that node is considered to be down. This ensures that nodes which are not responding, for reasons such as hardware errors, are considered to be down.<br>
+The time T, in which a node that is not responding is detected, is calculated as: MinT &lt; T &lt; MaxT where:<br>
+MinT = TickTime - TickTime / 4<br>
+MaxT = TickTime + TickTime / 4<br>
+TickTime is by default 60 (seconds). Thus, 45 &lt; T &lt; 75 seconds.<br>
+<strong>Note:</strong>  All communicating nodes should have the same TickTime value specified.<br>
+<strong>Note:</strong>  Normally, a terminating node is detected immediately.</p>
+<p><a href="http://erlang.org/doc/man/net_kernel.html">net_kernel</a><br>
+<a href="http://www.erlang.org/doc/man/kernel_app.html">kernel_app</a></p>
+<h2 id="节点互联失败排查"><a class="markdownIt-Anchor" href="#节点互联失败排查"></a> 节点互联失败排查</h2>
+<blockquote>
+<p>检查节点cookie<br>
+检查otp版本<br>
+检查机器网络<br>
+检查epmd端口<br>
+检查节点是否被禁用net_kernel:allowed()</p>
+</blockquote>
+<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
+<p><a href="http://blog.yufeng.info/archives/539">Erlang epmd的角色以及使用</a><br>
+<a href="https://www.cnblogs.com/zhongwencool/p/erlang_nodedown.html">怎样模拟节点互连后的各种失败情况</a><br>
+<a href="https://mryufeng.iteye.com/blog/120666">net_adm:ping(Node)发生了什么</a></p>
+]]></content>
+      <categories>
+        <category>Erlang</category>
+      </categories>
+      <tags>
+        <tag>Erlang</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Memory Allocator</title>
     <url>/2017/12/24/ErlangMemoryAllocator/</url>
     <content><![CDATA[<h1 id="memory-allocator"><a class="markdownIt-Anchor" href="#memory-allocator"></a> Memory Allocator</h1>
@@ -425,66 +485,6 @@ carriers_size 可以理解成Erlang向系统申请的内存</p>
       <categories>
         <category>Erlang</category>
         <category>memory allocator</category>
-      </categories>
-      <tags>
-        <tag>Erlang</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Erlang节点互联</title>
-    <url>/2017/12/24/ErlangNodeConnect/</url>
-    <content><![CDATA[<h1 id="erlang节点互联"><a class="markdownIt-Anchor" href="#erlang节点互联"></a> Erlang节点互联</h1>
-<h2 id="epmd"><a class="markdownIt-Anchor" href="#epmd"></a> epmd</h2>
-<ul>
-<li>Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT=XXX或者 erl -epmd_port NNNN 来修改次端口</li>
-<li>epmd文档：<a href="http://www.erlang.org/doc/man/epmd.html">这里</a></li>
-<li>epmd协议：<a href="http://www.erlang.org/doc/apps/erts/erl_dist_protocol.html">这里</a></li>
-</ul>
-<blockquote>
-<p><img src="http://erlang.org/doc/apps/erts/erl_ext_fig.gif" alt="enter image description here"><br>
-<img src="/images/epmd.png" alt="enter image description here"></p>
-</blockquote>
-<ul>
-<li>net_kernel会启动proto_dist比如说inet_tcp_dist监听端口,同时把端口报到epmd. 这时候erts就准备好了节点通讯。这时候另外一个节点要和我们通讯的时候，首先要连接，流程大概是这样的：</li>
-</ul>
-<ol>
-<li>根据节点名找到节点地址。</li>
-<li>查询节点的4369端口,也就是epmd,向它要节点对应的inet_tcp_dist监听的端口。</li>
-<li>发起连接, 握手，cookie认证，如果未授权就失败。</li>
-<li>记录节点名称和响应的信息。</li>
-</ol>
-<span id="more"></span>
-<h2 id="net_kernel"><a class="markdownIt-Anchor" href="#net_kernel"></a> net_kernel</h2>
-<ul>
-<li>重点关注 <strong>net_ticktime</strong>参数</li>
-</ul>
-<blockquote>
-<p>节点会在每TickTime/4 秒检查一下连接的节点是不是正常，如果连续4次没有收到(TickTime时间内)没有收到心跳消息，就会认为这个节点挂了</p>
-</blockquote>
-<p>Specifies the net_kernel tick time. TickTime is given in seconds. Once every TickTime/4 second, all connected nodes are ticked (if anything else has been written to a node) and if nothing has been received from another node within the last four (4) tick times that node is considered to be down. This ensures that nodes which are not responding, for reasons such as hardware errors, are considered to be down.<br>
-The time T, in which a node that is not responding is detected, is calculated as: MinT &lt; T &lt; MaxT where:<br>
-MinT = TickTime - TickTime / 4<br>
-MaxT = TickTime + TickTime / 4<br>
-TickTime is by default 60 (seconds). Thus, 45 &lt; T &lt; 75 seconds.<br>
-<strong>Note:</strong>  All communicating nodes should have the same TickTime value specified.<br>
-<strong>Note:</strong>  Normally, a terminating node is detected immediately.</p>
-<p><a href="http://erlang.org/doc/man/net_kernel.html">net_kernel</a><br>
-<a href="http://www.erlang.org/doc/man/kernel_app.html">kernel_app</a></p>
-<h2 id="节点互联失败排查"><a class="markdownIt-Anchor" href="#节点互联失败排查"></a> 节点互联失败排查</h2>
-<blockquote>
-<p>检查节点cookie<br>
-检查otp版本<br>
-检查机器网络<br>
-检查epmd端口<br>
-检查节点是否被禁用net_kernel:allowed()</p>
-</blockquote>
-<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
-<p><a href="http://blog.yufeng.info/archives/539">Erlang epmd的角色以及使用</a><br>
-<a href="https://www.cnblogs.com/zhongwencool/p/erlang_nodedown.html">怎样模拟节点互连后的各种失败情况</a><br>
-<a href="https://mryufeng.iteye.com/blog/120666">net_adm:ping(Node)发生了什么</a></p>
-]]></content>
-      <categories>
-        <category>Erlang</category>
       </categories>
       <tags>
         <tag>Erlang</tag>
@@ -838,74 +838,6 @@ but dirty IO not used by OTP today<br>
       </tags>
   </entry>
   <entry>
-    <title>游戏服务器开发与运维</title>
-    <url>/2022/12/21/gameserver/</url>
-    <content><![CDATA[<p>服务器所有需要的技术</p>
-<span id="more"></span>
-<h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
-<h2 id="开发"><a class="markdownIt-Anchor" href="#开发"></a> 开发</h2>
-<h3 id="1-寻路系统"><a class="markdownIt-Anchor" href="#1-寻路系统"></a> 1. 寻路系统</h3>
-<h2 id="运维"><a class="markdownIt-Anchor" href="#运维"></a> 运维</h2>
-]]></content>
-      <categories>
-        <category>游戏</category>
-      </categories>
-      <tags>
-        <tag>游戏服务器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>项目往事之团队</title>
-    <url>/2021/06/01/project-member/</url>
-    <content><![CDATA[<h2 id="组成"><a class="markdownIt-Anchor" href="#组成"></a> 组成</h2>
-<ul>
-<li>项目总是由形形色色的人构成，不同的专业研发、运营、运维等。重点说说研发，研发包括三个部分：
-<ol>
-<li>程序（一般分为前端/后端、客户端/服务器）。</li>
-<li>策划 (一般分为主策划、剧情、数值、文案，执行等)。</li>
-<li>美术 (一般分为3d,2d,原画，场景，模型，动画等)。</li>
-</ol>
-</li>
-</ul>
-<h2 id="类型"><a class="markdownIt-Anchor" href="#类型"></a> 类型</h2>
-<p>以下只区分程序、策划、美术三大的分类。在所见的团队中大致分为四类：</p>
-<ol>
-<li>要饭类型<br>
-在这类型的团队中，策划是短板。其他成员都在做出盈利产品的所要求的的基准水平线以上。<br>
-策划低于或者稍高于基准线，这个就看天吃饭，让用户老爷们赏点饭吃，靠稳定的服务，运营、美术品质等捞取一点利润，基本上就是个苦逼项目组。</li>
-<li>体弱多病型<br>
-这类型团队中，程序是短板。举个不太恰当的例子，程序的稳定性效率等如同一个人身体的健康，策划的设计理念就是其梦想。梦想很大很好，身体很弱很虚。<br>
-发热、耗电、crash，服务器回档、宕机、卡顿等，这种团队基本就是过了今天没有明天，等死型，当然也有遇到神医，也能病去体健，再创辉煌。但是基本上是在有时间有钱的背景下，偶发的特殊情况。</li>
-<li>希望型<br>
-这种团队中大家能力都在做出盈利产品的所要求的的基准水平线以上，个别特别推出，这种团队基本上属于长期合作，有积累，有默契、有韧劲。离成功只差一个契机，这是大家想去的理想团队。</li>
-<li>无名氏<br>
-这种团队多见于临时拼凑，成立团队的目的各不相同，人员参差不齐，基本上战五渣，见光死。</li>
-</ol>
-<span id="more"></span>  
-<h2 id="经历"><a class="markdownIt-Anchor" href="#经历"></a> 经历</h2>
-<p>第四种团队我在职业生涯经历一次，时长三个月，在我离开之后了解到发生了各种奇葩事情，没几个月解散了。<br>
-第三种团队我也经历过一次，做出了手游项目的第一个爆款RPG。<br>
-其他基本上都是第一种或者第二种团队，这两种中要饭型的团队更多些。我发现一个共同情况，作为项目总负责人PD，总是希望项目其他研发团队帮助项目的短板方，把短板方的工作尽量往其他团队那边转移，通过这样的方式来弥补项目短板，但。最终结果差强人意，导致大家都成了短板。在这过程中，我开始的做法是强烈要求短板方自己或者通过外部手段（招聘、培训等）来提高，但往往受领头人的思维、解决问题能力，更重要的所能调配的资源限制，无法展开，往往变成别人眼中的“喷子”，慢慢的也就躺平了。<br>
-一直在思考的这样的问题，在有限的资源下，怎么才能把事情做成，发挥最大能量？</p>
-<h2 id="谬论"><a class="markdownIt-Anchor" href="#谬论"></a> 谬论</h2>
-<ol>
-<li>放弃没希望的团队。一些团队一边不给资源(时间、人力等)，一边还高举高打，满嘴的愿景，对各种不合理视而不见，凡此种种，及时止损。</li>
-<li>部分团队有着明显的短板，但是受制于手中资源，无法做出改变，要仔细斟酌，以我的目的为优先做思考，为自己展开所有行为提供指引。</li>
-<li>对多努力还已有希望的团队适用，努力争取资源，试试蚂蚁啃大象的策略，先做出局部改变，并让握有资源的人看到，并逐渐把所有相关人员全部拉入解决问题的圈子里来，让我遇到的问题转化成大家都要面对的问题。</li>
-<li>谁的问题，就是谁的问题。对所有不符合产品所有要求的能力基准线以下的人，敦促其主动学习，通过集中培训等方式促进其提高，并对在规定时间仍不达标的人实施转岗、劝退等措施。</li>
-<li>招符合团队素质要求的人，宁缺毋滥，如果不能又快又好，优先选择好。当然适可而止。</li>
-</ol>
-<p><strong>在团队组建的初期就要拿到两样最重要的东西（人事权和钱），最基本的要拿到人事权，选谁用谁得自己说了算。只招复合团队素质的人，宁缺毋滥。</strong></p>
-]]></content>
-      <categories>
-        <category>项目</category>
-        <category>团队</category>
-      </categories>
-      <tags>
-        <tag>项目</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>数据库之分区、分片、分表</title>
     <url>/2021/07/12/database-sharding-partitioning/</url>
     <content><![CDATA[<span id="more"></span>]]></content>
@@ -915,128 +847,6 @@ but dirty IO not used by OTP today<br>
       </categories>
       <tags>
         <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何开发 protoc 插件[转载]</title>
-    <url>/2023/03/03/protobuf-plugins/</url>
-    <content><![CDATA[<h1 id="如何开发-protoc-插件"><a class="markdownIt-Anchor" href="#如何开发-protoc-插件"></a> 如何开发 protoc 插件</h1>
-<p><a href="https://taoshu.in/go/create-protoc-plugin.html">原文</a></p>
-<p>Protocol Buffers 是谷歌推出的编码标准，它在传输效率和编解码性能上都要优于 JSON。但其代价则是需要依赖中间描述语言（IDL）来定义数据（和服务）的结构（通过  <code>*.proto</code>  文件），并且需要一整套的工具链（protoc 及其插件）来生成对应的序列化和反序列化代码。除了谷歌官方提供的工具和插件（比如生成 go 代码的 protoc-gen-go）外，我们还可以开发或定制自己的插件，根据业务需要按照 proto 文件的定义生成代码或者文档。由 IDL 生成代码或者文档是元编程的一种形式，可以极大的解放程序员的生产力，建议每一位开发者都能掌握这一技能。今天就生成 markdown 文档为例讲解如何开发 protoc 插件。</p>
-<h2 id="protobuf-idl"><a class="markdownIt-Anchor" href="#protobuf-idl"></a> Protobuf IDL</h2>
-<p>在开始之前，我们简单过一下 Protocol Buffers 的 IDL（关于底层编码可以参考我的另一篇文章<a href="https://taoshu.in/pb-encoding.html">Protocol Buffers 编码</a>）。IDL 文件的扩展名为 proto，后面我们统称为 proto 文件，典型的 proto 文档结构如下：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">// 目前有 v2 和 v3 两个版本，默认为 v2 版本。</span><br><span class="line">// 如果想用 v3 版本，需要使用 syntax 指定。</span><br><span class="line">// 推荐使用 v3 版本。现在流行的 gRPC 框架也是使用 v3 版本。</span><br><span class="line">syntax = "proto3";</span><br><span class="line"></span><br><span class="line">// 每个 proto 文件需要定义自己的包名，类似 c++ 的名称空间。</span><br><span class="line">package hello;</span><br><span class="line"></span><br><span class="line">// 数据结构通过 message 定义</span><br><span class="line">message Echo {</span><br><span class="line">  // 每个 message 可以有多个 field。</span><br><span class="line">  // 每个 field 需要指定类型、字段名和编号。</span><br><span class="line">  // Protocol Buffers 在内部使用编号区分字段，一旦指定就不能更改。</span><br><span class="line">  string msg = 1;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">// 服务使用 servcie 定义</span><br><span class="line">service Demo {</span><br><span class="line">  // 每个 service 可以定义多个 rpc</span><br><span class="line">  // 每个 rpc 需要指定接口名、传入消息和返回消息三部分。</span><br><span class="line">  rpc Echo(Echo) returns (Echo);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>在 proto 文件中， message 的每一个字段也可以是另外一个 message（甚至还可以是 message 本身，也就是递归定义）。一个 proto 文件还可以导入其他的 proto 文件，进而引用本文件外的 message 定义。下面是一个例子：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">syntax = "proto3";</span><br><span class="line"></span><br><span class="line">package demo;</span><br><span class="line"></span><br><span class="line">// 通过 import 导入其他 proto 文件</span><br><span class="line">import "google/protobuf/timestamp.proto";</span><br><span class="line"></span><br><span class="line">message Foo {</span><br><span class="line">  // 引用外部消息定义时需要指定包名</span><br><span class="line">  google.protobuf.Timestamp ts = 2;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">message Bar {</span><br><span class="line">  int32 a = 1;</span><br><span class="line">  // b 的类型可以是 Bar 自身</span><br><span class="line">  Bar b = 2;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>因为可以在 proto 定义服务和接口方法，<a href="https://taoshu.in/grpc.html">gRPC</a>  和  <a href="https://taoshu.in/go/go-sniper-v2.html">Sniper</a>  都使用 proto 做为 IDL（同时也使用 Protocol Buffers 编码传输数据）。理论上我们可以直接使用 proto 文件做为接口文档。但因为 proto 支持嵌套定义和外部导入功能，让使用方直接阅读 proto 文档需要来回切换，非常不方便。所以我们内部开了一个  <a href="https://github.com/go-kiss/protoc-gen-markdown">protoc-gen-markdown</a>  插件，其功能就是遍历所有服务的每一个接口，递归查找入参和出参消息的每一个字段及其类型，生成 markdown 格式的接口文档。大家可以直接看这个生成的<a href="https://github.com/go-kiss/protoc-gen-markdown/blob/master/hello.md">示例</a>来感受一下它的效果。</p>
-<p>好了，以上是整个文章的背景。说的有点罗嗦。现在我们开始正题。</p>
-<h2 id="protoc-plugin-使用方法"><a class="markdownIt-Anchor" href="#protoc-plugin-使用方法"></a> protoc plugin 使用方法</h2>
-<p>如果要根据 proto 文件生成代码（或文档），首先要安装 protoc 编译工具。protoc 可以通过操作系统的包管理器（apt/homebrew等）安装，也可以到 GitHub 上下载编译好的版本。推荐直接下载，因为包管理器可能无法安装最新版本。解压后有两个文件夹：bin 下的 protoc 直接复制  <code>/usr/local/bin/</code>  目录就好，include 下的 google 文件夹要复制到  <code>/usr/local/include</code>  目录。</p>
-<p>protoc 的插件框架也比较简单。如果要开发某插件，我们首先需要取个名字。比如要生成 markdown 的插件，名字就定成 markdown。如果我们想使用 markdown 插件，我们需要执行以下命令：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">protoc --markdown_out=. hello.proto</span><br></pre></td></tr></tbody></table></figure>
-<p>这里有一个  <code>--markdown_out</code>  参数。因为我们的名字叫 markdown，所以参数名字叫 markdown_out；如果名字叫 XXX，那参数名字就叫 XXX_out。protoc 在运行的时候首先会解析 proto 文件的所有内容，生成一组 Protocol Buffers 编码的描述数据，然后尝试运行 protoc-gen-markdown 命令，并且通过 stdin 将描述数据发送给插件命令。插件生成好文件内容后再向 stdout 输入 Protocol Buffers 编码的数据来告诉 protoc 生成具体的文件。</p>
-<p>注意，插件的命令叫 protoc-gen-<strong>markdown</strong>，插件命令统一使用  <code>protoc-gen-</code>  前缀，这也是 protoc 的约定。</p>
-<p>我们刚才说 protoc 跟 protoc-gen-XXX 通信用的也是 Protocol Buffers 编码，是不是有点自举的意思。Protocol Buffers 编码需要 proto 文件定义，protoc 跟插件通信用的 proto 文件就是<code>protobuf/descriptor.proto</code>，你可以在<code>/usr/include/google</code>或者<code>/usr/local/include/google</code>目录下找到它。而且，这个 proto 用的是 v2 版本语法！</p>
-<h2 id="插件开发过程"><a class="markdownIt-Anchor" href="#插件开发过程"></a> 插件开发过程</h2>
-<p>理论上，现在我们就可以开发 protoc 插件了，过程也很简单：</p>
-<ol>
-<li>选择一种编程语言，比如 go</li>
-<li>根据  <code>protobuf/descriptor.proto</code>  生成对应语言的编解码代码</li>
-<li>开发 proto-gen-XXX 程序
-<ol>
-<li>从 stdin 读取数据并使用生成的 pb 文件解码</li>
-<li>根据 descriptor 描述数据生成代码片断</li>
-<li>拼装新生成的文件描述数据并通过 stdout 输出</li>
-</ol>
-</li>
-</ol>
-<p>这样做会有两个问题。</p>
-<ol>
-<li>直接读取 descriptor 数据非常麻烦，就连最简单的查询某字段的注释这样的功能都需要非常复杂的代码才能实现。所以说直接处理 descriptor 绝非明智之举。</li>
-<li>这些 descriptor 数据使用 v2 版本的语法，protoc 的好多语言插件（比如 PHP）已经不支持 v2 语法了。</li>
-</ol>
-<p>总之，我们需要更好的框架来完成这一工作。protoc-gen-markdown 早期使用 <a href="http://github.com/pseudomuto/protokit">github.com/pseudomuto/protokit</a> 来简化开发工作。可以提取注释，但不支持直接查询内嵌消息的结构，需要大量的辅助代码。protoc-gen-markdown 的代码也很难维护（除了我很少有人能改）。</p>
-<p>直到去年三月份，谷歌发布了<a href="https://blog.golang.org/protobuf-apiv2">新版 Go 语言 API</a>，其中引入了一个新包<code>google.golang.org/protobuf/compiler/protogen</code>可以大幅简化插件的开发。我这两天基于 protogen 重构了 protoc-gen-markdown 的实现，所有才好意思拿出来跟大家分享😭</p>
-<h2 id="插件代码结构"><a class="markdownIt-Anchor" href="#插件代码结构"></a> 插件代码结构</h2>
-<p>插件代码的主要结构如下：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">func main() {</span><br><span class="line">  g := markdown{}</span><br><span class="line">  var flags flag.FlagSet</span><br><span class="line">  flags.StringVar(&amp;g.Prefix, "prefix", "/", "API path prefix")</span><br><span class="line"></span><br><span class="line">  protogen.Options{</span><br><span class="line">    ParamFunc: flags.Set,</span><br><span class="line">  }.Run(g.Generate)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">func (md *markdown) Generate(plugin *protogen.Plugin) error {</span><br><span class="line">  // ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>首先我们需要定义一个<code>protogen.Options</code>，然后调用它的<code>Run</code>方法，并传入一个  <code>func(*protogen.Plugin) error</code>回调。主流程代码到此就结束了。我们还可以设置<code>protogen.Options</code>的<code>ParamFunc</code>参数，这样 protogen 会自动为我们解析命令行传入的参数。诸如从标准输入读取并解码 protobuf 信息，将输入信息编码成 protobuf 写入 stdout 等操作全部由 protogen 包办了。我们要做的就是与  <code>protogen.Plugin</code>  交互实现代码生成逻辑。如果大家对这种简化没有概念，可以去翻一下 protoc-gen-markdown 最初的代码。没有对比就没有伤害。</p>
-<p>接下来，我们把注意力转向  <code>Generate</code>  方法。读代码（尤其是读别人的代码）是枯燥的，我尽量说思路。</p>
-<h2 id="处理-proto-文件"><a class="markdownIt-Anchor" href="#处理-proto-文件"></a> 处理 proto 文件</h2>
-<p>要想生成接口文档，我们肯定是要遍历每一个 proto 文件的每一个 service 的每一个 rpc 定义，所以主流程是这样的：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">func (md *markdown) Generate(plugin *protogen.Plugin) error {</span><br><span class="line">  for _, f := range plugin.Files {</span><br><span class="line">    // 跳过没有定义 service 的 proto 文件</span><br><span class="line">    if len(f.Services) == 0 {</span><br><span class="line">      continue</span><br><span class="line">    }</span><br><span class="line">    // 指定要生成的文件名，策略可以根据需要指定</span><br><span class="line">    fname := f.GeneratedFilenamePrefix + ".md"</span><br><span class="line">    // 告诉 protoc 要生成一个新文件，并获取一个引用</span><br><span class="line">    // 后面可以通过 t 来写入新文件的内容</span><br><span class="line">    t := plugin.NewGeneratedFile(fname, f.GoImportPath)</span><br><span class="line">    // 遍历每一个 service</span><br><span class="line">    for _, s := range f.Services {</span><br><span class="line">      // ...</span><br><span class="line">      for _, m := range s.Methods {</span><br><span class="line">        // ...</span><br><span class="line">      }</span><br><span class="line">      // ...</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>对于 proto 的每一级结构，protogen 都有对应的数据类型，分别是 File, Service, Method, Field。除了 File 外，其他数据类型都有 Comments 属性，每个 Comments 又包含 LeadingDetached, Leading, Trailing 三种类型的注释，效果如下：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">// LeadingDetached</span><br><span class="line"></span><br><span class="line">// Leading</span><br><span class="line">message Foo {} // Trailing</span><br></pre></td></tr></tbody></table></figure>
-<p>生成文档就需要恰当处理这些注释。而注释跟被描述对象的关联关系 protogen 已经帮我们处理好了。</p>
-<p>除了注释，我们还需要读取更多信息，比如消息或者字段的名字、类型等，这些需要通过每个对象的 Desc 字段读取，它的类型是 protoreflect.ServiceDescriptor，跟我们前面说的 descriptor.proto 对应。</p>
-<h2 id="生成文档"><a class="markdownIt-Anchor" href="#生成文档"></a> 生成文档</h2>
-<p>生成的文档结构如下，逻辑见注释：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">for _, s := range f.Services {</span><br><span class="line">  // 输出 service 名称</span><br><span class="line">  t.P("# ", s.Desc.Name())</span><br><span class="line">  t.P()</span><br><span class="line">  // 输出 service 的注释</span><br><span class="line">  t.P(string(s.Comments.Leading))</span><br><span class="line">  // 生成接口目录</span><br><span class="line">  for _, m := range s.Methods {</span><br><span class="line">    // ...</span><br><span class="line">    t.P(fmt.Sprintf("- [%s](#%s)", api, anchor))</span><br><span class="line">  }</span><br><span class="line">  t.P()</span><br><span class="line">  for _, m := range s.Methods {</span><br><span class="line">    // 输出接口路径</span><br><span class="line">    t.P("## ", md.api(string(m.Desc.FullName())))</span><br><span class="line">    t.P()</span><br><span class="line">    // 输出接口注释</span><br><span class="line">    t.P(string(m.Comments.Leading))</span><br><span class="line">    t.P()</span><br><span class="line">    // 输出入参结构，json 格式</span><br><span class="line">    t.P("### Request")</span><br><span class="line">    // 语言指定为 javacript，这样可以在 json 里加入注释内容</span><br><span class="line">    t.P("```javascript")</span><br><span class="line">    // 每个 method 都有 Input 和 Output 两个字段</span><br><span class="line">    t.P(md.jsDocForMessage(m.Input))</span><br><span class="line">    t.P("```")</span><br><span class="line">    t.P()</span><br><span class="line">    // 输出入参结构，json 格式</span><br><span class="line">    t.P("### Reply")</span><br><span class="line">    t.P("```javascript")</span><br><span class="line">    t.P(md.jsDocForMessage(m.Output))</span><br><span class="line">    t.P("```")</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>我们是想用 json 表示每一个 Protocol Buffers 结构。但 json 不能添加注释，所以我把语言指定为 javacript，这样既能使用 json 又能加字段注释了。但为什么用 json 呢？因为 Protocol Buffers 官方定义了 json 的表示格式，我们的业务框架同时支持 protobuf 和 json 两种编码。使用 json 表达不会丢失定义信息，而且阅读也稍微方便一些。</p>
-<p>每个 method 都有 Input 和 Output 两个字段，分别表示接口的入参和出参。下面开始讨论如何提取每个字段的信息。</p>
-<h3 id="markdown-文档效果"><a class="markdownIt-Anchor" href="#markdown-文档效果"></a> markdown 文档效果</h3>
-<p>在开始之前，我们先简单说一下 markdown 消息输出效果（这部分是我自己定义的，仅供大家参考）。</p>
-<p>对于简单类型字段，比如</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">// 字段注释</span><br><span class="line">int32 a = 1; // 行尾注释</span><br><span class="line">double b = 2;</span><br><span class="line">string c = 3;</span><br></pre></td></tr></tbody></table></figure>
-<p>我会转换成（这是合法的 javascript 代码，类 json）</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">// 字段注释</span><br><span class="line">a: 0, // type&lt;int32&gt;, 行尾注释</span><br><span class="line">b: 0.0,</span><br><span class="line">c: "",</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="类型映射"><a class="markdownIt-Anchor" href="#类型映射"></a> 类型映射</h3>
-<p>字段名保持不变，字段值根据类型自动生成，一般取对应的类型的空值（整数类的为  <code>0</code>，字符串为  <code>""</code>，布尔值为  <code>false</code>，浮点数为  <code>0.0</code>  等，但 64 位整数对应  <code>"0"</code>，这个也是遵守 Protocol Buffers 与 json 的官方映射规则）。</p>
-<p>然后会给每个字段添加类型注释，格式是<code>type&lt;T&gt;</code>，这里的 T 对应 proto 文件的类型声明。如果 proto 字段本身也有行为注释，则会追加到类型注释之后。</p>
-<h4 id="message"><a class="markdownIt-Anchor" href="#message"></a> message</h4>
-<p>如果字段的类型是 message，则会转换成 json 的 object 语法，并且类型注释<code>type&lt;MessageName&gt;</code>。消息的每个字段会按照前面说的字段规则转换。比如：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">Foo a = 1;</span><br></pre></td></tr></tbody></table></figure>
-<p>会变成：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">a: {</span><br><span class="line">  // ...</span><br><span class="line">} // type&lt;Foo&gt;</span><br></pre></td></tr></tbody></table></figure>
-<h4 id="repeated"><a class="markdownIt-Anchor" href="#repeated"></a> repeated</h4>
-<p>如果是 repeated 类型的字段，则会在转换之后的结果两侧添加<code>[]</code>，然后再追加类型注释<code>list&lt;T&gt;</code>。这里 T 可以是普通类型，也可以是 message 类型。比如：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">repeated int32 a = 1;</span><br><span class="line">repeated Foo b = 2;</span><br></pre></td></tr></tbody></table></figure>
-<p>会变成：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">a: [</span><br><span class="line">  0</span><br><span class="line">], // list&lt;int32&gt;</span><br><span class="line">b: [{</span><br><span class="line">  // ...</span><br><span class="line">}], // list&lt;Foo&gt;</span><br></pre></td></tr></tbody></table></figure>
-<h4 id="map"><a class="markdownIt-Anchor" href="#map"></a> map</h4>
-<p>如果是 map 类型的字段，同样也会转换成 javascript 的 object 语法，但 key 会使用字符串，key 和 value 的值都使用对应空值。同时会追加类型注释<code>map&lt;k,v&gt;</code>。比如：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">map&lt;int32,string&gt; a = 1;</span><br></pre></td></tr></tbody></table></figure>
-<p>会转换成</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">a: {</span><br><span class="line">  "0": ""</span><br><span class="line">}, // map&lt;in32,string&gt;</span><br></pre></td></tr></tbody></table></figure>
-<h4 id="enum"><a class="markdownIt-Anchor" href="#enum"></a> enum</h4>
-<p>protoc-gen-markdown 对于枚举类型会直接转换成字符串，值为枚举的默认值（零值），同时追加类型注释<code>enum&lt;E1,E2,...&gt;</code>。比如：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">enum Platform {</span><br><span class="line">  All = 0;</span><br><span class="line">  Web = 1;</span><br><span class="line">  Ios = 2;</span><br><span class="line">  Android = 3;</span><br><span class="line">}</span><br><span class="line">Platform a = 1;</span><br></pre></td></tr></tbody></table></figure>
-<p>会转化成：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">a: "All", // enum&lt;All,Web,Ios,Android&gt;</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="递归处理"><a class="markdownIt-Anchor" href="#递归处理"></a> 递归处理</h3>
-<p>因为 proto 支持嵌套定义，所以我们需要从最外层的 message 开始<strong>递归处理</strong>所有字段。</p>
-<p>对于每一个 message，我定义了一个方法：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">func (md *markdown) jsDocForMessage(m *protogen.Message) string {</span><br><span class="line">  js := "{\n"</span><br><span class="line">  for _, field := range m.Fields {</span><br><span class="line">    js += md.jsDocForField(field)</span><br><span class="line">  }</span><br><span class="line">  js += "}"</span><br><span class="line">  return js</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>主要是生成最外面的”{}“，然后是处理每一个字段。<code>jsDocForField</code>的整体结构如下：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">func (md *markdown) jsDocForField(field *protogen.Field) string {</span><br><span class="line">  // 追加字段注释</span><br><span class="line">  js := field.Comments.Leading.String()</span><br><span class="line">  // 生成字段名</span><br><span class="line">  js += string(field.Desc.Name()) + ":"</span><br><span class="line">  // 确定字段值的取值和类型</span><br><span class="line">  var vv,vt string</span><br><span class="line">  if field.Desc.IsMap() {</span><br><span class="line">  } else if field.Message != nil {</span><br><span class="line">  } else if field.Enum != nil {</span><br><span class="line">  } else if field.Oneof != nil {</span><br><span class="line">  } else {</span><br><span class="line">  }</span><br><span class="line">  // 添加类型注释</span><br><span class="line">  if field.Desc.IsList() {</span><br><span class="line">    js += fmt.Sprintf("[%s], // list&lt;%s&gt;", vv, vt)</span><br><span class="line">  } else if field.Desc.IsMap() {</span><br><span class="line">    js += vv + fmt.Sprintf(", // map&lt;%s&gt;", vt)</span><br><span class="line">  } else if field.Enum != nil {</span><br><span class="line">    js += vv + fmt.Sprintf(", // enum&lt;%s&gt;", vt)</span><br><span class="line">  } else {</span><br><span class="line">    js += vv + fmt.Sprintf(", // type&lt;%s&gt;", vt)</span><br><span class="line">  }</span><br><span class="line">  // 追加行尾注释</span><br><span class="line">  return js</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>对于简单字段，可以直接调用  <code>scalarDefaultValue</code>  确定默认值。而对应的类型可以直接通过<code>field.Desc.Kind().String()</code>  获取。这个比较简单。</p>
-<p>Protocol Buffers 在内部会把 map 转换成下面这样的 message，</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">message MapFieldEntry {</span><br><span class="line">  key_type key = 1;</span><br><span class="line">  value_type value = 2;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<p>所以我们需要先处理 map 类型的字段，再处理 message 类型的字段。protogen 提供了  <code>IsMap</code>  方法供我们使用。如果  <code>IsMap</code>  返回  <code>false</code>，而  <code>filed.Message</code>  不为  <code>nil</code>，那才 message 类型字段。</p>
-<p>对于 message 类型的字段也很简单，直接递归调用  <code>jsDocForMessage</code>  获取取值的 json 表示，其类型可以通过<code>field.Message.Desc.Name()</code>获得。</p>
-<p>如果是 map 类型，我们可以通过  <code>.Message</code>  字段取到  <code>MapFieldEntry</code>  消息。然后根据<code>Fields[0]</code>和<code>Fields[1]</code>构造 map 的取值和类型。</p>
-<p>对于 Enum 类型，可以直接通过  <code>.Enum</code>  读取相关信息，也比较简单。</p>
-<p>另外，我们需要美化一下 json 的格式，主要是调整缩进。本身处理 protogen 消息已经很复杂了，如果还要手工维护缩进只会难上加难。于是我找了一个 go 语言实现的 javascript 格式化库 jsbeautifier，在消息返回之前统一格式化一下：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">options := jsbeautifier.DefaultOptions()</span><br><span class="line">js, _ = jsbeautifier.Beautify(&amp;js, options)</span><br></pre></td></tr></tbody></table></figure>
-<p>因为我们是递归实现的，如果在 proto 文件中使用了递归定义，比如：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">message Foo {</span><br><span class="line">  int32 a = 1;</span><br><span class="line">  Foo b = 2;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h4 id="递归定义消息"><a class="markdownIt-Anchor" href="#递归定义消息"></a> 递归定义消息</h4>
-<p>不加处理的话会导致栈溢出错误。为此，我维护了一个栈，保存当前正在处理消息。如果碰到递归定义，则直接返回<code>{}</code>。如此一来，刚才的定义会转化成：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">{</span><br><span class="line">  a: 0,</span><br><span class="line">  b: {}, // type&lt;Foo&gt;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
-<p>以上就是本文的全部内容了。本文定义了一套从 proto 生成 markdown 文档的规则并基于最新的<code>google.golang.org/protobuf/compiler/protogen</code>包实现了 protoc-gen-markdown 插件。阅读本文和 protoc-gen-markdown 源码，可以掌握 protoc 插件开发的基础知识。希望每一位读者都能掌握这一技能。</p>
-<p>今天(2022-05-12)收到 knight0zh 的留言：</p>
-<blockquote>
-<p>如果每次调试都需要编译一下会特别麻烦，也无法使用debug等工具</p>
-</blockquote>
-<p>这是一个好问题。因为插件是通过 protoc 调用的，没有特别好的方式来实现单步调试。</p>
-<p>我一直使用 print 大法。不过你不能直接打印调试信息，这会影响 protoc 跟插件之前的通信。正确的做法是打印到<code>stderr</code>流。</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">fmt.Fprintf(os.Stderr, "Fprintln: %v\n", err)</span><br></pre></td></tr></tbody></table></figure>]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>protobuf</tag>
       </tags>
   </entry>
   <entry>
@@ -2549,6 +2359,196 @@ MzYyMzgzMF19
       </categories>
       <tags>
         <tag>技能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>游戏服务器开发与运维</title>
+    <url>/2022/12/21/gameserver/</url>
+    <content><![CDATA[<p>服务器所有需要的技术</p>
+<span id="more"></span>
+<h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
+<h2 id="开发"><a class="markdownIt-Anchor" href="#开发"></a> 开发</h2>
+<h3 id="1-寻路系统"><a class="markdownIt-Anchor" href="#1-寻路系统"></a> 1. 寻路系统</h3>
+<h2 id="运维"><a class="markdownIt-Anchor" href="#运维"></a> 运维</h2>
+]]></content>
+      <categories>
+        <category>游戏</category>
+      </categories>
+      <tags>
+        <tag>游戏服务器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>项目往事之团队</title>
+    <url>/2021/06/01/project-member/</url>
+    <content><![CDATA[<h2 id="组成"><a class="markdownIt-Anchor" href="#组成"></a> 组成</h2>
+<ul>
+<li>项目总是由形形色色的人构成，不同的专业研发、运营、运维等。重点说说研发，研发包括三个部分：
+<ol>
+<li>程序（一般分为前端/后端、客户端/服务器）。</li>
+<li>策划 (一般分为主策划、剧情、数值、文案，执行等)。</li>
+<li>美术 (一般分为3d,2d,原画，场景，模型，动画等)。</li>
+</ol>
+</li>
+</ul>
+<h2 id="类型"><a class="markdownIt-Anchor" href="#类型"></a> 类型</h2>
+<p>以下只区分程序、策划、美术三大的分类。在所见的团队中大致分为四类：</p>
+<ol>
+<li>要饭类型<br>
+在这类型的团队中，策划是短板。其他成员都在做出盈利产品的所要求的的基准水平线以上。<br>
+策划低于或者稍高于基准线，这个就看天吃饭，让用户老爷们赏点饭吃，靠稳定的服务，运营、美术品质等捞取一点利润，基本上就是个苦逼项目组。</li>
+<li>体弱多病型<br>
+这类型团队中，程序是短板。举个不太恰当的例子，程序的稳定性效率等如同一个人身体的健康，策划的设计理念就是其梦想。梦想很大很好，身体很弱很虚。<br>
+发热、耗电、crash，服务器回档、宕机、卡顿等，这种团队基本就是过了今天没有明天，等死型，当然也有遇到神医，也能病去体健，再创辉煌。但是基本上是在有时间有钱的背景下，偶发的特殊情况。</li>
+<li>希望型<br>
+这种团队中大家能力都在做出盈利产品的所要求的的基准水平线以上，个别特别推出，这种团队基本上属于长期合作，有积累，有默契、有韧劲。离成功只差一个契机，这是大家想去的理想团队。</li>
+<li>无名氏<br>
+这种团队多见于临时拼凑，成立团队的目的各不相同，人员参差不齐，基本上战五渣，见光死。</li>
+</ol>
+<span id="more"></span>  
+<h2 id="经历"><a class="markdownIt-Anchor" href="#经历"></a> 经历</h2>
+<p>第四种团队我在职业生涯经历一次，时长三个月，在我离开之后了解到发生了各种奇葩事情，没几个月解散了。<br>
+第三种团队我也经历过一次，做出了手游项目的第一个爆款RPG。<br>
+其他基本上都是第一种或者第二种团队，这两种中要饭型的团队更多些。我发现一个共同情况，作为项目总负责人PD，总是希望项目其他研发团队帮助项目的短板方，把短板方的工作尽量往其他团队那边转移，通过这样的方式来弥补项目短板，但。最终结果差强人意，导致大家都成了短板。在这过程中，我开始的做法是强烈要求短板方自己或者通过外部手段（招聘、培训等）来提高，但往往受领头人的思维、解决问题能力，更重要的所能调配的资源限制，无法展开，往往变成别人眼中的“喷子”，慢慢的也就躺平了。<br>
+一直在思考的这样的问题，在有限的资源下，怎么才能把事情做成，发挥最大能量？</p>
+<h2 id="谬论"><a class="markdownIt-Anchor" href="#谬论"></a> 谬论</h2>
+<ol>
+<li>放弃没希望的团队。一些团队一边不给资源(时间、人力等)，一边还高举高打，满嘴的愿景，对各种不合理视而不见，凡此种种，及时止损。</li>
+<li>部分团队有着明显的短板，但是受制于手中资源，无法做出改变，要仔细斟酌，以我的目的为优先做思考，为自己展开所有行为提供指引。</li>
+<li>对多努力还已有希望的团队适用，努力争取资源，试试蚂蚁啃大象的策略，先做出局部改变，并让握有资源的人看到，并逐渐把所有相关人员全部拉入解决问题的圈子里来，让我遇到的问题转化成大家都要面对的问题。</li>
+<li>谁的问题，就是谁的问题。对所有不符合产品所有要求的能力基准线以下的人，敦促其主动学习，通过集中培训等方式促进其提高，并对在规定时间仍不达标的人实施转岗、劝退等措施。</li>
+<li>招符合团队素质要求的人，宁缺毋滥，如果不能又快又好，优先选择好。当然适可而止。</li>
+</ol>
+<p><strong>在团队组建的初期就要拿到两样最重要的东西（人事权和钱），最基本的要拿到人事权，选谁用谁得自己说了算。只招复合团队素质的人，宁缺毋滥。</strong></p>
+]]></content>
+      <categories>
+        <category>项目</category>
+        <category>团队</category>
+      </categories>
+      <tags>
+        <tag>项目</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何开发 protoc 插件[转载]</title>
+    <url>/2023/03/03/protobuf-plugins/</url>
+    <content><![CDATA[<p><a href="https://taoshu.in/go/create-protoc-plugin.html">原文</a><br>
+<a href="https://github.com/mars315/protoc-gen-hip">另外一个可参考的仓库</a></p>
+<p>Protocol Buffers 是谷歌推出的编码标准，它在传输效率和编解码性能上都要优于 JSON。但其代价则是需要依赖中间描述语言（IDL）来定义数据（和服务）的结构（通过  <code>*.proto</code>  文件），并且需要一整套的工具链（protoc 及其插件）来生成对应的序列化和反序列化代码。除了谷歌官方提供的工具和插件（比如生成 go 代码的 protoc-gen-go）外，我们还可以开发或定制自己的插件，根据业务需要按照 proto 文件的定义生成代码或者文档。由 IDL 生成代码或者文档是元编程的一种形式，可以极大的解放程序员的生产力，建议每一位开发者都能掌握这一技能。今天就生成 markdown 文档为例讲解如何开发 protoc 插件。</p>
+<h2 id="protobuf-idl"><a class="markdownIt-Anchor" href="#protobuf-idl"></a> Protobuf IDL</h2>
+<p>在开始之前，我们简单过一下 Protocol Buffers 的 IDL（关于底层编码可以参考我的另一篇文章<a href="https://taoshu.in/pb-encoding.html">Protocol Buffers 编码</a>）。IDL 文件的扩展名为 proto，后面我们统称为 proto 文件，典型的 proto 文档结构如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">// 目前有 v2 和 v3 两个版本，默认为 v2 版本。</span><br><span class="line">// 如果想用 v3 版本，需要使用 syntax 指定。</span><br><span class="line">// 推荐使用 v3 版本。现在流行的 gRPC 框架也是使用 v3 版本。</span><br><span class="line">syntax = "proto3";</span><br><span class="line"></span><br><span class="line">// 每个 proto 文件需要定义自己的包名，类似 c++ 的名称空间。</span><br><span class="line">package hello;</span><br><span class="line"></span><br><span class="line">// 数据结构通过 message 定义</span><br><span class="line">message Echo {</span><br><span class="line">  // 每个 message 可以有多个 field。</span><br><span class="line">  // 每个 field 需要指定类型、字段名和编号。</span><br><span class="line">  // Protocol Buffers 在内部使用编号区分字段，一旦指定就不能更改。</span><br><span class="line">  string msg = 1;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">// 服务使用 servcie 定义</span><br><span class="line">service Demo {</span><br><span class="line">  // 每个 service 可以定义多个 rpc</span><br><span class="line">  // 每个 rpc 需要指定接口名、传入消息和返回消息三部分。</span><br><span class="line">  rpc Echo(Echo) returns (Echo);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>在 proto 文件中， message 的每一个字段也可以是另外一个 message（甚至还可以是 message 本身，也就是递归定义）。一个 proto 文件还可以导入其他的 proto 文件，进而引用本文件外的 message 定义。下面是一个例子：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">syntax = "proto3";</span><br><span class="line"></span><br><span class="line">package demo;</span><br><span class="line"></span><br><span class="line">// 通过 import 导入其他 proto 文件</span><br><span class="line">import "google/protobuf/timestamp.proto";</span><br><span class="line"></span><br><span class="line">message Foo {</span><br><span class="line">  // 引用外部消息定义时需要指定包名</span><br><span class="line">  google.protobuf.Timestamp ts = 2;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">message Bar {</span><br><span class="line">  int32 a = 1;</span><br><span class="line">  // b 的类型可以是 Bar 自身</span><br><span class="line">  Bar b = 2;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>因为可以在 proto 定义服务和接口方法，<a href="https://taoshu.in/grpc.html">gRPC</a>  和  <a href="https://taoshu.in/go/go-sniper-v2.html">Sniper</a>  都使用 proto 做为 IDL（同时也使用 Protocol Buffers 编码传输数据）。理论上我们可以直接使用 proto 文件做为接口文档。但因为 proto 支持嵌套定义和外部导入功能，让使用方直接阅读 proto 文档需要来回切换，非常不方便。所以我们内部开了一个  <a href="https://github.com/go-kiss/protoc-gen-markdown">protoc-gen-markdown</a>  插件，其功能就是遍历所有服务的每一个接口，递归查找入参和出参消息的每一个字段及其类型，生成 markdown 格式的接口文档。大家可以直接看这个生成的<a href="https://github.com/go-kiss/protoc-gen-markdown/blob/master/hello.md">示例</a>来感受一下它的效果。</p>
+<p>好了，以上是整个文章的背景。说的有点罗嗦。现在我们开始正题。</p>
+<h2 id="protoc-plugin-使用方法"><a class="markdownIt-Anchor" href="#protoc-plugin-使用方法"></a> protoc plugin 使用方法</h2>
+<p>如果要根据 proto 文件生成代码（或文档），首先要安装 protoc 编译工具。protoc 可以通过操作系统的包管理器（apt/homebrew等）安装，也可以到 GitHub 上下载编译好的版本。推荐直接下载，因为包管理器可能无法安装最新版本。解压后有两个文件夹：bin 下的 protoc 直接复制  <code>/usr/local/bin/</code>  目录就好，include 下的 google 文件夹要复制到  <code>/usr/local/include</code>  目录。</p>
+<p>protoc 的插件框架也比较简单。如果要开发某插件，我们首先需要取个名字。比如要生成 markdown 的插件，名字就定成 markdown。如果我们想使用 markdown 插件，我们需要执行以下命令：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">protoc --markdown_out=. hello.proto</span><br></pre></td></tr></tbody></table></figure>
+<p>这里有一个  <code>--markdown_out</code>  参数。因为我们的名字叫 markdown，所以参数名字叫 markdown_out；如果名字叫 XXX，那参数名字就叫 XXX_out。protoc 在运行的时候首先会解析 proto 文件的所有内容，生成一组 Protocol Buffers 编码的描述数据，然后尝试运行 protoc-gen-markdown 命令，并且通过 stdin 将描述数据发送给插件命令。插件生成好文件内容后再向 stdout 输入 Protocol Buffers 编码的数据来告诉 protoc 生成具体的文件。</p>
+<p>注意，插件的命令叫 protoc-gen-<strong>markdown</strong>，插件命令统一使用  <code>protoc-gen-</code>  前缀，这也是 protoc 的约定。</p>
+<p>我们刚才说 protoc 跟 protoc-gen-XXX 通信用的也是 Protocol Buffers 编码，是不是有点自举的意思。Protocol Buffers 编码需要 proto 文件定义，protoc 跟插件通信用的 proto 文件就是<code>protobuf/descriptor.proto</code>，你可以在<code>/usr/include/google</code>或者<code>/usr/local/include/google</code>目录下找到它。而且，这个 proto 用的是 v2 版本语法！</p>
+<h2 id="插件开发过程"><a class="markdownIt-Anchor" href="#插件开发过程"></a> 插件开发过程</h2>
+<p>理论上，现在我们就可以开发 protoc 插件了，过程也很简单：</p>
+<ol>
+<li>选择一种编程语言，比如 go</li>
+<li>根据  <code>protobuf/descriptor.proto</code>  生成对应语言的编解码代码</li>
+<li>开发 proto-gen-XXX 程序
+<ol>
+<li>从 stdin 读取数据并使用生成的 pb 文件解码</li>
+<li>根据 descriptor 描述数据生成代码片断</li>
+<li>拼装新生成的文件描述数据并通过 stdout 输出</li>
+</ol>
+</li>
+</ol>
+<p>这样做会有两个问题。</p>
+<ol>
+<li>直接读取 descriptor 数据非常麻烦，就连最简单的查询某字段的注释这样的功能都需要非常复杂的代码才能实现。所以说直接处理 descriptor 绝非明智之举。</li>
+<li>这些 descriptor 数据使用 v2 版本的语法，protoc 的好多语言插件（比如 PHP）已经不支持 v2 语法了。</li>
+</ol>
+<p>总之，我们需要更好的框架来完成这一工作。protoc-gen-markdown 早期使用 <a href="http://github.com/pseudomuto/protokit">github.com/pseudomuto/protokit</a> 来简化开发工作。可以提取注释，但不支持直接查询内嵌消息的结构，需要大量的辅助代码。protoc-gen-markdown 的代码也很难维护（除了我很少有人能改）。</p>
+<p>直到去年三月份，谷歌发布了<a href="https://blog.golang.org/protobuf-apiv2">新版 Go 语言 API</a>，其中引入了一个新包<code>google.golang.org/protobuf/compiler/protogen</code>可以大幅简化插件的开发。我这两天基于 protogen 重构了 protoc-gen-markdown 的实现，所有才好意思拿出来跟大家分享😭</p>
+<h2 id="插件代码结构"><a class="markdownIt-Anchor" href="#插件代码结构"></a> 插件代码结构</h2>
+<p>插件代码的主要结构如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">func main() {</span><br><span class="line">  g := markdown{}</span><br><span class="line">  var flags flag.FlagSet</span><br><span class="line">  flags.StringVar(&amp;g.Prefix, "prefix", "/", "API path prefix")</span><br><span class="line"></span><br><span class="line">  protogen.Options{</span><br><span class="line">    ParamFunc: flags.Set,</span><br><span class="line">  }.Run(g.Generate)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">func (md *markdown) Generate(plugin *protogen.Plugin) error {</span><br><span class="line">  // ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>首先我们需要定义一个<code>protogen.Options</code>，然后调用它的<code>Run</code>方法，并传入一个  <code>func(*protogen.Plugin) error</code>回调。主流程代码到此就结束了。我们还可以设置<code>protogen.Options</code>的<code>ParamFunc</code>参数，这样 protogen 会自动为我们解析命令行传入的参数。诸如从标准输入读取并解码 protobuf 信息，将输入信息编码成 protobuf 写入 stdout 等操作全部由 protogen 包办了。我们要做的就是与  <code>protogen.Plugin</code>  交互实现代码生成逻辑。如果大家对这种简化没有概念，可以去翻一下 protoc-gen-markdown 最初的代码。没有对比就没有伤害。</p>
+<p>接下来，我们把注意力转向  <code>Generate</code>  方法。读代码（尤其是读别人的代码）是枯燥的，我尽量说思路。</p>
+<h2 id="处理-proto-文件"><a class="markdownIt-Anchor" href="#处理-proto-文件"></a> 处理 proto 文件</h2>
+<p>要想生成接口文档，我们肯定是要遍历每一个 proto 文件的每一个 service 的每一个 rpc 定义，所以主流程是这样的：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">func (md *markdown) Generate(plugin *protogen.Plugin) error {</span><br><span class="line">  for _, f := range plugin.Files {</span><br><span class="line">    // 跳过没有定义 service 的 proto 文件</span><br><span class="line">    if len(f.Services) == 0 {</span><br><span class="line">      continue</span><br><span class="line">    }</span><br><span class="line">    // 指定要生成的文件名，策略可以根据需要指定</span><br><span class="line">    fname := f.GeneratedFilenamePrefix + ".md"</span><br><span class="line">    // 告诉 protoc 要生成一个新文件，并获取一个引用</span><br><span class="line">    // 后面可以通过 t 来写入新文件的内容</span><br><span class="line">    t := plugin.NewGeneratedFile(fname, f.GoImportPath)</span><br><span class="line">    // 遍历每一个 service</span><br><span class="line">    for _, s := range f.Services {</span><br><span class="line">      // ...</span><br><span class="line">      for _, m := range s.Methods {</span><br><span class="line">        // ...</span><br><span class="line">      }</span><br><span class="line">      // ...</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>对于 proto 的每一级结构，protogen 都有对应的数据类型，分别是 File, Service, Method, Field。除了 File 外，其他数据类型都有 Comments 属性，每个 Comments 又包含 LeadingDetached, Leading, Trailing 三种类型的注释，效果如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">// LeadingDetached</span><br><span class="line"></span><br><span class="line">// Leading</span><br><span class="line">message Foo {} // Trailing</span><br></pre></td></tr></tbody></table></figure>
+<p>生成文档就需要恰当处理这些注释。而注释跟被描述对象的关联关系 protogen 已经帮我们处理好了。</p>
+<p>除了注释，我们还需要读取更多信息，比如消息或者字段的名字、类型等，这些需要通过每个对象的 Desc 字段读取，它的类型是 protoreflect.ServiceDescriptor，跟我们前面说的 descriptor.proto 对应。</p>
+<h2 id="生成文档"><a class="markdownIt-Anchor" href="#生成文档"></a> 生成文档</h2>
+<p>生成的文档结构如下，逻辑见注释：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">for _, s := range f.Services {</span><br><span class="line">  // 输出 service 名称</span><br><span class="line">  t.P("# ", s.Desc.Name())</span><br><span class="line">  t.P()</span><br><span class="line">  // 输出 service 的注释</span><br><span class="line">  t.P(string(s.Comments.Leading))</span><br><span class="line">  // 生成接口目录</span><br><span class="line">  for _, m := range s.Methods {</span><br><span class="line">    // ...</span><br><span class="line">    t.P(fmt.Sprintf("- [%s](#%s)", api, anchor))</span><br><span class="line">  }</span><br><span class="line">  t.P()</span><br><span class="line">  for _, m := range s.Methods {</span><br><span class="line">    // 输出接口路径</span><br><span class="line">    t.P("## ", md.api(string(m.Desc.FullName())))</span><br><span class="line">    t.P()</span><br><span class="line">    // 输出接口注释</span><br><span class="line">    t.P(string(m.Comments.Leading))</span><br><span class="line">    t.P()</span><br><span class="line">    // 输出入参结构，json 格式</span><br><span class="line">    t.P("### Request")</span><br><span class="line">    // 语言指定为 javacript，这样可以在 json 里加入注释内容</span><br><span class="line">    t.P("```javascript")</span><br><span class="line">    // 每个 method 都有 Input 和 Output 两个字段</span><br><span class="line">    t.P(md.jsDocForMessage(m.Input))</span><br><span class="line">    t.P("```")</span><br><span class="line">    t.P()</span><br><span class="line">    // 输出入参结构，json 格式</span><br><span class="line">    t.P("### Reply")</span><br><span class="line">    t.P("```javascript")</span><br><span class="line">    t.P(md.jsDocForMessage(m.Output))</span><br><span class="line">    t.P("```")</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>我们是想用 json 表示每一个 Protocol Buffers 结构。但 json 不能添加注释，所以我把语言指定为 javacript，这样既能使用 json 又能加字段注释了。但为什么用 json 呢？因为 Protocol Buffers 官方定义了 json 的表示格式，我们的业务框架同时支持 protobuf 和 json 两种编码。使用 json 表达不会丢失定义信息，而且阅读也稍微方便一些。</p>
+<p>每个 method 都有 Input 和 Output 两个字段，分别表示接口的入参和出参。下面开始讨论如何提取每个字段的信息。</p>
+<h3 id="markdown-文档效果"><a class="markdownIt-Anchor" href="#markdown-文档效果"></a> markdown 文档效果</h3>
+<p>在开始之前，我们先简单说一下 markdown 消息输出效果（这部分是我自己定义的，仅供大家参考）。</p>
+<p>对于简单类型字段，比如</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">// 字段注释</span><br><span class="line">int32 a = 1; // 行尾注释</span><br><span class="line">double b = 2;</span><br><span class="line">string c = 3;</span><br></pre></td></tr></tbody></table></figure>
+<p>我会转换成（这是合法的 javascript 代码，类 json）</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">// 字段注释</span><br><span class="line">a: 0, // type&lt;int32&gt;, 行尾注释</span><br><span class="line">b: 0.0,</span><br><span class="line">c: "",</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="类型映射"><a class="markdownIt-Anchor" href="#类型映射"></a> 类型映射</h3>
+<p>字段名保持不变，字段值根据类型自动生成，一般取对应的类型的空值（整数类的为  <code>0</code>，字符串为  <code>""</code>，布尔值为  <code>false</code>，浮点数为  <code>0.0</code>  等，但 64 位整数对应  <code>"0"</code>，这个也是遵守 Protocol Buffers 与 json 的官方映射规则）。</p>
+<p>然后会给每个字段添加类型注释，格式是<code>type&lt;T&gt;</code>，这里的 T 对应 proto 文件的类型声明。如果 proto 字段本身也有行为注释，则会追加到类型注释之后。</p>
+<h4 id="message"><a class="markdownIt-Anchor" href="#message"></a> message</h4>
+<p>如果字段的类型是 message，则会转换成 json 的 object 语法，并且类型注释<code>type&lt;MessageName&gt;</code>。消息的每个字段会按照前面说的字段规则转换。比如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">Foo a = 1;</span><br></pre></td></tr></tbody></table></figure>
+<p>会变成：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">a: {</span><br><span class="line">  // ...</span><br><span class="line">} // type&lt;Foo&gt;</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="repeated"><a class="markdownIt-Anchor" href="#repeated"></a> repeated</h4>
+<p>如果是 repeated 类型的字段，则会在转换之后的结果两侧添加<code>[]</code>，然后再追加类型注释<code>list&lt;T&gt;</code>。这里 T 可以是普通类型，也可以是 message 类型。比如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">repeated int32 a = 1;</span><br><span class="line">repeated Foo b = 2;</span><br></pre></td></tr></tbody></table></figure>
+<p>会变成：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">a: [</span><br><span class="line">  0</span><br><span class="line">], // list&lt;int32&gt;</span><br><span class="line">b: [{</span><br><span class="line">  // ...</span><br><span class="line">}], // list&lt;Foo&gt;</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="map"><a class="markdownIt-Anchor" href="#map"></a> map</h4>
+<p>如果是 map 类型的字段，同样也会转换成 javascript 的 object 语法，但 key 会使用字符串，key 和 value 的值都使用对应空值。同时会追加类型注释<code>map&lt;k,v&gt;</code>。比如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">map&lt;int32,string&gt; a = 1;</span><br></pre></td></tr></tbody></table></figure>
+<p>会转换成</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">a: {</span><br><span class="line">  "0": ""</span><br><span class="line">}, // map&lt;in32,string&gt;</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="enum"><a class="markdownIt-Anchor" href="#enum"></a> enum</h4>
+<p>protoc-gen-markdown 对于枚举类型会直接转换成字符串，值为枚举的默认值（零值），同时追加类型注释<code>enum&lt;E1,E2,...&gt;</code>。比如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">enum Platform {</span><br><span class="line">  All = 0;</span><br><span class="line">  Web = 1;</span><br><span class="line">  Ios = 2;</span><br><span class="line">  Android = 3;</span><br><span class="line">}</span><br><span class="line">Platform a = 1;</span><br></pre></td></tr></tbody></table></figure>
+<p>会转化成：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">a: "All", // enum&lt;All,Web,Ios,Android&gt;</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="递归处理"><a class="markdownIt-Anchor" href="#递归处理"></a> 递归处理</h3>
+<p>因为 proto 支持嵌套定义，所以我们需要从最外层的 message 开始<strong>递归处理</strong>所有字段。</p>
+<p>对于每一个 message，我定义了一个方法：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">func (md *markdown) jsDocForMessage(m *protogen.Message) string {</span><br><span class="line">  js := "{\n"</span><br><span class="line">  for _, field := range m.Fields {</span><br><span class="line">    js += md.jsDocForField(field)</span><br><span class="line">  }</span><br><span class="line">  js += "}"</span><br><span class="line">  return js</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>主要是生成最外面的”{}“，然后是处理每一个字段。<code>jsDocForField</code>的整体结构如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">func (md *markdown) jsDocForField(field *protogen.Field) string {</span><br><span class="line">  // 追加字段注释</span><br><span class="line">  js := field.Comments.Leading.String()</span><br><span class="line">  // 生成字段名</span><br><span class="line">  js += string(field.Desc.Name()) + ":"</span><br><span class="line">  // 确定字段值的取值和类型</span><br><span class="line">  var vv,vt string</span><br><span class="line">  if field.Desc.IsMap() {</span><br><span class="line">  } else if field.Message != nil {</span><br><span class="line">  } else if field.Enum != nil {</span><br><span class="line">  } else if field.Oneof != nil {</span><br><span class="line">  } else {</span><br><span class="line">  }</span><br><span class="line">  // 添加类型注释</span><br><span class="line">  if field.Desc.IsList() {</span><br><span class="line">    js += fmt.Sprintf("[%s], // list&lt;%s&gt;", vv, vt)</span><br><span class="line">  } else if field.Desc.IsMap() {</span><br><span class="line">    js += vv + fmt.Sprintf(", // map&lt;%s&gt;", vt)</span><br><span class="line">  } else if field.Enum != nil {</span><br><span class="line">    js += vv + fmt.Sprintf(", // enum&lt;%s&gt;", vt)</span><br><span class="line">  } else {</span><br><span class="line">    js += vv + fmt.Sprintf(", // type&lt;%s&gt;", vt)</span><br><span class="line">  }</span><br><span class="line">  // 追加行尾注释</span><br><span class="line">  return js</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>对于简单字段，可以直接调用  <code>scalarDefaultValue</code>  确定默认值。而对应的类型可以直接通过<code>field.Desc.Kind().String()</code>  获取。这个比较简单。</p>
+<p>Protocol Buffers 在内部会把 map 转换成下面这样的 message，</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">message MapFieldEntry {</span><br><span class="line">  key_type key = 1;</span><br><span class="line">  value_type value = 2;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>所以我们需要先处理 map 类型的字段，再处理 message 类型的字段。protogen 提供了  <code>IsMap</code>  方法供我们使用。如果  <code>IsMap</code>  返回  <code>false</code>，而  <code>filed.Message</code>  不为  <code>nil</code>，那才 message 类型字段。</p>
+<p>对于 message 类型的字段也很简单，直接递归调用  <code>jsDocForMessage</code>  获取取值的 json 表示，其类型可以通过<code>field.Message.Desc.Name()</code>获得。</p>
+<p>如果是 map 类型，我们可以通过  <code>.Message</code>  字段取到  <code>MapFieldEntry</code>  消息。然后根据<code>Fields[0]</code>和<code>Fields[1]</code>构造 map 的取值和类型。</p>
+<p>对于 Enum 类型，可以直接通过  <code>.Enum</code>  读取相关信息，也比较简单。</p>
+<p>另外，我们需要美化一下 json 的格式，主要是调整缩进。本身处理 protogen 消息已经很复杂了，如果还要手工维护缩进只会难上加难。于是我找了一个 go 语言实现的 javascript 格式化库 jsbeautifier，在消息返回之前统一格式化一下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">options := jsbeautifier.DefaultOptions()</span><br><span class="line">js, _ = jsbeautifier.Beautify(&amp;js, options)</span><br></pre></td></tr></tbody></table></figure>
+<p>因为我们是递归实现的，如果在 proto 文件中使用了递归定义，比如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">message Foo {</span><br><span class="line">  int32 a = 1;</span><br><span class="line">  Foo b = 2;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="递归定义消息"><a class="markdownIt-Anchor" href="#递归定义消息"></a> 递归定义消息</h4>
+<p>不加处理的话会导致栈溢出错误。为此，我维护了一个栈，保存当前正在处理消息。如果碰到递归定义，则直接返回<code>{}</code>。如此一来，刚才的定义会转化成：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">{</span><br><span class="line">  a: 0,</span><br><span class="line">  b: {}, // type&lt;Foo&gt;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<p>以上就是本文的全部内容了。本文定义了一套从 proto 生成 markdown 文档的规则并基于最新的<code>google.golang.org/protobuf/compiler/protogen</code>包实现了 protoc-gen-markdown 插件。阅读本文和 protoc-gen-markdown 源码，可以掌握 protoc 插件开发的基础知识。希望每一位读者都能掌握这一技能。</p>
+<p>今天(2022-05-12)收到 knight0zh 的留言：</p>
+<blockquote>
+<p>如果每次调试都需要编译一下会特别麻烦，也无法使用debug等工具</p>
+</blockquote>
+<p>这是一个好问题。因为插件是通过 protoc 调用的，没有特别好的方式来实现单步调试。</p>
+<p>我一直使用 print 大法。不过你不能直接打印调试信息，这会影响 protoc 跟插件之前的通信。正确的做法是打印到<code>stderr</code>流。</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">fmt.Fprintf(os.Stderr, "Fprintln: %v\n", err)</span><br></pre></td></tr></tbody></table></figure>]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>protobuf</tag>
       </tags>
   </entry>
   <entry>
