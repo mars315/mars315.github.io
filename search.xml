@@ -1,85 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Eralng系列文章</title>
-    <url>/2017/12/24/Erlang/</url>
-    <content><![CDATA[<h1 id="eralng系列文章"><a class="markdownIt-Anchor" href="#eralng系列文章"></a> Eralng系列文章</h1>
-<table>
-<thead>
-<tr>
-<th>Author</th>
-<th>snail</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>E-mail</td>
-<td><a href="mailto:254262243@qq.com">254262243@qq.com</a></td>
-</tr>
-</tbody>
-</table>
-<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
-<p>从业以来一直用C++，面对各种问题特别管理一个C<ins>团队时在服务器健壮性、效率等等方面做的工作又多又繁琐，人工以及各种工具齐上阵，深感心力交瘁。后来机缘巧合接触到Erlang，初识Erlang感觉很神奇无不为其各种特性所折服。但随后实际项目的应用过程中还是出现了各种问题，虽然相对于C</ins>难度有所降低，但是对于C++有多年的经验，在处理各种问题上都有相应的经验；但是Erlang运行于Erlang VM上还有各种封装，如果不了解一些内部细节在处理各种问题时真是摸不着头脑。我在工作中别人问的最多的问题或者我当初在写代码时最想知道的问题大概有如下几个：</p>
-<blockquote>
-<p>为什么一个进程的消息队列堆积会导致真个VM效率下降?<br>
-变量在什么地方分配在堆？栈？还是什么地方？<br>
-对于变量不可以变每次修改是否会重新分配?在哪里分配？效率怎么样?<br>
-进程什么时候GC？怎样做GC？GC堆进程影响？<br>
-进程内存(erlang:memory/1) 由哪些部分组成？<br>
-怎样调优VM以及自己逻辑的代码？<br>
-…</p>
-</blockquote>
-<p>上面的这些问题如果不了Erlang的调度器、VM、内存管理策略、GC、以及进程的实现等等很难找准方向，在<a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考很多资料</a>，写了后面<a href="#%E6%96%87%E7%AB%A0">四个文档</a>用来对我看过的资料做个总结</p>
-<h2 id="文章"><a class="markdownIt-Anchor" href="#文章"></a> 文章</h2>
-<ul>
-<li>
-<a href="/2017/12/24/ErlangScheduler/" title="[Eralng VM Scheduler]">[Eralng VM Scheduler]</a>  
-</li>
-<li>
-<a href="/2017/12/24/ErlangMemoryAllocator/" title="[Eralng Memory Allocator]">[Eralng Memory Allocator]</a>
-</li>
-<li>
-<a href="/2017/12/24/ErlangGarbageCollection/" title="[Eralng Garbage Collection]">[Eralng Garbage Collection]</a>
-</li>
-<li>
-<a href="/2017/12/24/ErlangProcess/" title="[Eralng Process]">[Eralng Process]</a>
-</li>
-</ul>
-<h2 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h2>
-<ul>
-<li>
-<a href="/2017/12/24/ErlangNodeConnect/" title="[Eralng 节点互联]">[Eralng 节点互联]</a>
-</li>
-<li>
-<a href="/2017/12/24/ReadingNotes/" title="[Eralng 读书笔记]">[Eralng 读书笔记]</a>
-</li>
-<li>
-<a href="/2017/12/24/Erlang2Elixir/" title="[Eralng to Elixir]">[Eralng to Elixir]</a>
-</li>
-</ul>
-<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
-<blockquote>
-<p><a href="http://blog.yufeng.info/">霸爷的博客</a><br>
-<a href="https://happi.github.io/theBeamBook">The Beam Book</a><br>
-高伸缩性系统：Erlang/OTP大型分布式容错设计<br>
-<a href="https://github.com/ferd">Fred Hebert</a><br>
-<a href="https://github.com/garazdawi">Lukas Larsson</a><br>
-<a href="https://www.erlang-solutions.com/">Erlang solution</a><br>
-<a href="https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/">Erlang Otp Internal Doc</a><br>
-<a href="http://www.erlang-factory.com/">Erlang Factory</a><br>
-<a href="http://bit.ly/2FtbBAL">Code BEAM SF</a><br>
-<a href="https://codesync.global/">Code Sync</a><br>
-其他的博客、文档 等等</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Erlang</category>
-      </categories>
-      <tags>
-        <tag>Erlang</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Erlang to Elixir</title>
     <url>/2017/12/24/Erlang2Elixir/</url>
     <content><![CDATA[<h1 id="erlang-to-elixir"><a class="markdownIt-Anchor" href="#erlang-to-elixir"></a> Erlang to Elixir</h1>
@@ -173,6 +94,85 @@ iex&gt;  “Hello #{name}”<br>
       </tags>
   </entry>
   <entry>
+    <title>Eralng系列文章</title>
+    <url>/2017/12/24/Erlang/</url>
+    <content><![CDATA[<h1 id="eralng系列文章"><a class="markdownIt-Anchor" href="#eralng系列文章"></a> Eralng系列文章</h1>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>snail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E-mail</td>
+<td><a href="mailto:254262243@qq.com">254262243@qq.com</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<p>从业以来一直用C++，面对各种问题特别管理一个C<ins>团队时在服务器健壮性、效率等等方面做的工作又多又繁琐，人工以及各种工具齐上阵，深感心力交瘁。后来机缘巧合接触到Erlang，初识Erlang感觉很神奇无不为其各种特性所折服。但随后实际项目的应用过程中还是出现了各种问题，虽然相对于C</ins>难度有所降低，但是对于C++有多年的经验，在处理各种问题上都有相应的经验；但是Erlang运行于Erlang VM上还有各种封装，如果不了解一些内部细节在处理各种问题时真是摸不着头脑。我在工作中别人问的最多的问题或者我当初在写代码时最想知道的问题大概有如下几个：</p>
+<blockquote>
+<p>为什么一个进程的消息队列堆积会导致真个VM效率下降?<br>
+变量在什么地方分配在堆？栈？还是什么地方？<br>
+对于变量不可以变每次修改是否会重新分配?在哪里分配？效率怎么样?<br>
+进程什么时候GC？怎样做GC？GC堆进程影响？<br>
+进程内存(erlang:memory/1) 由哪些部分组成？<br>
+怎样调优VM以及自己逻辑的代码？<br>
+…</p>
+</blockquote>
+<p>上面的这些问题如果不了Erlang的调度器、VM、内存管理策略、GC、以及进程的实现等等很难找准方向，在<a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考很多资料</a>，写了后面<a href="#%E6%96%87%E7%AB%A0">四个文档</a>用来对我看过的资料做个总结</p>
+<h2 id="文章"><a class="markdownIt-Anchor" href="#文章"></a> 文章</h2>
+<ul>
+<li>
+<a href="/2017/12/24/ErlangScheduler/" title="[Eralng VM Scheduler]">[Eralng VM Scheduler]</a>  
+</li>
+<li>
+<a href="/2017/12/24/ErlangMemoryAllocator/" title="[Eralng Memory Allocator]">[Eralng Memory Allocator]</a>
+</li>
+<li>
+<a href="/2017/12/24/ErlangGarbageCollection/" title="[Eralng Garbage Collection]">[Eralng Garbage Collection]</a>
+</li>
+<li>
+<a href="/2017/12/24/ErlangProcess/" title="[Eralng Process]">[Eralng Process]</a>
+</li>
+</ul>
+<h2 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h2>
+<ul>
+<li>
+<a href="/2017/12/24/ErlangNodeConnect/" title="[Eralng 节点互联]">[Eralng 节点互联]</a>
+</li>
+<li>
+<a href="/2017/12/24/ReadingNotes/" title="[Eralng 读书笔记]">[Eralng 读书笔记]</a>
+</li>
+<li>
+<a href="/2017/12/24/Erlang2Elixir/" title="[Eralng to Elixir]">[Eralng to Elixir]</a>
+</li>
+</ul>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<blockquote>
+<p><a href="http://blog.yufeng.info/">霸爷的博客</a><br>
+<a href="https://happi.github.io/theBeamBook">The Beam Book</a><br>
+高伸缩性系统：Erlang/OTP大型分布式容错设计<br>
+<a href="https://github.com/ferd">Fred Hebert</a><br>
+<a href="https://github.com/garazdawi">Lukas Larsson</a><br>
+<a href="https://www.erlang-solutions.com/">Erlang solution</a><br>
+<a href="https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/">Erlang Otp Internal Doc</a><br>
+<a href="http://www.erlang-factory.com/">Erlang Factory</a><br>
+<a href="http://bit.ly/2FtbBAL">Code BEAM SF</a><br>
+<a href="https://codesync.global/">Code Sync</a><br>
+其他的博客、文档 等等</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Erlang</category>
+      </categories>
+      <tags>
+        <tag>Erlang</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Erlang Garbage Collection</title>
     <url>/2017/12/24/ErlangGarbageCollection/</url>
     <content><![CDATA[<h1 id="garbage-collection"><a class="markdownIt-Anchor" href="#garbage-collection"></a> Garbage Collection</h1>
@@ -247,6 +247,68 @@ iex&gt;  “Hello #{name}”<br>
       <tags>
         <tag>Erlang</tag>
         <tag>gc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Erlang Process</title>
+    <url>/2017/12/24/ErlangProcess/</url>
+    <content><![CDATA[<h1 id="process"><a class="markdownIt-Anchor" href="#process"></a> Process</h1>
+<h3 id="什么是进程"><a class="markdownIt-Anchor" href="#什么是进程"></a> 什么是进程</h3>
+<p>这里的进程不是指操作系统意义上的进程，而是一个孤立的实体，进程是运行你的代码的地方，通过将错误的影响隔离到执行错误代码的进程，进程可以保护系统免受代码错误的影响。</p>
+<h3 id="进程内存"><a class="markdownIt-Anchor" href="#进程内存"></a> 进程内存</h3>
+<p>进程的内存分为四个部分：栈、堆、邮箱、进程控制块（Process Control Block）。</p>
+<blockquote>
+<p>可以用使用查看内部表示，但是这些仅仅用来调试或者理解内部机制用<br>
+hipe_bifs:show_estack/1、 hipe_bifs:show_nstack/1、hipe_bifs:show_heap/1、<br>
+hipe_bifs:show_pcb/1、 hipe_bifs:show_term/1</p>
+</blockquote>
+<ul>
+<li>可以参考下面两张图理解</li>
+</ul>
+<span id="more"></span> 
+<p><img src="/images/ProcessMemory.png" alt="进程内存"></p>
+<figure class="highlight erlang"><table><tbody><tr><td class="code"><pre><span class="line">           Shared Heap                        Erlang Process Memory Layout                  </span><br><span class="line">                                                                                            </span><br><span class="line">+----------------------------------+      +----------------------------------+              </span><br><span class="line">|                                  |      |                                  |              </span><br><span class="line">|                                  |      |  PID / Status / Registered Name  |       Process</span><br><span class="line">|                                  |      |                                  |       Control</span><br><span class="line">|                                  |      |   Initial Call / Current Call    +----&gt;  Block  </span><br><span class="line">|                                  |      |                                  |       (PCB)  </span><br><span class="line">|                                  |      |         Mailbox Pointers         |              </span><br><span class="line">|                                  |      |                                  |              </span><br><span class="line">|                                  |      +----------------------------------+              </span><br><span class="line">|                                  |      |                                  |              </span><br><span class="line">|                                  |      |        Function Parameters       |              </span><br><span class="line">|                                  |      |                                  |       Process</span><br><span class="line">|                                  |      |         Return Addresses         +----&gt;  Stack  </span><br><span class="line">|                                  |      |                                  |              </span><br><span class="line">|    +--------------+              |      |         Local Variables          |              </span><br><span class="line">|    |              |              |      |                                  |              </span><br><span class="line">|    | +------------+--+           |      +-------------------------------+--+              </span><br><span class="line">|    | |               |           |      |                               |  |              </span><br><span class="line">|    | | +-------------+--+        |      |  ^                            v  +----&gt;  Free   </span><br><span class="line">|    | | |                |        |      |  |                               |       Space  </span><br><span class="line">|    | | | +--------------+-+      |      +--+-------------------------------+              </span><br><span class="line">|    +-+ | |                |      |      |                                  |              </span><br><span class="line">|      +-+ |  Refc Binary   |      |      |  Mailbox Messages (Linked List)  |              </span><br><span class="line">|        +-+                |      |      |                                  |              </span><br><span class="line">|          +------^---------+      |      |  Compound Terms (List, Tuples)   |       Process</span><br><span class="line">|                 |                |      |                                  +----&gt;  Private</span><br><span class="line">|                 |                |      |     Terms Larger than a word     |       Heap   </span><br><span class="line">|                 |                |      |                                  |              </span><br><span class="line">|                 +--+ ProcBin +-------------+ Pointers to Large Binaries    |              </span><br><span class="line">|                                  |      |                                  |              </span><br><span class="line">+----------------------------------+      +----------------------------------+              </span><br></pre></td></tr></tbody></table></figure>
+<h3 id="进程控制块"><a class="markdownIt-Anchor" href="#进程控制块"></a> 进程控制块</h3>
+<p>记录进程的各种信息的一个结构，这个结构的每个字段记录着进程状态，对应源代码中有个叫做<code>process</code>的结构体，该结构体位于<a href="https://github.com/erlang/otp/blob/OTP-19.3/erts/emulator/beam/erl_process.h"><code>erl_process.h</code></a></p>
+<ul>
+<li>PCB 内部结构以及部分字段的含义</li>
+</ul>
+<figure class="highlight erlang"><table><tbody><tr><td class="code"><pre><span class="line">---------------------------------------------------------------</span><br><span class="line">Offset| Name        | Value              | *Value             |</span><br><span class="line">    0 | id          | 0x000001d0000003a3 |PID             </span><br><span class="line">   72 | htop        | 0x00007f7f33f15298 |pointers to the top of the heap                   </span><br><span class="line">   96 | hend        | 0x00007f7f33f16540 |points to the stop of the whole heap                  </span><br><span class="line">   88 | heap        | 0x00007f7f33f11470 |points to heap start                 </span><br><span class="line">  104 | heap_sz     | 0x0000000000000a1a | gives the size of the heap in words <span class="params">(hend - heap = heap_sz * <span class="number">8</span> on a <span class="number">64</span> bit machine )</span>                    </span><br><span class="line">   80 | stop        | 0x00007f7f33f16480 |pointers to the top of the stack                   </span><br><span class="line">  592 | gen_gcs     | 0x0000000000000012 |Number of <span class="params">(minor)</span> generational GCs.</span><br><span class="line">  <span class="number">594</span> | max_gen_gcs | <span class="number">0</span>x000000000000ffff |Max minor gen GCs before fullsweep.</span><br><span class="line">  <span class="number">552</span> | high_water  | <span class="number">0</span>x00007f7f33f11c50 |                    |</span><br><span class="line">  <span class="number">560</span> | old_hend    | <span class="number">0</span>x00007f7f33e90648 |                    |</span><br><span class="line">  <span class="number">568</span> | old_htop    | <span class="number">0</span>x00007f7f33e8f8e8 |                    |</span><br><span class="line">  <span class="number">576</span> | old_head    | <span class="number">0</span>x00007f7f33e8e770 |                    |</span><br><span class="line">  <span class="number">112</span> | min_heap_size | <span class="number">0</span>x00000000000000e9 |in words, that the heap starts with <span class="keyword">and</span> which it will <span class="keyword">not</span> shrink smaller than, the default value is <span class="number">233</span>.</span><br><span class="line">  <span class="number">328</span> | rcount      | <span class="number">0</span>x0000000000000000 | suspend count </span><br><span class="line">  <span class="number">336</span> | reds        | <span class="number">0</span>x0000000000002270 | keep track <span class="keyword">of</span> the total number <span class="keyword">of</span> reductions a process has done up until it was last suspended  </span><br><span class="line">   <span class="number">16</span> | tracer      | <span class="number">0</span>xfffffffffffffffb |                    |</span><br><span class="line">   <span class="number">24</span> | trace_fla.. | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">344</span> | group_lea.. | <span class="number">0</span>x0000019800000333 |                    |</span><br><span class="line">  <span class="number">352</span> | flags       | <span class="number">0</span>x0000000000002000 |Trap exit, etc (no trace flags anymore)                    </span><br><span class="line">  <span class="number">360</span> | fvalue      | <span class="number">0</span>xfffffffffffffffb |Exit &amp; Throw value (failure reason)</span><br><span class="line">  <span class="number">368</span> | freason     | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">320</span> | fcalls      | <span class="number">0</span>x00000000000005a2 | keeps the number <span class="keyword">of</span> reductions left to execute   </span><br><span class="line">  <span class="number">384</span> | next        | <span class="number">0</span>x0000000000000000 |next ready(runnable) process  in the ready queue <span class="keyword">of</span> scheduler    </span><br><span class="line">   <span class="number">48</span> | reg         | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">56</span> | nlinks      | <span class="number">0</span>x00007f7f3cbc0750 |                    |</span><br><span class="line">  <span class="number">616</span> | mbuf        | <span class="number">0</span>x0000000000000000 |a memory area outside <span class="keyword">of</span> a process heap where other processes can safely write data                    </span><br><span class="line">  <span class="number">640</span> | mbuf_sz     | <span class="number">0</span>x0000000000000000 |Total size <span class="keyword">of</span> heap fragments <span class="keyword">and</span> message fragments</span><br><span class="line">  <span class="number">464</span> | dictionary  | <span class="number">0</span>x0000000000000000 | Process Dictionary                   </span><br><span class="line">  <span class="number">472</span> | seq..clock  | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">480</span> | seq..astcnt | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">488</span> | seq..token  | <span class="number">0</span>xfffffffffffffffb |                    |</span><br><span class="line">  <span class="number">496</span> | intial[<span class="number">0</span>]   | <span class="number">0</span>x000000000000320b |                    |</span><br><span class="line">  <span class="number">504</span> | intial[<span class="number">1</span>]   | <span class="number">0</span>x0000000000000c8b |                    |</span><br><span class="line">  <span class="number">512</span> | intial[<span class="number">2</span>]   | <span class="number">0</span>x0000000000000002 |                    |</span><br><span class="line">  <span class="number">520</span> | current     | <span class="number">0</span>x00007f7f3be87c20 | <span class="number">0</span>x000000000000ed8b |</span><br><span class="line">  <span class="number">296</span> | cp          | <span class="number">0</span>x00007f7f3d3a5100 | <span class="number">0</span>x0000000000440848 |</span><br><span class="line">  <span class="number">304</span> | i           | <span class="number">0</span>x00007f7f3be87c38 | <span class="number">0</span>x000000000044353a |</span><br><span class="line">  <span class="number">312</span> | catches     | <span class="number">0</span>x0000000000000001 |                    |</span><br><span class="line">  <span class="number">224</span> | arity       | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">232</span> | arg_reg     | <span class="number">0</span>x00007f7f3cbc04f8 | <span class="number">0</span>x000000000000320b |</span><br><span class="line">  <span class="number">240</span> | max_arg_reg | <span class="number">0</span>x0000000000000006 |                    |</span><br><span class="line">  <span class="number">248</span> | def..reg[<span class="number">0</span>] | <span class="number">0</span>x000000000000320b |                    |</span><br><span class="line">  <span class="number">256</span> | def..reg[<span class="number">1</span>] | <span class="number">0</span>x0000000000000c8b |                    |</span><br><span class="line">  <span class="number">264</span> | def..reg[<span class="number">2</span>] | <span class="number">0</span>x00007f7f33ec9589 |                    |</span><br><span class="line">  <span class="number">272</span> | def..reg[<span class="number">3</span>] | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">280</span> | def..reg[<span class="number">4</span>] | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">288</span> | def..reg[<span class="number">5</span>] | <span class="number">0</span>x00000000000007d0 |                    |</span><br><span class="line">  <span class="number">136</span> | nsp         | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">144</span> | nstack      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">152</span> | nstend      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">160</span> | ncallee     | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">56</span> | ncsp        | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">64</span> | narity      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">---------------------------------------------------------------</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="邮箱以及消息传递"><a class="markdownIt-Anchor" href="#邮箱以及消息传递"></a> 邮箱以及消息传递</h3>
+<p>Erlang所有的进程通过消息相互沟通。<br>
+消息怎么发送呢？</p>
+<ol>
+<li><a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_message.c#L1031">计算消息的大小</a></li>
+<li><a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_message.c#L1033">分配足够空间</a>（在发送者进程(<code>on_heap</code>)或者在不在发送者（<code>off_heap</code>）堆上）</li>
+<li><a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_message.c#L1040">复制消息</a> (从发送者的堆上复制到新分配的空间上)</li>
+<li>分配一个<code>ErlMessage</code>结构用于包装消息</li>
+<li>将消息(<code>ErlMessage</code>)<a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_message.c#L502">插入</a>  消息接收进程<a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_process.h#L1042">邮箱</a>（或者外部消息队列）</li>
+</ol>
+<blockquote>
+<p>还有进程消息相关设置<code>message_queue_data</code> <code>on_heap</code> <code>off_heap</code>, 是否需要设置<code>message_queue_data</code> 要根据实际情况以及基准测试决定。<a href="https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/GarbageCollection.md#messages">More</a></p>
+</blockquote>
+<p>❗ on_heap</p>
+<blockquote>
+<p>在上面第五步时，发送消息的进程在发送消息时，会首先尝试获取接收消息进程的 <code>main lock</code> ，如果能获得了锁，就把消息写入 接受者的邮箱，否则就不会把消息写入<code>m_buf</code>中（也称为 <code>heap fragments</code>），在进程GC的时如果有大量的消息没有被处理，消息被移动到 <code>old heap</code>，这将会导致进程堆内存增长，并消耗更多的内存使用。</p>
+</blockquote>
+<p>❗ off_heap</p>
+<blockquote>
+<p>在上面第五步时，不会尝试去获取<code>main lock</code>，消息直接吸入 <code>m_buf</code> 。虽然这这回降低锁冲突，但是分配 <code>heap fragment</code>相比直接吸入进程堆消耗更高，会导致更高的内存使用率，可能会出现进程堆内存由很多空余，但是新的消息依然被写入 新的 <code>heap fragment</code></p>
+</blockquote>
+<p>❗ 在GC时处于邮箱（<code>internal message queue</code>）中的消息将会被检查，而处于"external" <code>message in queue</code>(<code>m_buf</code>)会被GC忽略。</p>
+<h3 id="进程字典"><a class="markdownIt-Anchor" href="#进程字典"></a> 进程字典</h3>
+<p>进程本地kv存储，最大优势是所有键值都存储在进程堆内存，效率相当的高而且由于在进程内部使用所以不会被复制。（消息或者ETS中的变量会复制）。 进程字典是由一个数组实现的，每个哈希值指向具有键值对的桶(<code>bucket</code>)。桶实际上Erlang中的<code>list</code>,每个元素是一个存放于进程堆上的元组({key, Value})。<br>
+❗ 但是这并不是没有代价的，可能会导致进程GC或者当更新某个key对应的值时，会导致整个桶被重新分配。</p>
+<h3 id="进程状态"><a class="markdownIt-Anchor" href="#进程状态"></a> 进程状态</h3>
+<p><img src="/images/ProcessStateMachine.png" alt="进程状态机"></p>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<p><a href="https://happi.github.io/theBeamBook">The Beam Book</a></p>
+]]></content>
+      <categories>
+        <category>Erlang</category>
+      </categories>
+      <tags>
+        <tag>Erlang</tag>
       </tags>
   </entry>
   <entry>
@@ -491,68 +553,6 @@ carriers_size 可以理解成Erlang向系统申请的内存</p>
       </tags>
   </entry>
   <entry>
-    <title>Erlang Process</title>
-    <url>/2017/12/24/ErlangProcess/</url>
-    <content><![CDATA[<h1 id="process"><a class="markdownIt-Anchor" href="#process"></a> Process</h1>
-<h3 id="什么是进程"><a class="markdownIt-Anchor" href="#什么是进程"></a> 什么是进程</h3>
-<p>这里的进程不是指操作系统意义上的进程，而是一个孤立的实体，进程是运行你的代码的地方，通过将错误的影响隔离到执行错误代码的进程，进程可以保护系统免受代码错误的影响。</p>
-<h3 id="进程内存"><a class="markdownIt-Anchor" href="#进程内存"></a> 进程内存</h3>
-<p>进程的内存分为四个部分：栈、堆、邮箱、进程控制块（Process Control Block）。</p>
-<blockquote>
-<p>可以用使用查看内部表示，但是这些仅仅用来调试或者理解内部机制用<br>
-hipe_bifs:show_estack/1、 hipe_bifs:show_nstack/1、hipe_bifs:show_heap/1、<br>
-hipe_bifs:show_pcb/1、 hipe_bifs:show_term/1</p>
-</blockquote>
-<ul>
-<li>可以参考下面两张图理解</li>
-</ul>
-<span id="more"></span> 
-<p><img src="/images/ProcessMemory.png" alt="进程内存"></p>
-<figure class="highlight erlang"><table><tbody><tr><td class="code"><pre><span class="line">           Shared Heap                        Erlang Process Memory Layout                  </span><br><span class="line">                                                                                            </span><br><span class="line">+----------------------------------+      +----------------------------------+              </span><br><span class="line">|                                  |      |                                  |              </span><br><span class="line">|                                  |      |  PID / Status / Registered Name  |       Process</span><br><span class="line">|                                  |      |                                  |       Control</span><br><span class="line">|                                  |      |   Initial Call / Current Call    +----&gt;  Block  </span><br><span class="line">|                                  |      |                                  |       (PCB)  </span><br><span class="line">|                                  |      |         Mailbox Pointers         |              </span><br><span class="line">|                                  |      |                                  |              </span><br><span class="line">|                                  |      +----------------------------------+              </span><br><span class="line">|                                  |      |                                  |              </span><br><span class="line">|                                  |      |        Function Parameters       |              </span><br><span class="line">|                                  |      |                                  |       Process</span><br><span class="line">|                                  |      |         Return Addresses         +----&gt;  Stack  </span><br><span class="line">|                                  |      |                                  |              </span><br><span class="line">|    +--------------+              |      |         Local Variables          |              </span><br><span class="line">|    |              |              |      |                                  |              </span><br><span class="line">|    | +------------+--+           |      +-------------------------------+--+              </span><br><span class="line">|    | |               |           |      |                               |  |              </span><br><span class="line">|    | | +-------------+--+        |      |  ^                            v  +----&gt;  Free   </span><br><span class="line">|    | | |                |        |      |  |                               |       Space  </span><br><span class="line">|    | | | +--------------+-+      |      +--+-------------------------------+              </span><br><span class="line">|    +-+ | |                |      |      |                                  |              </span><br><span class="line">|      +-+ |  Refc Binary   |      |      |  Mailbox Messages (Linked List)  |              </span><br><span class="line">|        +-+                |      |      |                                  |              </span><br><span class="line">|          +------^---------+      |      |  Compound Terms (List, Tuples)   |       Process</span><br><span class="line">|                 |                |      |                                  +----&gt;  Private</span><br><span class="line">|                 |                |      |     Terms Larger than a word     |       Heap   </span><br><span class="line">|                 |                |      |                                  |              </span><br><span class="line">|                 +--+ ProcBin +-------------+ Pointers to Large Binaries    |              </span><br><span class="line">|                                  |      |                                  |              </span><br><span class="line">+----------------------------------+      +----------------------------------+              </span><br></pre></td></tr></tbody></table></figure>
-<h3 id="进程控制块"><a class="markdownIt-Anchor" href="#进程控制块"></a> 进程控制块</h3>
-<p>记录进程的各种信息的一个结构，这个结构的每个字段记录着进程状态，对应源代码中有个叫做<code>process</code>的结构体，该结构体位于<a href="https://github.com/erlang/otp/blob/OTP-19.3/erts/emulator/beam/erl_process.h"><code>erl_process.h</code></a></p>
-<ul>
-<li>PCB 内部结构以及部分字段的含义</li>
-</ul>
-<figure class="highlight erlang"><table><tbody><tr><td class="code"><pre><span class="line">---------------------------------------------------------------</span><br><span class="line">Offset| Name        | Value              | *Value             |</span><br><span class="line">    0 | id          | 0x000001d0000003a3 |PID             </span><br><span class="line">   72 | htop        | 0x00007f7f33f15298 |pointers to the top of the heap                   </span><br><span class="line">   96 | hend        | 0x00007f7f33f16540 |points to the stop of the whole heap                  </span><br><span class="line">   88 | heap        | 0x00007f7f33f11470 |points to heap start                 </span><br><span class="line">  104 | heap_sz     | 0x0000000000000a1a | gives the size of the heap in words <span class="params">(hend - heap = heap_sz * <span class="number">8</span> on a <span class="number">64</span> bit machine )</span>                    </span><br><span class="line">   80 | stop        | 0x00007f7f33f16480 |pointers to the top of the stack                   </span><br><span class="line">  592 | gen_gcs     | 0x0000000000000012 |Number of <span class="params">(minor)</span> generational GCs.</span><br><span class="line">  <span class="number">594</span> | max_gen_gcs | <span class="number">0</span>x000000000000ffff |Max minor gen GCs before fullsweep.</span><br><span class="line">  <span class="number">552</span> | high_water  | <span class="number">0</span>x00007f7f33f11c50 |                    |</span><br><span class="line">  <span class="number">560</span> | old_hend    | <span class="number">0</span>x00007f7f33e90648 |                    |</span><br><span class="line">  <span class="number">568</span> | old_htop    | <span class="number">0</span>x00007f7f33e8f8e8 |                    |</span><br><span class="line">  <span class="number">576</span> | old_head    | <span class="number">0</span>x00007f7f33e8e770 |                    |</span><br><span class="line">  <span class="number">112</span> | min_heap_size | <span class="number">0</span>x00000000000000e9 |in words, that the heap starts with <span class="keyword">and</span> which it will <span class="keyword">not</span> shrink smaller than, the default value is <span class="number">233</span>.</span><br><span class="line">  <span class="number">328</span> | rcount      | <span class="number">0</span>x0000000000000000 | suspend count </span><br><span class="line">  <span class="number">336</span> | reds        | <span class="number">0</span>x0000000000002270 | keep track <span class="keyword">of</span> the total number <span class="keyword">of</span> reductions a process has done up until it was last suspended  </span><br><span class="line">   <span class="number">16</span> | tracer      | <span class="number">0</span>xfffffffffffffffb |                    |</span><br><span class="line">   <span class="number">24</span> | trace_fla.. | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">344</span> | group_lea.. | <span class="number">0</span>x0000019800000333 |                    |</span><br><span class="line">  <span class="number">352</span> | flags       | <span class="number">0</span>x0000000000002000 |Trap exit, etc (no trace flags anymore)                    </span><br><span class="line">  <span class="number">360</span> | fvalue      | <span class="number">0</span>xfffffffffffffffb |Exit &amp; Throw value (failure reason)</span><br><span class="line">  <span class="number">368</span> | freason     | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">320</span> | fcalls      | <span class="number">0</span>x00000000000005a2 | keeps the number <span class="keyword">of</span> reductions left to execute   </span><br><span class="line">  <span class="number">384</span> | next        | <span class="number">0</span>x0000000000000000 |next ready(runnable) process  in the ready queue <span class="keyword">of</span> scheduler    </span><br><span class="line">   <span class="number">48</span> | reg         | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">56</span> | nlinks      | <span class="number">0</span>x00007f7f3cbc0750 |                    |</span><br><span class="line">  <span class="number">616</span> | mbuf        | <span class="number">0</span>x0000000000000000 |a memory area outside <span class="keyword">of</span> a process heap where other processes can safely write data                    </span><br><span class="line">  <span class="number">640</span> | mbuf_sz     | <span class="number">0</span>x0000000000000000 |Total size <span class="keyword">of</span> heap fragments <span class="keyword">and</span> message fragments</span><br><span class="line">  <span class="number">464</span> | dictionary  | <span class="number">0</span>x0000000000000000 | Process Dictionary                   </span><br><span class="line">  <span class="number">472</span> | seq..clock  | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">480</span> | seq..astcnt | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">488</span> | seq..token  | <span class="number">0</span>xfffffffffffffffb |                    |</span><br><span class="line">  <span class="number">496</span> | intial[<span class="number">0</span>]   | <span class="number">0</span>x000000000000320b |                    |</span><br><span class="line">  <span class="number">504</span> | intial[<span class="number">1</span>]   | <span class="number">0</span>x0000000000000c8b |                    |</span><br><span class="line">  <span class="number">512</span> | intial[<span class="number">2</span>]   | <span class="number">0</span>x0000000000000002 |                    |</span><br><span class="line">  <span class="number">520</span> | current     | <span class="number">0</span>x00007f7f3be87c20 | <span class="number">0</span>x000000000000ed8b |</span><br><span class="line">  <span class="number">296</span> | cp          | <span class="number">0</span>x00007f7f3d3a5100 | <span class="number">0</span>x0000000000440848 |</span><br><span class="line">  <span class="number">304</span> | i           | <span class="number">0</span>x00007f7f3be87c38 | <span class="number">0</span>x000000000044353a |</span><br><span class="line">  <span class="number">312</span> | catches     | <span class="number">0</span>x0000000000000001 |                    |</span><br><span class="line">  <span class="number">224</span> | arity       | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">232</span> | arg_reg     | <span class="number">0</span>x00007f7f3cbc04f8 | <span class="number">0</span>x000000000000320b |</span><br><span class="line">  <span class="number">240</span> | max_arg_reg | <span class="number">0</span>x0000000000000006 |                    |</span><br><span class="line">  <span class="number">248</span> | def..reg[<span class="number">0</span>] | <span class="number">0</span>x000000000000320b |                    |</span><br><span class="line">  <span class="number">256</span> | def..reg[<span class="number">1</span>] | <span class="number">0</span>x0000000000000c8b |                    |</span><br><span class="line">  <span class="number">264</span> | def..reg[<span class="number">2</span>] | <span class="number">0</span>x00007f7f33ec9589 |                    |</span><br><span class="line">  <span class="number">272</span> | def..reg[<span class="number">3</span>] | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">280</span> | def..reg[<span class="number">4</span>] | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">288</span> | def..reg[<span class="number">5</span>] | <span class="number">0</span>x00000000000007d0 |                    |</span><br><span class="line">  <span class="number">136</span> | nsp         | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">144</span> | nstack      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">152</span> | nstend      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">160</span> | ncallee     | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">56</span> | ncsp        | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">64</span> | narity      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">---------------------------------------------------------------</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="邮箱以及消息传递"><a class="markdownIt-Anchor" href="#邮箱以及消息传递"></a> 邮箱以及消息传递</h3>
-<p>Erlang所有的进程通过消息相互沟通。<br>
-消息怎么发送呢？</p>
-<ol>
-<li><a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_message.c#L1031">计算消息的大小</a></li>
-<li><a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_message.c#L1033">分配足够空间</a>（在发送者进程(<code>on_heap</code>)或者在不在发送者（<code>off_heap</code>）堆上）</li>
-<li><a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_message.c#L1040">复制消息</a> (从发送者的堆上复制到新分配的空间上)</li>
-<li>分配一个<code>ErlMessage</code>结构用于包装消息</li>
-<li>将消息(<code>ErlMessage</code>)<a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_message.c#L502">插入</a>  消息接收进程<a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_process.h#L1042">邮箱</a>（或者外部消息队列）</li>
-</ol>
-<blockquote>
-<p>还有进程消息相关设置<code>message_queue_data</code> <code>on_heap</code> <code>off_heap</code>, 是否需要设置<code>message_queue_data</code> 要根据实际情况以及基准测试决定。<a href="https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/GarbageCollection.md#messages">More</a></p>
-</blockquote>
-<p>❗ on_heap</p>
-<blockquote>
-<p>在上面第五步时，发送消息的进程在发送消息时，会首先尝试获取接收消息进程的 <code>main lock</code> ，如果能获得了锁，就把消息写入 接受者的邮箱，否则就不会把消息写入<code>m_buf</code>中（也称为 <code>heap fragments</code>），在进程GC的时如果有大量的消息没有被处理，消息被移动到 <code>old heap</code>，这将会导致进程堆内存增长，并消耗更多的内存使用。</p>
-</blockquote>
-<p>❗ off_heap</p>
-<blockquote>
-<p>在上面第五步时，不会尝试去获取<code>main lock</code>，消息直接吸入 <code>m_buf</code> 。虽然这这回降低锁冲突，但是分配 <code>heap fragment</code>相比直接吸入进程堆消耗更高，会导致更高的内存使用率，可能会出现进程堆内存由很多空余，但是新的消息依然被写入 新的 <code>heap fragment</code></p>
-</blockquote>
-<p>❗ 在GC时处于邮箱（<code>internal message queue</code>）中的消息将会被检查，而处于"external" <code>message in queue</code>(<code>m_buf</code>)会被GC忽略。</p>
-<h3 id="进程字典"><a class="markdownIt-Anchor" href="#进程字典"></a> 进程字典</h3>
-<p>进程本地kv存储，最大优势是所有键值都存储在进程堆内存，效率相当的高而且由于在进程内部使用所以不会被复制。（消息或者ETS中的变量会复制）。 进程字典是由一个数组实现的，每个哈希值指向具有键值对的桶(<code>bucket</code>)。桶实际上Erlang中的<code>list</code>,每个元素是一个存放于进程堆上的元组({key, Value})。<br>
-❗ 但是这并不是没有代价的，可能会导致进程GC或者当更新某个key对应的值时，会导致整个桶被重新分配。</p>
-<h3 id="进程状态"><a class="markdownIt-Anchor" href="#进程状态"></a> 进程状态</h3>
-<p><img src="/images/ProcessStateMachine.png" alt="进程状态机"></p>
-<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
-<p><a href="https://happi.github.io/theBeamBook">The Beam Book</a></p>
-]]></content>
-      <categories>
-        <category>Erlang</category>
-      </categories>
-      <tags>
-        <tag>Erlang</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Erlang Scheduler</title>
     <url>/2017/12/24/ErlangScheduler/</url>
     <content><![CDATA[<h1 id="erlang-scheduler"><a class="markdownIt-Anchor" href="#erlang-scheduler"></a> Erlang Scheduler</h1>
@@ -770,6 +770,69 @@ run queue长度高于平均长度会被标记成emigration，进程会从这个�
       </categories>
       <tags>
         <tag>Erlang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库之分区、分片、分表</title>
+    <url>/2021/07/12/database-sharding-partitioning/</url>
+    <content><![CDATA[<span id="more"></span>]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>分片 分区 垂直扩展 水平扩展</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>项目往事之团队</title>
+    <url>/2021/06/01/project-member/</url>
+    <content><![CDATA[<h2 id="组成"><a class="markdownIt-Anchor" href="#组成"></a> 组成</h2>
+<ul>
+<li>项目总是由形形色色的人构成，不同的专业研发、运营、运维等。重点说说研发，研发包括三个部分：
+<ol>
+<li>程序（一般分为前端/后端、客户端/服务器）。</li>
+<li>策划 (一般分为主策划、剧情、数值、文案，执行等)。</li>
+<li>美术 (一般分为3d,2d,原画，场景，模型，动画等)。</li>
+</ol>
+</li>
+</ul>
+<h2 id="类型"><a class="markdownIt-Anchor" href="#类型"></a> 类型</h2>
+<p>以下只区分程序、策划、美术三大的分类。在所见的团队中大致分为四类：</p>
+<ol>
+<li>要饭类型<br>
+在这类型的团队中，策划是短板。其他成员都在做出盈利产品的所要求的的基准水平线以上。<br>
+策划低于或者稍高于基准线，这个就看天吃饭，让用户老爷们赏点饭吃，靠稳定的服务，运营、美术品质等捞取一点利润，基本上就是个苦逼项目组。</li>
+<li>体弱多病型<br>
+这类型团队中，程序是短板。举个不太恰当的例子，程序的稳定性效率等如同一个人身体的健康，策划的设计理念就是其梦想。梦想很大很好，身体很弱很虚。<br>
+发热、耗电、crash，服务器回档、宕机、卡顿等，这种团队基本就是过了今天没有明天，等死型，当然也有遇到神医，也能病去体健，再创辉煌。但是基本上是在有时间有钱的背景下，偶发的特殊情况。</li>
+<li>希望型<br>
+这种团队中大家能力都在做出盈利产品的所要求的的基准水平线以上，个别特别推出，这种团队基本上属于长期合作，有积累，有默契、有韧劲。离成功只差一个契机，这是大家想去的理想团队。</li>
+<li>无名氏<br>
+这种团队多见于临时拼凑，成立团队的目的各不相同，人员参差不齐，基本上战五渣，见光死。</li>
+</ol>
+<span id="more"></span>  
+<h2 id="经历"><a class="markdownIt-Anchor" href="#经历"></a> 经历</h2>
+<p>第四种团队我在职业生涯经历一次，时长三个月，在我离开之后了解到发生了各种奇葩事情，没几个月解散了。<br>
+第三种团队我也经历过一次，做出了手游项目的第一个爆款RPG。<br>
+其他基本上都是第一种或者第二种团队，这两种中要饭型的团队更多些。我发现一个共同情况，作为项目总负责人PD，总是希望项目其他研发团队帮助项目的短板方，把短板方的工作尽量往其他团队那边转移，通过这样的方式来弥补项目短板，但。最终结果差强人意，导致大家都成了短板。在这过程中，我开始的做法是强烈要求短板方自己或者通过外部手段（招聘、培训等）来提高，但往往受领头人的思维、解决问题能力，更重要的所能调配的资源限制，无法展开，往往变成别人眼中的“喷子”，慢慢的也就躺平了。<br>
+一直在思考的这样的问题，在有限的资源下，怎么才能把事情做成，发挥最大能量？</p>
+<h2 id="谬论"><a class="markdownIt-Anchor" href="#谬论"></a> 谬论</h2>
+<ol>
+<li>放弃没希望的团队。一些团队一边不给资源(时间、人力等)，一边还高举高打，满嘴的愿景，对各种不合理视而不见，凡此种种，及时止损。</li>
+<li>部分团队有着明显的短板，但是受制于手中资源，无法做出改变，要仔细斟酌，以我的目的为优先做思考，为自己展开所有行为提供指引。</li>
+<li>对多努力还已有希望的团队适用，努力争取资源，试试蚂蚁啃大象的策略，先做出局部改变，并让握有资源的人看到，并逐渐把所有相关人员全部拉入解决问题的圈子里来，让我遇到的问题转化成大家都要面对的问题。</li>
+<li>谁的问题，就是谁的问题。对所有不符合产品所有要求的能力基准线以下的人，敦促其主动学习，通过集中培训等方式促进其提高，并对在规定时间仍不达标的人实施转岗、劝退等措施。</li>
+<li>招符合团队素质要求的人，宁缺毋滥，如果不能又快又好，优先选择好。当然适可而止。</li>
+</ol>
+<p><strong>在团队组建的初期就要拿到两样最重要的东西（人事权和钱），最基本的要拿到人事权，选谁用谁得自己说了算。只招复合团队素质的人，宁缺毋滥。</strong></p>
+]]></content>
+      <categories>
+        <category>项目</category>
+        <category>团队</category>
+      </categories>
+      <tags>
+        <tag>项目</tag>
       </tags>
   </entry>
   <entry>
@@ -2285,151 +2348,6 @@ MzYyMzgzMF19
       </tags>
   </entry>
   <entry>
-    <title>数据库之分区、分片、分表</title>
-    <url>/2021/07/12/database-sharding-partitioning/</url>
-    <content><![CDATA[<span id="more"></span>]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>分片 分区 垂直扩展 水平扩展</category>
-      </categories>
-      <tags>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Erlang 读书笔记</title>
-    <url>/2017/12/24/ReadingNotes/</url>
-    <content><![CDATA[<h1 id="erlang-读书笔记"><a class="markdownIt-Anchor" href="#erlang-读书笔记"></a> Erlang 读书笔记</h1>
-<ul>
-<li>erlang:byte_size/0查看binary的字节数量</li>
-<li>erts_debug:flat_size查看变量所占的内存字节数</li>
-<li>erlang timeout的语义是保证事件不会再给定的时间之前触发，就是触发时间&gt;=给定的时间</li>
-<li>Terms are created on the heap by evaluating expressions.</li>
-</ul>
-<blockquote>
-<p>There are two major types of terms:<br>
-<a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_term.h#L88-L97">immediate terms</a> which require no heap space (small integers, atoms, pids, port ids etc) and cons<br>
-<a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_term.h#L106-L120">boxed terms</a> (tuple, big num, binaries etc) that do require heap space.<br>
-Immediate terms do not need any heap space because they are embedded into the containing structure.</p>
-</blockquote>
-<span id="more"></span>
-<ul>
-<li>进程字典实现</li>
-</ul>
-<blockquote>
-<p>由数组实现hash结构，每个都是键值对存放于进程的Heap上<br>
-根据key来算hash值，没有冲突就把{Key，Val}存入数组&gt; 如果有key冲突就是存从一个键值对列表，如果要更新一个Key，将会导致整个bucket被重新分配，确保没有获取到 从old heap指向 new heap的指针</p>
-</blockquote>
-<ul>
-<li>进程的内存由 stack 、heap、 mailbox、 PCB构成</li>
-</ul>
-<blockquote>
-<p>stack：函数返回地址、函数参数、局部变量<br>
-heap: lists 、tuple<br>
-mailbox:待处理的消息<br>
-PCB： 进程控制块</p>
-</blockquote>
-<ul>
-<li>可以使用hipe_bifs:show_*查看进程栈、堆、PCB 内存数据 <em><strong>（仅供调试）</strong></em></li>
-</ul>
-<blockquote>
-<p>hipe_bifs:show_estack/1<br>
-hipe_bifs:show_heap/1<br>
-hipe_bifs:show_pcb/1</p>
-</blockquote>
-<ul>
-<li>PCB 内部结构</li>
-</ul>
-<figure class="highlight erlang"><table><tbody><tr><td class="code"><pre><span class="line">---------------------------------------------------------------</span><br><span class="line">Offset| Name        | Value              | *Value             |</span><br><span class="line">    0 | id          | 0x000001d0000003a3 |PID             </span><br><span class="line">   72 | htop        | 0x00007f7f33f15298 |pointers to the top of the heap                   </span><br><span class="line">   96 | hend        | 0x00007f7f33f16540 |points to the stop of the whole heap                  </span><br><span class="line">   88 | heap        | 0x00007f7f33f11470 |points to heap start                 </span><br><span class="line">  104 | heap_sz     | 0x0000000000000a1a | gives the size of the heap in words <span class="params">(hend - heap = heap_sz * <span class="number">8</span> on a <span class="number">64</span> bit machine )</span>                    </span><br><span class="line">   80 | stop        | 0x00007f7f33f16480 |pointers to the top of the stack                   </span><br><span class="line">  592 | gen_gcs     | 0x0000000000000012 |Number of <span class="params">(minor)</span> generational GCs.</span><br><span class="line">  <span class="number">594</span> | max_gen_gcs | <span class="number">0</span>x000000000000ffff |Max minor gen GCs before fullsweep.</span><br><span class="line">  <span class="number">552</span> | high_water  | <span class="number">0</span>x00007f7f33f11c50 |                    |</span><br><span class="line">  <span class="number">560</span> | old_hend    | <span class="number">0</span>x00007f7f33e90648 |                    |</span><br><span class="line">  <span class="number">568</span> | old_htop    | <span class="number">0</span>x00007f7f33e8f8e8 |                    |</span><br><span class="line">  <span class="number">576</span> | old_head    | <span class="number">0</span>x00007f7f33e8e770 |                    |</span><br><span class="line">  <span class="number">112</span> | min_heap_size | <span class="number">0</span>x00000000000000e9 |in words, that the heap starts with <span class="keyword">and</span> which it will <span class="keyword">not</span> shrink smaller than, the default value is <span class="number">233</span>.</span><br><span class="line">  <span class="number">328</span> | rcount      | <span class="number">0</span>x0000000000000000 | suspend count </span><br><span class="line">  <span class="number">336</span> | reds        | <span class="number">0</span>x0000000000002270 | keep track <span class="keyword">of</span> the total number <span class="keyword">of</span> reductions a process has done up until it was last suspended  </span><br><span class="line">   <span class="number">16</span> | tracer      | <span class="number">0</span>xfffffffffffffffb |                    |</span><br><span class="line">   <span class="number">24</span> | trace_fla.. | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">344</span> | group_lea.. | <span class="number">0</span>x0000019800000333 |                    |</span><br><span class="line">  <span class="number">352</span> | flags       | <span class="number">0</span>x0000000000002000 |Trap exit, etc (no trace flags anymore)                    </span><br><span class="line">  <span class="number">360</span> | fvalue      | <span class="number">0</span>xfffffffffffffffb |Exit &amp; Throw value (failure reason)</span><br><span class="line">  <span class="number">368</span> | freason     | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">320</span> | fcalls      | <span class="number">0</span>x00000000000005a2 | keeps the number <span class="keyword">of</span> reductions left to execute   </span><br><span class="line">  <span class="number">384</span> | next        | <span class="number">0</span>x0000000000000000 |next ready(runnable) process  in the ready queue <span class="keyword">of</span> scheduler    </span><br><span class="line">   <span class="number">48</span> | reg         | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">56</span> | nlinks      | <span class="number">0</span>x00007f7f3cbc0750 |                    |</span><br><span class="line">  <span class="number">616</span> | mbuf        | <span class="number">0</span>x0000000000000000 |a memory area outside <span class="keyword">of</span> a process heap where other processes can safely write data                    </span><br><span class="line">  <span class="number">640</span> | mbuf_sz     | <span class="number">0</span>x0000000000000000 |Total size <span class="keyword">of</span> heap fragments <span class="keyword">and</span> message fragments</span><br><span class="line">  <span class="number">464</span> | dictionary  | <span class="number">0</span>x0000000000000000 | Process Dictionary                   </span><br><span class="line">  <span class="number">472</span> | seq..clock  | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">480</span> | seq..astcnt | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">488</span> | seq..token  | <span class="number">0</span>xfffffffffffffffb |                    |</span><br><span class="line">  <span class="number">496</span> | intial[<span class="number">0</span>]   | <span class="number">0</span>x000000000000320b |                    |</span><br><span class="line">  <span class="number">504</span> | intial[<span class="number">1</span>]   | <span class="number">0</span>x0000000000000c8b |                    |</span><br><span class="line">  <span class="number">512</span> | intial[<span class="number">2</span>]   | <span class="number">0</span>x0000000000000002 |                    |</span><br><span class="line">  <span class="number">520</span> | current     | <span class="number">0</span>x00007f7f3be87c20 | <span class="number">0</span>x000000000000ed8b |</span><br><span class="line">  <span class="number">296</span> | cp          | <span class="number">0</span>x00007f7f3d3a5100 | <span class="number">0</span>x0000000000440848 |</span><br><span class="line">  <span class="number">304</span> | i           | <span class="number">0</span>x00007f7f3be87c38 | <span class="number">0</span>x000000000044353a |</span><br><span class="line">  <span class="number">312</span> | catches     | <span class="number">0</span>x0000000000000001 |                    |</span><br><span class="line">  <span class="number">224</span> | arity       | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">232</span> | arg_reg     | <span class="number">0</span>x00007f7f3cbc04f8 | <span class="number">0</span>x000000000000320b |</span><br><span class="line">  <span class="number">240</span> | max_arg_reg | <span class="number">0</span>x0000000000000006 |                    |</span><br><span class="line">  <span class="number">248</span> | def..reg[<span class="number">0</span>] | <span class="number">0</span>x000000000000320b |                    |</span><br><span class="line">  <span class="number">256</span> | def..reg[<span class="number">1</span>] | <span class="number">0</span>x0000000000000c8b |                    |</span><br><span class="line">  <span class="number">264</span> | def..reg[<span class="number">2</span>] | <span class="number">0</span>x00007f7f33ec9589 |                    |</span><br><span class="line">  <span class="number">272</span> | def..reg[<span class="number">3</span>] | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">280</span> | def..reg[<span class="number">4</span>] | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">288</span> | def..reg[<span class="number">5</span>] | <span class="number">0</span>x00000000000007d0 |                    |</span><br><span class="line">  <span class="number">136</span> | nsp         | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">144</span> | nstack      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">152</span> | nstend      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">160</span> | ncallee     | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">56</span> | ncsp        | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">64</span> | narity      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">---------------------------------------------------------------</span><br></pre></td></tr></tbody></table></figure>
-<blockquote>
-<p>“dirty” IO threads intended to replace the async thread pool used by the file driver<br>
-but dirty IO not used by OTP today<br>
-字面常量不会再被copy，但是ets中人会被copy <a href="http://www.erlang-factory.com/euc2017/kenneth-lundin">More</a></p>
-</blockquote>
-<ul>
-<li>新增的调试工具</li>
-</ul>
-<blockquote>
-<p>msacc<br>
-新增的参数 +IOt +IOp 可以使用msacc:start/1、msacc:print/0来查看sleep time 如果这个值很低可以增大+IOt</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Erlang</category>
-      </categories>
-      <tags>
-        <tag>Erlang</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>游戏服务器开发与运维</title>
-    <url>/2022/12/21/gameserver/</url>
-    <content><![CDATA[<p>服务器所有需要的技术</p>
-<span id="more"></span>
-<h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
-<h2 id="开发"><a class="markdownIt-Anchor" href="#开发"></a> 开发</h2>
-<h3 id="1-寻路系统"><a class="markdownIt-Anchor" href="#1-寻路系统"></a> 1. 寻路系统</h3>
-<h2 id="运维"><a class="markdownIt-Anchor" href="#运维"></a> 运维</h2>
-]]></content>
-      <categories>
-        <category>游戏</category>
-      </categories>
-      <tags>
-        <tag>游戏服务器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>项目往事之团队</title>
-    <url>/2021/06/01/project-member/</url>
-    <content><![CDATA[<h2 id="组成"><a class="markdownIt-Anchor" href="#组成"></a> 组成</h2>
-<ul>
-<li>项目总是由形形色色的人构成，不同的专业研发、运营、运维等。重点说说研发，研发包括三个部分：
-<ol>
-<li>程序（一般分为前端/后端、客户端/服务器）。</li>
-<li>策划 (一般分为主策划、剧情、数值、文案，执行等)。</li>
-<li>美术 (一般分为3d,2d,原画，场景，模型，动画等)。</li>
-</ol>
-</li>
-</ul>
-<h2 id="类型"><a class="markdownIt-Anchor" href="#类型"></a> 类型</h2>
-<p>以下只区分程序、策划、美术三大的分类。在所见的团队中大致分为四类：</p>
-<ol>
-<li>要饭类型<br>
-在这类型的团队中，策划是短板。其他成员都在做出盈利产品的所要求的的基准水平线以上。<br>
-策划低于或者稍高于基准线，这个就看天吃饭，让用户老爷们赏点饭吃，靠稳定的服务，运营、美术品质等捞取一点利润，基本上就是个苦逼项目组。</li>
-<li>体弱多病型<br>
-这类型团队中，程序是短板。举个不太恰当的例子，程序的稳定性效率等如同一个人身体的健康，策划的设计理念就是其梦想。梦想很大很好，身体很弱很虚。<br>
-发热、耗电、crash，服务器回档、宕机、卡顿等，这种团队基本就是过了今天没有明天，等死型，当然也有遇到神医，也能病去体健，再创辉煌。但是基本上是在有时间有钱的背景下，偶发的特殊情况。</li>
-<li>希望型<br>
-这种团队中大家能力都在做出盈利产品的所要求的的基准水平线以上，个别特别推出，这种团队基本上属于长期合作，有积累，有默契、有韧劲。离成功只差一个契机，这是大家想去的理想团队。</li>
-<li>无名氏<br>
-这种团队多见于临时拼凑，成立团队的目的各不相同，人员参差不齐，基本上战五渣，见光死。</li>
-</ol>
-<span id="more"></span>  
-<h2 id="经历"><a class="markdownIt-Anchor" href="#经历"></a> 经历</h2>
-<p>第四种团队我在职业生涯经历一次，时长三个月，在我离开之后了解到发生了各种奇葩事情，没几个月解散了。<br>
-第三种团队我也经历过一次，做出了手游项目的第一个爆款RPG。<br>
-其他基本上都是第一种或者第二种团队，这两种中要饭型的团队更多些。我发现一个共同情况，作为项目总负责人PD，总是希望项目其他研发团队帮助项目的短板方，把短板方的工作尽量往其他团队那边转移，通过这样的方式来弥补项目短板，但。最终结果差强人意，导致大家都成了短板。在这过程中，我开始的做法是强烈要求短板方自己或者通过外部手段（招聘、培训等）来提高，但往往受领头人的思维、解决问题能力，更重要的所能调配的资源限制，无法展开，往往变成别人眼中的“喷子”，慢慢的也就躺平了。<br>
-一直在思考的这样的问题，在有限的资源下，怎么才能把事情做成，发挥最大能量？</p>
-<h2 id="谬论"><a class="markdownIt-Anchor" href="#谬论"></a> 谬论</h2>
-<ol>
-<li>放弃没希望的团队。一些团队一边不给资源(时间、人力等)，一边还高举高打，满嘴的愿景，对各种不合理视而不见，凡此种种，及时止损。</li>
-<li>部分团队有着明显的短板，但是受制于手中资源，无法做出改变，要仔细斟酌，以我的目的为优先做思考，为自己展开所有行为提供指引。</li>
-<li>对多努力还已有希望的团队适用，努力争取资源，试试蚂蚁啃大象的策略，先做出局部改变，并让握有资源的人看到，并逐渐把所有相关人员全部拉入解决问题的圈子里来，让我遇到的问题转化成大家都要面对的问题。</li>
-<li>谁的问题，就是谁的问题。对所有不符合产品所有要求的能力基准线以下的人，敦促其主动学习，通过集中培训等方式促进其提高，并对在规定时间仍不达标的人实施转岗、劝退等措施。</li>
-<li>招符合团队素质要求的人，宁缺毋滥，如果不能又快又好，优先选择好。当然适可而止。</li>
-</ol>
-<p><strong>在团队组建的初期就要拿到两样最重要的东西（人事权和钱），最基本的要拿到人事权，选谁用谁得自己说了算。只招复合团队素质的人，宁缺毋滥。</strong></p>
-]]></content>
-      <categories>
-        <category>项目</category>
-        <category>团队</category>
-      </categories>
-      <tags>
-        <tag>项目</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何开发 protoc 插件[转载]</title>
     <url>/2023/03/03/protobuf-plugins/</url>
     <content><![CDATA[<p><a href="https://taoshu.in/go/create-protoc-plugin.html">原文</a><br>
@@ -2782,6 +2700,88 @@ All of the fragments get collapsed when you do garbage collection.</p>
 Answer: Yes you can. you can read my mind, and there are two other minds you can read as well(笑). In part of doing the work done with Fred to get the fragmentation problem, I was working … recon(听不清，就是一起开发了recon). And see modular in recon_alloc, does some basic analysis for you, trys to figure out what’s in the system. it has maybe 7 or 8 functions, their data analyse different aspects of things, problems that we have encountered. We are trying to add more things to it, but what I find is that most of the problems that you encounter are unique. It’s not like that it’s a general problem for everybody because then it would be a general setting, but if it’s almost always a specific problem that somebody’s having because they’ve written their code in certain way and therefore this happens. BUt for this fragmentation part, finding out there are many singleblock carriers rather than multiblock carriers, their functions in this library can do that.<br>
 With lot of documentation explaining all of these stuff, the documentation is almost better than the tool. I would say. So just reading documentation explains most of the things I did in my slides.</p>
 <p>听写水平有限，仅供参考。</p>
+]]></content>
+      <categories>
+        <category>Erlang</category>
+      </categories>
+      <tags>
+        <tag>Erlang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>游戏服务器开发与运维</title>
+    <url>/2022/12/21/gameserver/</url>
+    <content><![CDATA[<p>服务器所有需要的技术</p>
+<span id="more"></span>
+<h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
+<h2 id="开发"><a class="markdownIt-Anchor" href="#开发"></a> 开发</h2>
+<h3 id="1-寻路系统"><a class="markdownIt-Anchor" href="#1-寻路系统"></a> 1. 寻路系统</h3>
+<h2 id="运维"><a class="markdownIt-Anchor" href="#运维"></a> 运维</h2>
+]]></content>
+      <categories>
+        <category>游戏</category>
+      </categories>
+      <tags>
+        <tag>游戏服务器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Erlang 读书笔记</title>
+    <url>/2017/12/24/ReadingNotes/</url>
+    <content><![CDATA[<h1 id="erlang-读书笔记"><a class="markdownIt-Anchor" href="#erlang-读书笔记"></a> Erlang 读书笔记</h1>
+<ul>
+<li>erlang:byte_size/0查看binary的字节数量</li>
+<li>erts_debug:flat_size查看变量所占的内存字节数</li>
+<li>erlang timeout的语义是保证事件不会再给定的时间之前触发，就是触发时间&gt;=给定的时间</li>
+<li>Terms are created on the heap by evaluating expressions.</li>
+</ul>
+<blockquote>
+<p>There are two major types of terms:<br>
+<a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_term.h#L88-L97">immediate terms</a> which require no heap space (small integers, atoms, pids, port ids etc) and cons<br>
+<a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_term.h#L106-L120">boxed terms</a> (tuple, big num, binaries etc) that do require heap space.<br>
+Immediate terms do not need any heap space because they are embedded into the containing structure.</p>
+</blockquote>
+<span id="more"></span>
+<ul>
+<li>进程字典实现</li>
+</ul>
+<blockquote>
+<p>由数组实现hash结构，每个都是键值对存放于进程的Heap上<br>
+根据key来算hash值，没有冲突就把{Key，Val}存入数组&gt; 如果有key冲突就是存从一个键值对列表，如果要更新一个Key，将会导致整个bucket被重新分配，确保没有获取到 从old heap指向 new heap的指针</p>
+</blockquote>
+<ul>
+<li>进程的内存由 stack 、heap、 mailbox、 PCB构成</li>
+</ul>
+<blockquote>
+<p>stack：函数返回地址、函数参数、局部变量<br>
+heap: lists 、tuple<br>
+mailbox:待处理的消息<br>
+PCB： 进程控制块</p>
+</blockquote>
+<ul>
+<li>可以使用hipe_bifs:show_*查看进程栈、堆、PCB 内存数据 <em><strong>（仅供调试）</strong></em></li>
+</ul>
+<blockquote>
+<p>hipe_bifs:show_estack/1<br>
+hipe_bifs:show_heap/1<br>
+hipe_bifs:show_pcb/1</p>
+</blockquote>
+<ul>
+<li>PCB 内部结构</li>
+</ul>
+<figure class="highlight erlang"><table><tbody><tr><td class="code"><pre><span class="line">---------------------------------------------------------------</span><br><span class="line">Offset| Name        | Value              | *Value             |</span><br><span class="line">    0 | id          | 0x000001d0000003a3 |PID             </span><br><span class="line">   72 | htop        | 0x00007f7f33f15298 |pointers to the top of the heap                   </span><br><span class="line">   96 | hend        | 0x00007f7f33f16540 |points to the stop of the whole heap                  </span><br><span class="line">   88 | heap        | 0x00007f7f33f11470 |points to heap start                 </span><br><span class="line">  104 | heap_sz     | 0x0000000000000a1a | gives the size of the heap in words <span class="params">(hend - heap = heap_sz * <span class="number">8</span> on a <span class="number">64</span> bit machine )</span>                    </span><br><span class="line">   80 | stop        | 0x00007f7f33f16480 |pointers to the top of the stack                   </span><br><span class="line">  592 | gen_gcs     | 0x0000000000000012 |Number of <span class="params">(minor)</span> generational GCs.</span><br><span class="line">  <span class="number">594</span> | max_gen_gcs | <span class="number">0</span>x000000000000ffff |Max minor gen GCs before fullsweep.</span><br><span class="line">  <span class="number">552</span> | high_water  | <span class="number">0</span>x00007f7f33f11c50 |                    |</span><br><span class="line">  <span class="number">560</span> | old_hend    | <span class="number">0</span>x00007f7f33e90648 |                    |</span><br><span class="line">  <span class="number">568</span> | old_htop    | <span class="number">0</span>x00007f7f33e8f8e8 |                    |</span><br><span class="line">  <span class="number">576</span> | old_head    | <span class="number">0</span>x00007f7f33e8e770 |                    |</span><br><span class="line">  <span class="number">112</span> | min_heap_size | <span class="number">0</span>x00000000000000e9 |in words, that the heap starts with <span class="keyword">and</span> which it will <span class="keyword">not</span> shrink smaller than, the default value is <span class="number">233</span>.</span><br><span class="line">  <span class="number">328</span> | rcount      | <span class="number">0</span>x0000000000000000 | suspend count </span><br><span class="line">  <span class="number">336</span> | reds        | <span class="number">0</span>x0000000000002270 | keep track <span class="keyword">of</span> the total number <span class="keyword">of</span> reductions a process has done up until it was last suspended  </span><br><span class="line">   <span class="number">16</span> | tracer      | <span class="number">0</span>xfffffffffffffffb |                    |</span><br><span class="line">   <span class="number">24</span> | trace_fla.. | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">344</span> | group_lea.. | <span class="number">0</span>x0000019800000333 |                    |</span><br><span class="line">  <span class="number">352</span> | flags       | <span class="number">0</span>x0000000000002000 |Trap exit, etc (no trace flags anymore)                    </span><br><span class="line">  <span class="number">360</span> | fvalue      | <span class="number">0</span>xfffffffffffffffb |Exit &amp; Throw value (failure reason)</span><br><span class="line">  <span class="number">368</span> | freason     | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">320</span> | fcalls      | <span class="number">0</span>x00000000000005a2 | keeps the number <span class="keyword">of</span> reductions left to execute   </span><br><span class="line">  <span class="number">384</span> | next        | <span class="number">0</span>x0000000000000000 |next ready(runnable) process  in the ready queue <span class="keyword">of</span> scheduler    </span><br><span class="line">   <span class="number">48</span> | reg         | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">56</span> | nlinks      | <span class="number">0</span>x00007f7f3cbc0750 |                    |</span><br><span class="line">  <span class="number">616</span> | mbuf        | <span class="number">0</span>x0000000000000000 |a memory area outside <span class="keyword">of</span> a process heap where other processes can safely write data                    </span><br><span class="line">  <span class="number">640</span> | mbuf_sz     | <span class="number">0</span>x0000000000000000 |Total size <span class="keyword">of</span> heap fragments <span class="keyword">and</span> message fragments</span><br><span class="line">  <span class="number">464</span> | dictionary  | <span class="number">0</span>x0000000000000000 | Process Dictionary                   </span><br><span class="line">  <span class="number">472</span> | seq..clock  | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">480</span> | seq..astcnt | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">488</span> | seq..token  | <span class="number">0</span>xfffffffffffffffb |                    |</span><br><span class="line">  <span class="number">496</span> | intial[<span class="number">0</span>]   | <span class="number">0</span>x000000000000320b |                    |</span><br><span class="line">  <span class="number">504</span> | intial[<span class="number">1</span>]   | <span class="number">0</span>x0000000000000c8b |                    |</span><br><span class="line">  <span class="number">512</span> | intial[<span class="number">2</span>]   | <span class="number">0</span>x0000000000000002 |                    |</span><br><span class="line">  <span class="number">520</span> | current     | <span class="number">0</span>x00007f7f3be87c20 | <span class="number">0</span>x000000000000ed8b |</span><br><span class="line">  <span class="number">296</span> | cp          | <span class="number">0</span>x00007f7f3d3a5100 | <span class="number">0</span>x0000000000440848 |</span><br><span class="line">  <span class="number">304</span> | i           | <span class="number">0</span>x00007f7f3be87c38 | <span class="number">0</span>x000000000044353a |</span><br><span class="line">  <span class="number">312</span> | catches     | <span class="number">0</span>x0000000000000001 |                    |</span><br><span class="line">  <span class="number">224</span> | arity       | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">232</span> | arg_reg     | <span class="number">0</span>x00007f7f3cbc04f8 | <span class="number">0</span>x000000000000320b |</span><br><span class="line">  <span class="number">240</span> | max_arg_reg | <span class="number">0</span>x0000000000000006 |                    |</span><br><span class="line">  <span class="number">248</span> | def..reg[<span class="number">0</span>] | <span class="number">0</span>x000000000000320b |                    |</span><br><span class="line">  <span class="number">256</span> | def..reg[<span class="number">1</span>] | <span class="number">0</span>x0000000000000c8b |                    |</span><br><span class="line">  <span class="number">264</span> | def..reg[<span class="number">2</span>] | <span class="number">0</span>x00007f7f33ec9589 |                    |</span><br><span class="line">  <span class="number">272</span> | def..reg[<span class="number">3</span>] | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">280</span> | def..reg[<span class="number">4</span>] | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">288</span> | def..reg[<span class="number">5</span>] | <span class="number">0</span>x00000000000007d0 |                    |</span><br><span class="line">  <span class="number">136</span> | nsp         | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">144</span> | nstack      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">152</span> | nstend      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">160</span> | ncallee     | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">56</span> | ncsp        | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">64</span> | narity      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">---------------------------------------------------------------</span><br></pre></td></tr></tbody></table></figure>
+<blockquote>
+<p>“dirty” IO threads intended to replace the async thread pool used by the file driver<br>
+but dirty IO not used by OTP today<br>
+字面常量不会再被copy，但是ets中人会被copy <a href="http://www.erlang-factory.com/euc2017/kenneth-lundin">More</a></p>
+</blockquote>
+<ul>
+<li>新增的调试工具</li>
+</ul>
+<blockquote>
+<p>msacc<br>
+新增的参数 +IOt +IOp 可以使用msacc:start/1、msacc:print/0来查看sleep time 如果这个值很低可以增大+IOt</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>Erlang</category>
