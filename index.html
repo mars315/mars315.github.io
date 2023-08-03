@@ -1,23 +1,1609 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block title %}{{ config.title }}{% if theme.index_with_subtitle and config.subtitle %} - {{config.subtitle }}{% endif %}{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}
-  {% if is_home() %}page-home{% endif -%}
-{% endblock %}
 
-{% block content %}
-  <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
-    {% endfor %}
-  </section>
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-  {% include '_partials/pagination.swig' %}
-{% endblock %}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+  <meta name="description" content="时光匆匆，万物变幻。 这世间，我曾停留过。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="mars315">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="mars315">
+<meta property="og:description" content="时光匆匆，万物变幻。 这世间，我曾停留过。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="mars315">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>mars315</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="mars315" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">mars315</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-rss">
+
+    <a href="/atom.xml" rel="section"><i class="fa fa-rss fa-fw"></i>RSS</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/mars315" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/03/protobuf-plugins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/03/03/protobuf-plugins/" class="post-title-link" itemprop="url">如何开发 protoc 插件[转载]</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-03 23:29:53" itemprop="dateCreated datePublished" datetime="2023-03-03T23:29:53+08:00">2023-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-08 10:39:14" itemprop="dateModified" datetime="2023-03-08T10:39:14+08:00">2023-03-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://taoshu.in/go/create-protoc-plugin.html">原文</a><br>
+<a target="_blank" rel="noopener" href="https://github.com/mars315/protoc-gen-hip">另外一个可参考的仓库</a></p>
+<p>Protocol Buffers 是谷歌推出的编码标准，它在传输效率和编解码性能上都要优于 JSON。但其代价则是需要依赖中间描述语言（IDL）来定义数据（和服务）的结构（通过  <code>*.proto</code>  文件），并且需要一整套的工具链（protoc 及其插件）来生成对应的序列化和反序列化代码。除了谷歌官方提供的工具和插件（比如生成 go 代码的 protoc-gen-go）外，我们还可以开发或定制自己的插件，根据业务需要按照 proto 文件的定义生成代码或者文档。由 IDL 生成代码或者文档是元编程的一种形式，可以极大的解放程序员的生产力，建议每一位开发者都能掌握这一技能。今天就生成 markdown 文档为例讲解如何开发 protoc 插件。</p>
+<h2 id="protobuf-idl"><a class="markdownIt-Anchor" href="#protobuf-idl"></a> Protobuf IDL</h2>
+<p>在开始之前，我们简单过一下 Protocol Buffers 的 IDL（关于底层编码可以参考我的另一篇文章<a target="_blank" rel="noopener" href="https://taoshu.in/pb-encoding.html">Protocol Buffers 编码</a>）。IDL 文件的扩展名为 proto，后面我们统称为 proto 文件，典型的 proto 文档结构如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 目前有 v2 和 v3 两个版本，默认为 v2 版本。</span><br><span class="line">// 如果想用 v3 版本，需要使用 syntax 指定。</span><br><span class="line">// 推荐使用 v3 版本。现在流行的 gRPC 框架也是使用 v3 版本。</span><br><span class="line">syntax = "proto3";</span><br><span class="line"></span><br><span class="line">// 每个 proto 文件需要定义自己的包名，类似 c++ 的名称空间。</span><br><span class="line">package hello;</span><br><span class="line"></span><br><span class="line">// 数据结构通过 message 定义</span><br><span class="line">message Echo {</span><br><span class="line">  // 每个 message 可以有多个 field。</span><br><span class="line">  // 每个 field 需要指定类型、字段名和编号。</span><br><span class="line">  // Protocol Buffers 在内部使用编号区分字段，一旦指定就不能更改。</span><br><span class="line">  string msg = 1;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">// 服务使用 servcie 定义</span><br><span class="line">service Demo {</span><br><span class="line">  // 每个 service 可以定义多个 rpc</span><br><span class="line">  // 每个 rpc 需要指定接口名、传入消息和返回消息三部分。</span><br><span class="line">  rpc Echo(Echo) returns (Echo);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>在 proto 文件中， message 的每一个字段也可以是另外一个 message（甚至还可以是 message 本身，也就是递归定义）。一个 proto 文件还可以导入其他的 proto 文件，进而引用本文件外的 message 定义。下面是一个例子：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">syntax = "proto3";</span><br><span class="line"></span><br><span class="line">package demo;</span><br><span class="line"></span><br><span class="line">// 通过 import 导入其他 proto 文件</span><br><span class="line">import "google/protobuf/timestamp.proto";</span><br><span class="line"></span><br><span class="line">message Foo {</span><br><span class="line">  // 引用外部消息定义时需要指定包名</span><br><span class="line">  google.protobuf.Timestamp ts = 2;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">message Bar {</span><br><span class="line">  int32 a = 1;</span><br><span class="line">  // b 的类型可以是 Bar 自身</span><br><span class="line">  Bar b = 2;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>因为可以在 proto 定义服务和接口方法，<a target="_blank" rel="noopener" href="https://taoshu.in/grpc.html">gRPC</a>  和  <a target="_blank" rel="noopener" href="https://taoshu.in/go/go-sniper-v2.html">Sniper</a>  都使用 proto 做为 IDL（同时也使用 Protocol Buffers 编码传输数据）。理论上我们可以直接使用 proto 文件做为接口文档。但因为 proto 支持嵌套定义和外部导入功能，让使用方直接阅读 proto 文档需要来回切换，非常不方便。所以我们内部开了一个  <a target="_blank" rel="noopener" href="https://github.com/go-kiss/protoc-gen-markdown">protoc-gen-markdown</a>  插件，其功能就是遍历所有服务的每一个接口，递归查找入参和出参消息的每一个字段及其类型，生成 markdown 格式的接口文档。大家可以直接看这个生成的<a target="_blank" rel="noopener" href="https://github.com/go-kiss/protoc-gen-markdown/blob/master/hello.md">示例</a>来感受一下它的效果。</p>
+<p>好了，以上是整个文章的背景。说的有点罗嗦。现在我们开始正题。</p>
+<h2 id="protoc-plugin-使用方法"><a class="markdownIt-Anchor" href="#protoc-plugin-使用方法"></a> protoc plugin 使用方法</h2>
+<p>如果要根据 proto 文件生成代码（或文档），首先要安装 protoc 编译工具。protoc 可以通过操作系统的包管理器（apt/homebrew等）安装，也可以到 GitHub 上下载编译好的版本。推荐直接下载，因为包管理器可能无法安装最新版本。解压后有两个文件夹：bin 下的 protoc 直接复制  <code>/usr/local/bin/</code>  目录就好，include 下的 google 文件夹要复制到  <code>/usr/local/include</code>  目录。</p>
+<p>protoc 的插件框架也比较简单。如果要开发某插件，我们首先需要取个名字。比如要生成 markdown 的插件，名字就定成 markdown。如果我们想使用 markdown 插件，我们需要执行以下命令：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc --markdown_out=. hello.proto</span><br></pre></td></tr></tbody></table></figure>
+<p>这里有一个  <code>--markdown_out</code>  参数。因为我们的名字叫 markdown，所以参数名字叫 markdown_out；如果名字叫 XXX，那参数名字就叫 XXX_out。protoc 在运行的时候首先会解析 proto 文件的所有内容，生成一组 Protocol Buffers 编码的描述数据，然后尝试运行 protoc-gen-markdown 命令，并且通过 stdin 将描述数据发送给插件命令。插件生成好文件内容后再向 stdout 输入 Protocol Buffers 编码的数据来告诉 protoc 生成具体的文件。</p>
+<p>注意，插件的命令叫 protoc-gen-<strong>markdown</strong>，插件命令统一使用  <code>protoc-gen-</code>  前缀，这也是 protoc 的约定。</p>
+<p>我们刚才说 protoc 跟 protoc-gen-XXX 通信用的也是 Protocol Buffers 编码，是不是有点自举的意思。Protocol Buffers 编码需要 proto 文件定义，protoc 跟插件通信用的 proto 文件就是<code>protobuf/descriptor.proto</code>，你可以在<code>/usr/include/google</code>或者<code>/usr/local/include/google</code>目录下找到它。而且，这个 proto 用的是 v2 版本语法！</p>
+<h2 id="插件开发过程"><a class="markdownIt-Anchor" href="#插件开发过程"></a> 插件开发过程</h2>
+<p>理论上，现在我们就可以开发 protoc 插件了，过程也很简单：</p>
+<ol>
+<li>选择一种编程语言，比如 go</li>
+<li>根据  <code>protobuf/descriptor.proto</code>  生成对应语言的编解码代码</li>
+<li>开发 proto-gen-XXX 程序
+<ol>
+<li>从 stdin 读取数据并使用生成的 pb 文件解码</li>
+<li>根据 descriptor 描述数据生成代码片断</li>
+<li>拼装新生成的文件描述数据并通过 stdout 输出</li>
+</ol>
+</li>
+</ol>
+<p>这样做会有两个问题。</p>
+<ol>
+<li>直接读取 descriptor 数据非常麻烦，就连最简单的查询某字段的注释这样的功能都需要非常复杂的代码才能实现。所以说直接处理 descriptor 绝非明智之举。</li>
+<li>这些 descriptor 数据使用 v2 版本的语法，protoc 的好多语言插件（比如 PHP）已经不支持 v2 语法了。</li>
+</ol>
+<p>总之，我们需要更好的框架来完成这一工作。protoc-gen-markdown 早期使用 <a target="_blank" rel="noopener" href="http://github.com/pseudomuto/protokit">github.com/pseudomuto/protokit</a> 来简化开发工作。可以提取注释，但不支持直接查询内嵌消息的结构，需要大量的辅助代码。protoc-gen-markdown 的代码也很难维护（除了我很少有人能改）。</p>
+<p>直到去年三月份，谷歌发布了<a target="_blank" rel="noopener" href="https://blog.golang.org/protobuf-apiv2">新版 Go 语言 API</a>，其中引入了一个新包<code>google.golang.org/protobuf/compiler/protogen</code>可以大幅简化插件的开发。我这两天基于 protogen 重构了 protoc-gen-markdown 的实现，所有才好意思拿出来跟大家分享😭</p>
+<h2 id="插件代码结构"><a class="markdownIt-Anchor" href="#插件代码结构"></a> 插件代码结构</h2>
+<p>插件代码的主要结构如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">func main() {</span><br><span class="line">  g := markdown{}</span><br><span class="line">  var flags flag.FlagSet</span><br><span class="line">  flags.StringVar(&amp;g.Prefix, "prefix", "/", "API path prefix")</span><br><span class="line"></span><br><span class="line">  protogen.Options{</span><br><span class="line">    ParamFunc: flags.Set,</span><br><span class="line">  }.Run(g.Generate)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">func (md *markdown) Generate(plugin *protogen.Plugin) error {</span><br><span class="line">  // ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>首先我们需要定义一个<code>protogen.Options</code>，然后调用它的<code>Run</code>方法，并传入一个  <code>func(*protogen.Plugin) error</code>回调。主流程代码到此就结束了。我们还可以设置<code>protogen.Options</code>的<code>ParamFunc</code>参数，这样 protogen 会自动为我们解析命令行传入的参数。诸如从标准输入读取并解码 protobuf 信息，将输入信息编码成 protobuf 写入 stdout 等操作全部由 protogen 包办了。我们要做的就是与  <code>protogen.Plugin</code>  交互实现代码生成逻辑。如果大家对这种简化没有概念，可以去翻一下 protoc-gen-markdown 最初的代码。没有对比就没有伤害。</p>
+<p>接下来，我们把注意力转向  <code>Generate</code>  方法。读代码（尤其是读别人的代码）是枯燥的，我尽量说思路。</p>
+<h2 id="处理-proto-文件"><a class="markdownIt-Anchor" href="#处理-proto-文件"></a> 处理 proto 文件</h2>
+<p>要想生成接口文档，我们肯定是要遍历每一个 proto 文件的每一个 service 的每一个 rpc 定义，所以主流程是这样的：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">func (md *markdown) Generate(plugin *protogen.Plugin) error {</span><br><span class="line">  for _, f := range plugin.Files {</span><br><span class="line">    // 跳过没有定义 service 的 proto 文件</span><br><span class="line">    if len(f.Services) == 0 {</span><br><span class="line">      continue</span><br><span class="line">    }</span><br><span class="line">    // 指定要生成的文件名，策略可以根据需要指定</span><br><span class="line">    fname := f.GeneratedFilenamePrefix + ".md"</span><br><span class="line">    // 告诉 protoc 要生成一个新文件，并获取一个引用</span><br><span class="line">    // 后面可以通过 t 来写入新文件的内容</span><br><span class="line">    t := plugin.NewGeneratedFile(fname, f.GoImportPath)</span><br><span class="line">    // 遍历每一个 service</span><br><span class="line">    for _, s := range f.Services {</span><br><span class="line">      // ...</span><br><span class="line">      for _, m := range s.Methods {</span><br><span class="line">        // ...</span><br><span class="line">      }</span><br><span class="line">      // ...</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>对于 proto 的每一级结构，protogen 都有对应的数据类型，分别是 File, Service, Method, Field。除了 File 外，其他数据类型都有 Comments 属性，每个 Comments 又包含 LeadingDetached, Leading, Trailing 三种类型的注释，效果如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// LeadingDetached</span><br><span class="line"></span><br><span class="line">// Leading</span><br><span class="line">message Foo {} // Trailing</span><br></pre></td></tr></tbody></table></figure>
+<p>生成文档就需要恰当处理这些注释。而注释跟被描述对象的关联关系 protogen 已经帮我们处理好了。</p>
+<p>除了注释，我们还需要读取更多信息，比如消息或者字段的名字、类型等，这些需要通过每个对象的 Desc 字段读取，它的类型是 protoreflect.ServiceDescriptor，跟我们前面说的 descriptor.proto 对应。</p>
+<h2 id="生成文档"><a class="markdownIt-Anchor" href="#生成文档"></a> 生成文档</h2>
+<p>生成的文档结构如下，逻辑见注释：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">for _, s := range f.Services {</span><br><span class="line">  // 输出 service 名称</span><br><span class="line">  t.P("# ", s.Desc.Name())</span><br><span class="line">  t.P()</span><br><span class="line">  // 输出 service 的注释</span><br><span class="line">  t.P(string(s.Comments.Leading))</span><br><span class="line">  // 生成接口目录</span><br><span class="line">  for _, m := range s.Methods {</span><br><span class="line">    // ...</span><br><span class="line">    t.P(fmt.Sprintf("- [%s](#%s)", api, anchor))</span><br><span class="line">  }</span><br><span class="line">  t.P()</span><br><span class="line">  for _, m := range s.Methods {</span><br><span class="line">    // 输出接口路径</span><br><span class="line">    t.P("## ", md.api(string(m.Desc.FullName())))</span><br><span class="line">    t.P()</span><br><span class="line">    // 输出接口注释</span><br><span class="line">    t.P(string(m.Comments.Leading))</span><br><span class="line">    t.P()</span><br><span class="line">    // 输出入参结构，json 格式</span><br><span class="line">    t.P("### Request")</span><br><span class="line">    // 语言指定为 javacript，这样可以在 json 里加入注释内容</span><br><span class="line">    t.P("```javascript")</span><br><span class="line">    // 每个 method 都有 Input 和 Output 两个字段</span><br><span class="line">    t.P(md.jsDocForMessage(m.Input))</span><br><span class="line">    t.P("```")</span><br><span class="line">    t.P()</span><br><span class="line">    // 输出入参结构，json 格式</span><br><span class="line">    t.P("### Reply")</span><br><span class="line">    t.P("```javascript")</span><br><span class="line">    t.P(md.jsDocForMessage(m.Output))</span><br><span class="line">    t.P("```")</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>我们是想用 json 表示每一个 Protocol Buffers 结构。但 json 不能添加注释，所以我把语言指定为 javacript，这样既能使用 json 又能加字段注释了。但为什么用 json 呢？因为 Protocol Buffers 官方定义了 json 的表示格式，我们的业务框架同时支持 protobuf 和 json 两种编码。使用 json 表达不会丢失定义信息，而且阅读也稍微方便一些。</p>
+<p>每个 method 都有 Input 和 Output 两个字段，分别表示接口的入参和出参。下面开始讨论如何提取每个字段的信息。</p>
+<h3 id="markdown-文档效果"><a class="markdownIt-Anchor" href="#markdown-文档效果"></a> markdown 文档效果</h3>
+<p>在开始之前，我们先简单说一下 markdown 消息输出效果（这部分是我自己定义的，仅供大家参考）。</p>
+<p>对于简单类型字段，比如</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 字段注释</span><br><span class="line">int32 a = 1; // 行尾注释</span><br><span class="line">double b = 2;</span><br><span class="line">string c = 3;</span><br></pre></td></tr></tbody></table></figure>
+<p>我会转换成（这是合法的 javascript 代码，类 json）</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 字段注释</span><br><span class="line">a: 0, // type&lt;int32&gt;, 行尾注释</span><br><span class="line">b: 0.0,</span><br><span class="line">c: "",</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="类型映射"><a class="markdownIt-Anchor" href="#类型映射"></a> 类型映射</h3>
+<p>字段名保持不变，字段值根据类型自动生成，一般取对应的类型的空值（整数类的为  <code>0</code>，字符串为  <code>""</code>，布尔值为  <code>false</code>，浮点数为  <code>0.0</code>  等，但 64 位整数对应  <code>"0"</code>，这个也是遵守 Protocol Buffers 与 json 的官方映射规则）。</p>
+<p>然后会给每个字段添加类型注释，格式是<code>type&lt;T&gt;</code>，这里的 T 对应 proto 文件的类型声明。如果 proto 字段本身也有行为注释，则会追加到类型注释之后。</p>
+<h4 id="message"><a class="markdownIt-Anchor" href="#message"></a> message</h4>
+<p>如果字段的类型是 message，则会转换成 json 的 object 语法，并且类型注释<code>type&lt;MessageName&gt;</code>。消息的每个字段会按照前面说的字段规则转换。比如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Foo a = 1;</span><br></pre></td></tr></tbody></table></figure>
+<p>会变成：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a: {</span><br><span class="line">  // ...</span><br><span class="line">} // type&lt;Foo&gt;</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="repeated"><a class="markdownIt-Anchor" href="#repeated"></a> repeated</h4>
+<p>如果是 repeated 类型的字段，则会在转换之后的结果两侧添加<code>[]</code>，然后再追加类型注释<code>list&lt;T&gt;</code>。这里 T 可以是普通类型，也可以是 message 类型。比如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">repeated int32 a = 1;</span><br><span class="line">repeated Foo b = 2;</span><br></pre></td></tr></tbody></table></figure>
+<p>会变成：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a: [</span><br><span class="line">  0</span><br><span class="line">], // list&lt;int32&gt;</span><br><span class="line">b: [{</span><br><span class="line">  // ...</span><br><span class="line">}], // list&lt;Foo&gt;</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="map"><a class="markdownIt-Anchor" href="#map"></a> map</h4>
+<p>如果是 map 类型的字段，同样也会转换成 javascript 的 object 语法，但 key 会使用字符串，key 和 value 的值都使用对应空值。同时会追加类型注释<code>map&lt;k,v&gt;</code>。比如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map&lt;int32,string&gt; a = 1;</span><br></pre></td></tr></tbody></table></figure>
+<p>会转换成</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a: {</span><br><span class="line">  "0": ""</span><br><span class="line">}, // map&lt;in32,string&gt;</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="enum"><a class="markdownIt-Anchor" href="#enum"></a> enum</h4>
+<p>protoc-gen-markdown 对于枚举类型会直接转换成字符串，值为枚举的默认值（零值），同时追加类型注释<code>enum&lt;E1,E2,...&gt;</code>。比如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">enum Platform {</span><br><span class="line">  All = 0;</span><br><span class="line">  Web = 1;</span><br><span class="line">  Ios = 2;</span><br><span class="line">  Android = 3;</span><br><span class="line">}</span><br><span class="line">Platform a = 1;</span><br></pre></td></tr></tbody></table></figure>
+<p>会转化成：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a: "All", // enum&lt;All,Web,Ios,Android&gt;</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="递归处理"><a class="markdownIt-Anchor" href="#递归处理"></a> 递归处理</h3>
+<p>因为 proto 支持嵌套定义，所以我们需要从最外层的 message 开始<strong>递归处理</strong>所有字段。</p>
+<p>对于每一个 message，我定义了一个方法：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">func (md *markdown) jsDocForMessage(m *protogen.Message) string {</span><br><span class="line">  js := "{\n"</span><br><span class="line">  for _, field := range m.Fields {</span><br><span class="line">    js += md.jsDocForField(field)</span><br><span class="line">  }</span><br><span class="line">  js += "}"</span><br><span class="line">  return js</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>主要是生成最外面的”{}“，然后是处理每一个字段。<code>jsDocForField</code>的整体结构如下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">func (md *markdown) jsDocForField(field *protogen.Field) string {</span><br><span class="line">  // 追加字段注释</span><br><span class="line">  js := field.Comments.Leading.String()</span><br><span class="line">  // 生成字段名</span><br><span class="line">  js += string(field.Desc.Name()) + ":"</span><br><span class="line">  // 确定字段值的取值和类型</span><br><span class="line">  var vv,vt string</span><br><span class="line">  if field.Desc.IsMap() {</span><br><span class="line">  } else if field.Message != nil {</span><br><span class="line">  } else if field.Enum != nil {</span><br><span class="line">  } else if field.Oneof != nil {</span><br><span class="line">  } else {</span><br><span class="line">  }</span><br><span class="line">  // 添加类型注释</span><br><span class="line">  if field.Desc.IsList() {</span><br><span class="line">    js += fmt.Sprintf("[%s], // list&lt;%s&gt;", vv, vt)</span><br><span class="line">  } else if field.Desc.IsMap() {</span><br><span class="line">    js += vv + fmt.Sprintf(", // map&lt;%s&gt;", vt)</span><br><span class="line">  } else if field.Enum != nil {</span><br><span class="line">    js += vv + fmt.Sprintf(", // enum&lt;%s&gt;", vt)</span><br><span class="line">  } else {</span><br><span class="line">    js += vv + fmt.Sprintf(", // type&lt;%s&gt;", vt)</span><br><span class="line">  }</span><br><span class="line">  // 追加行尾注释</span><br><span class="line">  return js</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>对于简单字段，可以直接调用  <code>scalarDefaultValue</code>  确定默认值。而对应的类型可以直接通过<code>field.Desc.Kind().String()</code>  获取。这个比较简单。</p>
+<p>Protocol Buffers 在内部会把 map 转换成下面这样的 message，</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">message MapFieldEntry {</span><br><span class="line">  key_type key = 1;</span><br><span class="line">  value_type value = 2;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>所以我们需要先处理 map 类型的字段，再处理 message 类型的字段。protogen 提供了  <code>IsMap</code>  方法供我们使用。如果  <code>IsMap</code>  返回  <code>false</code>，而  <code>filed.Message</code>  不为  <code>nil</code>，那才 message 类型字段。</p>
+<p>对于 message 类型的字段也很简单，直接递归调用  <code>jsDocForMessage</code>  获取取值的 json 表示，其类型可以通过<code>field.Message.Desc.Name()</code>获得。</p>
+<p>如果是 map 类型，我们可以通过  <code>.Message</code>  字段取到  <code>MapFieldEntry</code>  消息。然后根据<code>Fields[0]</code>和<code>Fields[1]</code>构造 map 的取值和类型。</p>
+<p>对于 Enum 类型，可以直接通过  <code>.Enum</code>  读取相关信息，也比较简单。</p>
+<p>另外，我们需要美化一下 json 的格式，主要是调整缩进。本身处理 protogen 消息已经很复杂了，如果还要手工维护缩进只会难上加难。于是我找了一个 go 语言实现的 javascript 格式化库 jsbeautifier，在消息返回之前统一格式化一下：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">options := jsbeautifier.DefaultOptions()</span><br><span class="line">js, _ = jsbeautifier.Beautify(&amp;js, options)</span><br></pre></td></tr></tbody></table></figure>
+<p>因为我们是递归实现的，如果在 proto 文件中使用了递归定义，比如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">message Foo {</span><br><span class="line">  int32 a = 1;</span><br><span class="line">  Foo b = 2;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="递归定义消息"><a class="markdownIt-Anchor" href="#递归定义消息"></a> 递归定义消息</h4>
+<p>不加处理的话会导致栈溢出错误。为此，我维护了一个栈，保存当前正在处理消息。如果碰到递归定义，则直接返回<code>{}</code>。如此一来，刚才的定义会转化成：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  a: 0,</span><br><span class="line">  b: {}, // type&lt;Foo&gt;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<p>以上就是本文的全部内容了。本文定义了一套从 proto 生成 markdown 文档的规则并基于最新的<code>google.golang.org/protobuf/compiler/protogen</code>包实现了 protoc-gen-markdown 插件。阅读本文和 protoc-gen-markdown 源码，可以掌握 protoc 插件开发的基础知识。希望每一位读者都能掌握这一技能。</p>
+<p>今天(2022-05-12)收到 knight0zh 的留言：</p>
+<blockquote>
+<p>如果每次调试都需要编译一下会特别麻烦，也无法使用debug等工具</p>
+</blockquote>
+<p>这是一个好问题。因为插件是通过 protoc 调用的，没有特别好的方式来实现单步调试。</p>
+<p>我一直使用 print 大法。不过你不能直接打印调试信息，这会影响 protoc 跟插件之前的通信。正确的做法是打印到<code>stderr</code>流。</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fmt.Fprintf(os.Stderr, "Fprintln: %v\n", err)</span><br></pre></td></tr></tbody></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/21/gameserver/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/21/gameserver/" class="post-title-link" itemprop="url">游戏服务器开发与运维</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-21 09:57:03 / 修改时间：10:06:13" itemprop="dateCreated datePublished" datetime="2022-12-21T09:57:03+08:00">2022-12-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">游戏</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>22</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>服务器所有需要的技术</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/21/gameserver/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/07/GameSkill/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/07/GameSkill/" class="post-title-link" itemprop="url">数据驱动类技能</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-07 23:29:53" itemprop="dateCreated datePublished" datetime="2022-04-07T23:29:53+08:00">2022-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-21 10:00:44" itemprop="dateModified" datetime="2022-12-21T10:00:44+08:00">2022-12-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%88%8F/" itemprop="url" rel="index"><span itemprop="name">游戏</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>29k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>26 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools:zh-cn">Dota 2 Workshop Tools:zh-cn</a>‎ | <a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools:zh-cn/Scripting:zh-cn">Scripting:zh-cn</a></p>
+<p>几乎所有在DOTA2中的技能都是使用C++来编写的，当查看所有这些技能的时候，npc_abilities.txt包含了一些技能元数据的KV(Key-Values)文件，暴露出了一些技能的键值，这里包含了几乎所有的元数据，使用数据驱动类技能系统能够为DOTA2创造一些自定义技能，能够为他们赋予特殊的数值和特定的触发事件。</p>
+<h2 id="一个简单的例子"><a class="markdownIt-Anchor" href="#一个简单的例子"></a> 一个简单的例子</h2>
+<p>这是一个非常简单的技能，他是一个被动技能，给单位添加了一个粒子特效。</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">"fx_test_ability"</span><br><span class="line">{</span><br><span class="line">    // General</span><br><span class="line">    //-------------------------------------------------------------------------------------------------------------</span><br><span class="line">    "BaseClass"             "ability_datadriven"</span><br><span class="line">    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"</span><br><span class="line">    "AbilityTextureName"    "axe_battle_hunger"</span><br><span class="line"></span><br><span class="line">    // Modifiers</span><br><span class="line">    //-------------------------------------------------------------------------------------------------------------</span><br><span class="line">    "Modifiers"</span><br><span class="line">    {</span><br><span class="line">        "fx_test_modifier"</span><br><span class="line">        {</span><br><span class="line">            "Passive" "1"</span><br><span class="line">            "OnCreated"</span><br><span class="line">            {</span><br><span class="line">                "AttachEffect"</span><br><span class="line">                {</span><br><span class="line">                    "Target" "CASTER"</span><br><span class="line">                    "EffectName" "particles/econ/generic/generic_buff_1/generic_buff_1.vpcf"</span><br><span class="line">                    "EffectAttachType" "follow_overhead"</span><br><span class="line">                    "EffectLifeDurationScale" "1"</span><br><span class="line">                    "EffectColorA" "255 255 0"</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>其中，基类(“BaseClass”),技能行为(“AbilityBehavior”)和技能图标名称(“AbilityTextureName”)在所有技能中都是类似的。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/07/GameSkill/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/12/database-sharding-partitioning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/12/database-sharding-partitioning/" class="post-title-link" itemprop="url">数据库之分区、分片、分表</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-12 17:13:47" itemprop="dateCreated datePublished" datetime="2021-07-12T17:13:47+08:00">2021-07-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/%E5%88%86%E7%89%87-%E5%88%86%E5%8C%BA-%E5%9E%82%E7%9B%B4%E6%89%A9%E5%B1%95-%E6%B0%B4%E5%B9%B3%E6%89%A9%E5%B1%95/" itemprop="url" rel="index"><span itemprop="name">分片 分区 垂直扩展 水平扩展</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <span id="more"></span>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/01/project-member/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/01/project-member/" class="post-title-link" itemprop="url">项目往事之团队</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-01 18:59:34" itemprop="dateCreated datePublished" datetime="2021-06-01T18:59:34+08:00">2021-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index"><span itemprop="name">项目</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A1%B9%E7%9B%AE/%E5%9B%A2%E9%98%9F/" itemprop="url" rel="index"><span itemprop="name">团队</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="组成"><a class="markdownIt-Anchor" href="#组成"></a> 组成</h2>
+<ul>
+<li>项目总是由形形色色的人构成，不同的专业研发、运营、运维等。重点说说研发，研发包括三个部分：
+<ol>
+<li>程序（一般分为前端/后端、客户端/服务器）。</li>
+<li>策划 (一般分为主策划、剧情、数值、文案，执行等)。</li>
+<li>美术 (一般分为3d,2d,原画，场景，模型，动画等)。</li>
+</ol>
+</li>
+</ul>
+<h2 id="类型"><a class="markdownIt-Anchor" href="#类型"></a> 类型</h2>
+<p>以下只区分程序、策划、美术三大的分类。在所见的团队中大致分为四类：</p>
+<ol>
+<li>要饭类型<br>
+在这类型的团队中，策划是短板。其他成员都在做出盈利产品的所要求的的基准水平线以上。<br>
+策划低于或者稍高于基准线，这个就看天吃饭，让用户老爷们赏点饭吃，靠稳定的服务，运营、美术品质等捞取一点利润，基本上就是个苦逼项目组。</li>
+<li>体弱多病型<br>
+这类型团队中，程序是短板。举个不太恰当的例子，程序的稳定性效率等如同一个人身体的健康，策划的设计理念就是其梦想。梦想很大很好，身体很弱很虚。<br>
+发热、耗电、crash，服务器回档、宕机、卡顿等，这种团队基本就是过了今天没有明天，等死型，当然也有遇到神医，也能病去体健，再创辉煌。但是基本上是在有时间有钱的背景下，偶发的特殊情况。</li>
+<li>希望型<br>
+这种团队中大家能力都在做出盈利产品的所要求的的基准水平线以上，个别特别推出，这种团队基本上属于长期合作，有积累，有默契、有韧劲。离成功只差一个契机，这是大家想去的理想团队。</li>
+<li>无名氏<br>
+这种团队多见于临时拼凑，成立团队的目的各不相同，人员参差不齐，基本上战五渣，见光死。</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/01/project-member/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/Erlang/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/24/Erlang/" class="post-title-link" itemprop="url">Eralng系列文章</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-24 23:29:53" itemprop="dateCreated datePublished" datetime="2017-12-24T23:29:53+08:00">2017-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/" itemprop="url" rel="index"><span itemprop="name">Erlang</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>812</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="eralng系列文章"><a class="markdownIt-Anchor" href="#eralng系列文章"></a> Eralng系列文章</h1>
+<table>
+<thead>
+<tr>
+<th>Author</th>
+<th>snail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E-mail</td>
+<td><a href="mailto:254262243@qq.com">254262243@qq.com</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<p>从业以来一直用C++，面对各种问题特别管理一个C<ins>团队时在服务器健壮性、效率等等方面做的工作又多又繁琐，人工以及各种工具齐上阵，深感心力交瘁。后来机缘巧合接触到Erlang，初识Erlang感觉很神奇无不为其各种特性所折服。但随后实际项目的应用过程中还是出现了各种问题，虽然相对于C</ins>难度有所降低，但是对于C++有多年的经验，在处理各种问题上都有相应的经验；但是Erlang运行于Erlang VM上还有各种封装，如果不了解一些内部细节在处理各种问题时真是摸不着头脑。我在工作中别人问的最多的问题或者我当初在写代码时最想知道的问题大概有如下几个：</p>
+<blockquote>
+<p>为什么一个进程的消息队列堆积会导致真个VM效率下降?<br>
+变量在什么地方分配在堆？栈？还是什么地方？<br>
+对于变量不可以变每次修改是否会重新分配?在哪里分配？效率怎么样?<br>
+进程什么时候GC？怎样做GC？GC堆进程影响？<br>
+进程内存(erlang:memory/1) 由哪些部分组成？<br>
+怎样调优VM以及自己逻辑的代码？<br>
+…</p>
+</blockquote>
+<p>上面的这些问题如果不了Erlang的调度器、VM、内存管理策略、GC、以及进程的实现等等很难找准方向，在<a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考很多资料</a>，写了后面<a href="#%E6%96%87%E7%AB%A0">四个文档</a>用来对我看过的资料做个总结</p>
+<h2 id="文章"><a class="markdownIt-Anchor" href="#文章"></a> 文章</h2>
+<ul>
+<li>
+<a href="/2017/12/24/ErlangScheduler/" title="[Eralng VM Scheduler]">[Eralng VM Scheduler]</a>  
+</li>
+<li>
+<a href="/2017/12/24/ErlangMemoryAllocator/" title="[Eralng Memory Allocator]">[Eralng Memory Allocator]</a>
+</li>
+<li>
+<a href="/2017/12/24/ErlangGarbageCollection/" title="[Eralng Garbage Collection]">[Eralng Garbage Collection]</a>
+</li>
+<li>
+<a href="/2017/12/24/ErlangProcess/" title="[Eralng Process]">[Eralng Process]</a>
+</li>
+</ul>
+<h2 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h2>
+<ul>
+<li>
+<a href="/2017/12/24/ErlangNodeConnect/" title="[Eralng 节点互联]">[Eralng 节点互联]</a>
+</li>
+<li>
+<a href="/2017/12/24/ReadingNotes/" title="[Eralng 读书笔记]">[Eralng 读书笔记]</a>
+</li>
+<li>
+<a href="/2017/12/24/Erlang2Elixir/" title="[Eralng to Elixir]">[Eralng to Elixir]</a>
+</li>
+</ul>
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://blog.yufeng.info/">霸爷的博客</a><br>
+<a target="_blank" rel="noopener" href="https://happi.github.io/theBeamBook">The Beam Book</a><br>
+高伸缩性系统：Erlang/OTP大型分布式容错设计<br>
+<a target="_blank" rel="noopener" href="https://github.com/ferd">Fred Hebert</a><br>
+<a target="_blank" rel="noopener" href="https://github.com/garazdawi">Lukas Larsson</a><br>
+<a target="_blank" rel="noopener" href="https://www.erlang-solutions.com/">Erlang solution</a><br>
+<a target="_blank" rel="noopener" href="https://github.com/erlang/otp/blob/master/erts/emulator/internal_doc/">Erlang Otp Internal Doc</a><br>
+<a target="_blank" rel="noopener" href="http://www.erlang-factory.com/">Erlang Factory</a><br>
+<a target="_blank" rel="noopener" href="http://bit.ly/2FtbBAL">Code BEAM SF</a><br>
+<a target="_blank" rel="noopener" href="https://codesync.global/">Code Sync</a><br>
+其他的博客、文档 等等</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangGarbageCollection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/24/ErlangGarbageCollection/" class="post-title-link" itemprop="url">Erlang Garbage Collection</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-24 23:29:53" itemprop="dateCreated datePublished" datetime="2017-12-24T23:29:53+08:00">2017-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/" itemprop="url" rel="index"><span itemprop="name">Erlang</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/gc/" itemprop="url" rel="index"><span itemprop="name">gc</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="garbage-collection"><a class="markdownIt-Anchor" href="#garbage-collection"></a> Garbage Collection</h1>
+<p>Erlang的GC是分代复制，还有一个引用计数型的GC运行在共享堆（Binary&gt;64字节）上</p>
+<h3 id="private-heap-gc-私有堆垃圾回收"><a class="markdownIt-Anchor" href="#private-heap-gc-私有堆垃圾回收"></a> Private Heap GC 私有堆垃圾回收</h3>
+<p>私有堆的垃圾回收是分代的. 分代机制把进程的堆内存分为两个部分,年轻代和年老代. 区分是基于这样一个考虑, 如果一个对象在运行一次垃圾回收之后没有被回收,那么这个对象短期内被回收的可能性就很低. 所以, 年轻代就用来存储新分配的数据,年老代就用来存放运行一定次数的垃圾回收之后依然幸存的数据. 这样的区分可以帮助GC减少对那些很可能还不是垃圾的数据不必要的扫描. 对应于此, Erlang的GC扫描有两个策略, Generational(Minor) 和 Fullsweep(Major). Generational GC只回收年轻代的区域, 而Fullsweep则同时回收年轻代和年老代.</p>
+<p><strong>场景 1</strong>:</p>
+<figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; No GC &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
+<p>假设一个生存期较短的进程, 在存活期间使用的堆内存也没有超过  _min_heap_size,_那么在进程结束是全部内存即被回收.</p>
+<p><strong><strong>场景</strong> 2</strong>:</p>
+<figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; Fullsweep &gt; Generational &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
+<p>假设一个新创建的进程,当进程的数据增长超过了_min_heap_size_时, fullsweep GC即被触发, 因为在此之前还没有任何GC被触发,所以堆区还没有被分成年轻代和年老代. 在第一次fullsweep GC结束以后, 堆区就会被分为年轻代和年老代了, 从这个时候起, GC的策略就被切换为 generational GC了, 直到进程结束.</p>
+<p><strong><strong>场景</strong> 3</strong>:</p>
+<figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; Fullsweep &gt; Generational &gt; Fullsweep &gt; Generational &gt; ... &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
+<p>在某些情景下, GC策略会从generation再切换回fullsweep. 一种情景是, 在运行了一定次数(fullsweep_after)的genereration GC之后,系统会再次切换回fullsweep. 这个参数fullsweep_after可以是全局的也可以是单进程的. 全局的值可以通过函数erlang:system_info(fullsweep_after)获取, 进程的可以通过函数erlang:process_info(self(),garbage_collection)来获取. 另外一种情景是, 当generation GC(minor GC)不能够收集到足够的内存空间时. 最后一种情况是, 当手动调用函数garbage_collector(PID)时. 在运行fullsweep之后, GC策略再次切换回generation GC直到以上的任意一个情景再次出现.</p>
+<p><strong><strong>场景</strong> 4</strong>:</p>
+<figure class="highlight erlang"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spawn &gt; Fullsweep &gt; Generational &gt; Fullsweep &gt; Increase Heap &gt; Fullsweep &gt; ... &gt; Terminate</span><br></pre></td></tr></tbody></table></figure>
+<p>假设在场景3里面,第二个fullsweep GC依然没有回收到足够的内存, 那么系统就会为进程增加堆内存, 然后该进程就回到第一个场景,像刚创建的进程一样首先开始一个fullsweep,然后循环往复.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/12/24/ErlangGarbageCollection/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/Erlang2Elixir/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/24/Erlang2Elixir/" class="post-title-link" itemprop="url">Erlang to Elixir</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-24 23:29:53" itemprop="dateCreated datePublished" datetime="2017-12-24T23:29:53+08:00">2017-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/" itemprop="url" rel="index"><span itemprop="name">Erlang</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="erlang-to-elixir"><a class="markdownIt-Anchor" href="#erlang-to-elixir"></a> Erlang to Elixir</h1>
+<h2 id="基础"><a class="markdownIt-Anchor" href="#基础"></a> 基础</h2>
+<ul>
+<li>原子有冒号 <code>:ok</code> 或者 <code>Atom</code></li>
+<li>变量<code>ok </code></li>
+<li><code>"hello"</code> 是<code>bianry</code> ，<code>'hello'</code> 是<code>list</code></li>
+</ul>
+<blockquote>
+<p>❗ 所有定义比如<code>def</code> <code>defp</code> 等等以<code>p</code>结束的都是私有的</p>
+</blockquote>
+<ul>
+<li>对应 Erlang的宏定义：<code>@is_running false</code></li>
+<li>record 定义 <code>defrecordp</code>  <code>defrecord</code></li>
+<li>结构体体是字典的特殊形式，它们的键是预定义的，一般都有默认值。结构体必须定义在某个模块内部，因此也必须通过模块的命名空间来访问。定义一个结构体，我们使用 <code>defstruct</code> 关键字，后面跟着关键字列表和默认值 (通俗的将就是键在编译时就确定了的map)</li>
+</ul>
+<figure class="highlight elixir"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   <span class="class"><span class="keyword">defmodule</span>  <span class="title">Example.User</span></span>  <span class="keyword">do</span>  </span><br><span class="line">    <span class="keyword">defstruct</span>  <span class="symbol">name:</span>  <span class="string">"Sean"</span>,  <span class="symbol">roles:</span>  []  </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">iex&gt;  %<span class="title class_">Example</span>.<span class="title class_">User</span>{}</span><br><span class="line">iex&gt;  steve  =  <span class="comment">#Example.User&lt;name: "Steve", roles: []&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/12/24/Erlang2Elixir/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangNodeConnect/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/24/ErlangNodeConnect/" class="post-title-link" itemprop="url">Erlang节点互联</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-24 23:29:53" itemprop="dateCreated datePublished" datetime="2017-12-24T23:29:53+08:00">2017-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/" itemprop="url" rel="index"><span itemprop="name">Erlang</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="erlang节点互联"><a class="markdownIt-Anchor" href="#erlang节点互联"></a> Erlang节点互联</h1>
+<h2 id="epmd"><a class="markdownIt-Anchor" href="#epmd"></a> epmd</h2>
+<ul>
+<li>Epmd是Erlang Port Mapper Daemon的缩写，在Erlang集群中的作用相当于dns的作用，提供节点名称到端口的查询服务，epmd默认绑定4369端口，可以通过设置环境变量 ERL_EPMD_PORT=XXX或者 erl -epmd_port NNNN 来修改次端口</li>
+<li>epmd文档：<a target="_blank" rel="noopener" href="http://www.erlang.org/doc/man/epmd.html">这里</a></li>
+<li>epmd协议：<a target="_blank" rel="noopener" href="http://www.erlang.org/doc/apps/erts/erl_dist_protocol.html">这里</a></li>
+</ul>
+<blockquote>
+<p><img src="http://erlang.org/doc/apps/erts/erl_ext_fig.gif" alt="enter image description here"><br>
+<img src="/images/epmd.png" alt="enter image description here"></p>
+</blockquote>
+<ul>
+<li>net_kernel会启动proto_dist比如说inet_tcp_dist监听端口,同时把端口报到epmd. 这时候erts就准备好了节点通讯。这时候另外一个节点要和我们通讯的时候，首先要连接，流程大概是这样的：</li>
+</ul>
+<ol>
+<li>根据节点名找到节点地址。</li>
+<li>查询节点的4369端口,也就是epmd,向它要节点对应的inet_tcp_dist监听的端口。</li>
+<li>发起连接, 握手，cookie认证，如果未授权就失败。</li>
+<li>记录节点名称和响应的信息。</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/12/24/ErlangNodeConnect/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/12/24/ErlangMemoryAllocator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="mars315">
+      <meta itemprop="description" content="时光匆匆，万物变幻。</br> 这世间，我曾停留过。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="mars315">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/24/ErlangMemoryAllocator/" class="post-title-link" itemprop="url">Memory Allocator</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-24 23:29:53" itemprop="dateCreated datePublished" datetime="2017-12-24T23:29:53+08:00">2017-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-06 18:58:45" itemprop="dateModified" datetime="2022-12-06T18:58:45+08:00">2022-12-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/" itemprop="url" rel="index"><span itemprop="name">Erlang</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Erlang/memory-allocator/" itemprop="url" rel="index"><span itemprop="name">memory allocator</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="memory-allocator"><a class="markdownIt-Anchor" href="#memory-allocator"></a> Memory Allocator</h1>
+<h3 id="blocks"><a class="markdownIt-Anchor" href="#blocks"></a> blocks</h3>
+<p>block是Erlang VM需要的一块连续的内存，比如向ets中插入的数据会变成一个block，Erlang进程的stack和heap 也是一个block；进程间发送的消息在block内被复制。总是block就是一块连续的C 内存。block也是Erlang Allocator内存分配的基本单位。</p>
+<h3 id="carriers"><a class="markdownIt-Anchor" href="#carriers"></a> carriers</h3>
+<p>carriers 是一个包含一个或者多个block的容器，carrier结构中有个头部，用于标识carrier的类型等等<br>
+carrier是18bit对齐的（所以最小值是256KB）</p>
+<h3 id="single-block-carriers-and-multi-block-carriers"><a class="markdownIt-Anchor" href="#single-block-carriers-and-multi-block-carriers"></a> single-block carriers and multi-block carriers</h3>
+<blockquote>
+<p>single-block carrier 就是只包含一个block的carrier<br>
+multi-block carrier 包含多个block的carrier<br>
+将大小超过一定阈值（ +sbct(single block carrier threshol)）的block放于一个single-block carrier；否则block会被放于一个 multi-block carrier中，这个阈值多大算大，是根据各个实际应用场景来决定的，有些情况下256字节就算很大，有些情况下可能5MB才算大；所以要根据应用场景来调整该值。默认值是512KB(The default is half MB)<br>
+一般情况来讲，所有至少80%-90%的数据的都应该在multi-block carrier，</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/12/24/ErlangMemoryAllocator/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mars315"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">mars315</p>
+  <div class="site-description" itemprop="description">时光匆匆，万物变幻。</br> 这世间，我曾停留过。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+<!-- CloudCalendar -->
+<div class="widget-wrap" style="width: 90%;margin-left: auto;margin-right: auto; opacity: 0.97;">
+	<div class="widget" id="CloudCalendar"></div>
+</div>
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mars315</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">93k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:25</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+<!-- calendar widget -->
+
+    <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-calendar/calendar.min.js"></script>
+    <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-calendar/languages.min.js"></script>
+    <script>
+    $(function() {
+        $('#CloudCalendar').aCalendar('zh-CN',
+            $.extend(
+                '', {
+                    single:true,
+                    root:'/calendar/'
+                }
+            )
+        );
+    });
+    </script>
+
+
+</body>
+</html>
