@@ -773,83 +773,6 @@ run queue长度高于平均长度会被标记成emigration，进程会从这个�
       </tags>
   </entry>
   <entry>
-    <title>Erlang 读书笔记</title>
-    <url>/2017/12/24/ReadingNotes/</url>
-    <content><![CDATA[<h1 id="erlang-读书笔记"><a class="markdownIt-Anchor" href="#erlang-读书笔记"></a> Erlang 读书笔记</h1>
-<ul>
-<li>erlang:byte_size/0查看binary的字节数量</li>
-<li>erts_debug:flat_size查看变量所占的内存字节数</li>
-<li>erlang timeout的语义是保证事件不会再给定的时间之前触发，就是触发时间&gt;=给定的时间</li>
-<li>Terms are created on the heap by evaluating expressions.</li>
-</ul>
-<blockquote>
-<p>There are two major types of terms:<br>
-<a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_term.h#L88-L97">immediate terms</a> which require no heap space (small integers, atoms, pids, port ids etc) and cons<br>
-<a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_term.h#L106-L120">boxed terms</a> (tuple, big num, binaries etc) that do require heap space.<br>
-Immediate terms do not need any heap space because they are embedded into the containing structure.</p>
-</blockquote>
-<span id="more"></span>
-<ul>
-<li>进程字典实现</li>
-</ul>
-<blockquote>
-<p>由数组实现hash结构，每个都是键值对存放于进程的Heap上<br>
-根据key来算hash值，没有冲突就把{Key，Val}存入数组&gt; 如果有key冲突就是存从一个键值对列表，如果要更新一个Key，将会导致整个bucket被重新分配，确保没有获取到 从old heap指向 new heap的指针</p>
-</blockquote>
-<ul>
-<li>进程的内存由 stack 、heap、 mailbox、 PCB构成</li>
-</ul>
-<blockquote>
-<p>stack：函数返回地址、函数参数、局部变量<br>
-heap: lists 、tuple<br>
-mailbox:待处理的消息<br>
-PCB： 进程控制块</p>
-</blockquote>
-<ul>
-<li>可以使用hipe_bifs:show_*查看进程栈、堆、PCB 内存数据 <em><strong>（仅供调试）</strong></em></li>
-</ul>
-<blockquote>
-<p>hipe_bifs:show_estack/1<br>
-hipe_bifs:show_heap/1<br>
-hipe_bifs:show_pcb/1</p>
-</blockquote>
-<ul>
-<li>PCB 内部结构</li>
-</ul>
-<figure class="highlight erlang"><table><tbody><tr><td class="code"><pre><span class="line">---------------------------------------------------------------</span><br><span class="line">Offset| Name        | Value              | *Value             |</span><br><span class="line">    0 | id          | 0x000001d0000003a3 |PID             </span><br><span class="line">   72 | htop        | 0x00007f7f33f15298 |pointers to the top of the heap                   </span><br><span class="line">   96 | hend        | 0x00007f7f33f16540 |points to the stop of the whole heap                  </span><br><span class="line">   88 | heap        | 0x00007f7f33f11470 |points to heap start                 </span><br><span class="line">  104 | heap_sz     | 0x0000000000000a1a | gives the size of the heap in words <span class="params">(hend - heap = heap_sz * <span class="number">8</span> on a <span class="number">64</span> bit machine )</span>                    </span><br><span class="line">   80 | stop        | 0x00007f7f33f16480 |pointers to the top of the stack                   </span><br><span class="line">  592 | gen_gcs     | 0x0000000000000012 |Number of <span class="params">(minor)</span> generational GCs.</span><br><span class="line">  <span class="number">594</span> | max_gen_gcs | <span class="number">0</span>x000000000000ffff |Max minor gen GCs before fullsweep.</span><br><span class="line">  <span class="number">552</span> | high_water  | <span class="number">0</span>x00007f7f33f11c50 |                    |</span><br><span class="line">  <span class="number">560</span> | old_hend    | <span class="number">0</span>x00007f7f33e90648 |                    |</span><br><span class="line">  <span class="number">568</span> | old_htop    | <span class="number">0</span>x00007f7f33e8f8e8 |                    |</span><br><span class="line">  <span class="number">576</span> | old_head    | <span class="number">0</span>x00007f7f33e8e770 |                    |</span><br><span class="line">  <span class="number">112</span> | min_heap_size | <span class="number">0</span>x00000000000000e9 |in words, that the heap starts with <span class="keyword">and</span> which it will <span class="keyword">not</span> shrink smaller than, the default value is <span class="number">233</span>.</span><br><span class="line">  <span class="number">328</span> | rcount      | <span class="number">0</span>x0000000000000000 | suspend count </span><br><span class="line">  <span class="number">336</span> | reds        | <span class="number">0</span>x0000000000002270 | keep track <span class="keyword">of</span> the total number <span class="keyword">of</span> reductions a process has done up until it was last suspended  </span><br><span class="line">   <span class="number">16</span> | tracer      | <span class="number">0</span>xfffffffffffffffb |                    |</span><br><span class="line">   <span class="number">24</span> | trace_fla.. | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">344</span> | group_lea.. | <span class="number">0</span>x0000019800000333 |                    |</span><br><span class="line">  <span class="number">352</span> | flags       | <span class="number">0</span>x0000000000002000 |Trap exit, etc (no trace flags anymore)                    </span><br><span class="line">  <span class="number">360</span> | fvalue      | <span class="number">0</span>xfffffffffffffffb |Exit &amp; Throw value (failure reason)</span><br><span class="line">  <span class="number">368</span> | freason     | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">320</span> | fcalls      | <span class="number">0</span>x00000000000005a2 | keeps the number <span class="keyword">of</span> reductions left to execute   </span><br><span class="line">  <span class="number">384</span> | next        | <span class="number">0</span>x0000000000000000 |next ready(runnable) process  in the ready queue <span class="keyword">of</span> scheduler    </span><br><span class="line">   <span class="number">48</span> | reg         | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">56</span> | nlinks      | <span class="number">0</span>x00007f7f3cbc0750 |                    |</span><br><span class="line">  <span class="number">616</span> | mbuf        | <span class="number">0</span>x0000000000000000 |a memory area outside <span class="keyword">of</span> a process heap where other processes can safely write data                    </span><br><span class="line">  <span class="number">640</span> | mbuf_sz     | <span class="number">0</span>x0000000000000000 |Total size <span class="keyword">of</span> heap fragments <span class="keyword">and</span> message fragments</span><br><span class="line">  <span class="number">464</span> | dictionary  | <span class="number">0</span>x0000000000000000 | Process Dictionary                   </span><br><span class="line">  <span class="number">472</span> | seq..clock  | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">480</span> | seq..astcnt | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">488</span> | seq..token  | <span class="number">0</span>xfffffffffffffffb |                    |</span><br><span class="line">  <span class="number">496</span> | intial[<span class="number">0</span>]   | <span class="number">0</span>x000000000000320b |                    |</span><br><span class="line">  <span class="number">504</span> | intial[<span class="number">1</span>]   | <span class="number">0</span>x0000000000000c8b |                    |</span><br><span class="line">  <span class="number">512</span> | intial[<span class="number">2</span>]   | <span class="number">0</span>x0000000000000002 |                    |</span><br><span class="line">  <span class="number">520</span> | current     | <span class="number">0</span>x00007f7f3be87c20 | <span class="number">0</span>x000000000000ed8b |</span><br><span class="line">  <span class="number">296</span> | cp          | <span class="number">0</span>x00007f7f3d3a5100 | <span class="number">0</span>x0000000000440848 |</span><br><span class="line">  <span class="number">304</span> | i           | <span class="number">0</span>x00007f7f3be87c38 | <span class="number">0</span>x000000000044353a |</span><br><span class="line">  <span class="number">312</span> | catches     | <span class="number">0</span>x0000000000000001 |                    |</span><br><span class="line">  <span class="number">224</span> | arity       | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">232</span> | arg_reg     | <span class="number">0</span>x00007f7f3cbc04f8 | <span class="number">0</span>x000000000000320b |</span><br><span class="line">  <span class="number">240</span> | max_arg_reg | <span class="number">0</span>x0000000000000006 |                    |</span><br><span class="line">  <span class="number">248</span> | def..reg[<span class="number">0</span>] | <span class="number">0</span>x000000000000320b |                    |</span><br><span class="line">  <span class="number">256</span> | def..reg[<span class="number">1</span>] | <span class="number">0</span>x0000000000000c8b |                    |</span><br><span class="line">  <span class="number">264</span> | def..reg[<span class="number">2</span>] | <span class="number">0</span>x00007f7f33ec9589 |                    |</span><br><span class="line">  <span class="number">272</span> | def..reg[<span class="number">3</span>] | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">280</span> | def..reg[<span class="number">4</span>] | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">288</span> | def..reg[<span class="number">5</span>] | <span class="number">0</span>x00000000000007d0 |                    |</span><br><span class="line">  <span class="number">136</span> | nsp         | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">144</span> | nstack      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">152</span> | nstend      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">160</span> | ncallee     | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">56</span> | ncsp        | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">64</span> | narity      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">---------------------------------------------------------------</span><br></pre></td></tr></tbody></table></figure>
-<blockquote>
-<p>“dirty” IO threads intended to replace the async thread pool used by the file driver<br>
-but dirty IO not used by OTP today<br>
-字面常量不会再被copy，但是ets中人会被copy <a href="http://www.erlang-factory.com/euc2017/kenneth-lundin">More</a></p>
-</blockquote>
-<ul>
-<li>新增的调试工具</li>
-</ul>
-<blockquote>
-<p>msacc<br>
-新增的参数 +IOt +IOp 可以使用msacc:start/1、msacc:print/0来查看sleep time 如果这个值很低可以增大+IOt</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Erlang</category>
-      </categories>
-      <tags>
-        <tag>Erlang</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据库之分区、分片、分表</title>
-    <url>/2021/07/12/database-sharding-partitioning/</url>
-    <content><![CDATA[<span id="more"></span>]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>分片 分区 垂直扩展 水平扩展</category>
-      </categories>
-      <tags>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>数据驱动类技能</title>
     <url>/2022/04/07/GameSkill/</url>
     <content><![CDATA[<p><a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools:zh-cn">Dota 2 Workshop Tools:zh-cn</a>‎ | <a href="https://developer.valvesoftware.com/wiki/Dota_2_Workshop_Tools:zh-cn/Scripting:zh-cn">Scripting:zh-cn</a></p>
@@ -2359,6 +2282,83 @@ MzYyMzgzMF19
       </categories>
       <tags>
         <tag>技能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库之分区、分片、分表</title>
+    <url>/2021/07/12/database-sharding-partitioning/</url>
+    <content><![CDATA[<span id="more"></span>]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>分片 分区 垂直扩展 水平扩展</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Erlang 读书笔记</title>
+    <url>/2017/12/24/ReadingNotes/</url>
+    <content><![CDATA[<h1 id="erlang-读书笔记"><a class="markdownIt-Anchor" href="#erlang-读书笔记"></a> Erlang 读书笔记</h1>
+<ul>
+<li>erlang:byte_size/0查看binary的字节数量</li>
+<li>erts_debug:flat_size查看变量所占的内存字节数</li>
+<li>erlang timeout的语义是保证事件不会再给定的时间之前触发，就是触发时间&gt;=给定的时间</li>
+<li>Terms are created on the heap by evaluating expressions.</li>
+</ul>
+<blockquote>
+<p>There are two major types of terms:<br>
+<a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_term.h#L88-L97">immediate terms</a> which require no heap space (small integers, atoms, pids, port ids etc) and cons<br>
+<a href="https://github.com/erlang/otp/blob/OTP-18.0/erts/emulator/beam/erl_term.h#L106-L120">boxed terms</a> (tuple, big num, binaries etc) that do require heap space.<br>
+Immediate terms do not need any heap space because they are embedded into the containing structure.</p>
+</blockquote>
+<span id="more"></span>
+<ul>
+<li>进程字典实现</li>
+</ul>
+<blockquote>
+<p>由数组实现hash结构，每个都是键值对存放于进程的Heap上<br>
+根据key来算hash值，没有冲突就把{Key，Val}存入数组&gt; 如果有key冲突就是存从一个键值对列表，如果要更新一个Key，将会导致整个bucket被重新分配，确保没有获取到 从old heap指向 new heap的指针</p>
+</blockquote>
+<ul>
+<li>进程的内存由 stack 、heap、 mailbox、 PCB构成</li>
+</ul>
+<blockquote>
+<p>stack：函数返回地址、函数参数、局部变量<br>
+heap: lists 、tuple<br>
+mailbox:待处理的消息<br>
+PCB： 进程控制块</p>
+</blockquote>
+<ul>
+<li>可以使用hipe_bifs:show_*查看进程栈、堆、PCB 内存数据 <em><strong>（仅供调试）</strong></em></li>
+</ul>
+<blockquote>
+<p>hipe_bifs:show_estack/1<br>
+hipe_bifs:show_heap/1<br>
+hipe_bifs:show_pcb/1</p>
+</blockquote>
+<ul>
+<li>PCB 内部结构</li>
+</ul>
+<figure class="highlight erlang"><table><tbody><tr><td class="code"><pre><span class="line">---------------------------------------------------------------</span><br><span class="line">Offset| Name        | Value              | *Value             |</span><br><span class="line">    0 | id          | 0x000001d0000003a3 |PID             </span><br><span class="line">   72 | htop        | 0x00007f7f33f15298 |pointers to the top of the heap                   </span><br><span class="line">   96 | hend        | 0x00007f7f33f16540 |points to the stop of the whole heap                  </span><br><span class="line">   88 | heap        | 0x00007f7f33f11470 |points to heap start                 </span><br><span class="line">  104 | heap_sz     | 0x0000000000000a1a | gives the size of the heap in words <span class="params">(hend - heap = heap_sz * <span class="number">8</span> on a <span class="number">64</span> bit machine )</span>                    </span><br><span class="line">   80 | stop        | 0x00007f7f33f16480 |pointers to the top of the stack                   </span><br><span class="line">  592 | gen_gcs     | 0x0000000000000012 |Number of <span class="params">(minor)</span> generational GCs.</span><br><span class="line">  <span class="number">594</span> | max_gen_gcs | <span class="number">0</span>x000000000000ffff |Max minor gen GCs before fullsweep.</span><br><span class="line">  <span class="number">552</span> | high_water  | <span class="number">0</span>x00007f7f33f11c50 |                    |</span><br><span class="line">  <span class="number">560</span> | old_hend    | <span class="number">0</span>x00007f7f33e90648 |                    |</span><br><span class="line">  <span class="number">568</span> | old_htop    | <span class="number">0</span>x00007f7f33e8f8e8 |                    |</span><br><span class="line">  <span class="number">576</span> | old_head    | <span class="number">0</span>x00007f7f33e8e770 |                    |</span><br><span class="line">  <span class="number">112</span> | min_heap_size | <span class="number">0</span>x00000000000000e9 |in words, that the heap starts with <span class="keyword">and</span> which it will <span class="keyword">not</span> shrink smaller than, the default value is <span class="number">233</span>.</span><br><span class="line">  <span class="number">328</span> | rcount      | <span class="number">0</span>x0000000000000000 | suspend count </span><br><span class="line">  <span class="number">336</span> | reds        | <span class="number">0</span>x0000000000002270 | keep track <span class="keyword">of</span> the total number <span class="keyword">of</span> reductions a process has done up until it was last suspended  </span><br><span class="line">   <span class="number">16</span> | tracer      | <span class="number">0</span>xfffffffffffffffb |                    |</span><br><span class="line">   <span class="number">24</span> | trace_fla.. | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">344</span> | group_lea.. | <span class="number">0</span>x0000019800000333 |                    |</span><br><span class="line">  <span class="number">352</span> | flags       | <span class="number">0</span>x0000000000002000 |Trap exit, etc (no trace flags anymore)                    </span><br><span class="line">  <span class="number">360</span> | fvalue      | <span class="number">0</span>xfffffffffffffffb |Exit &amp; Throw value (failure reason)</span><br><span class="line">  <span class="number">368</span> | freason     | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">320</span> | fcalls      | <span class="number">0</span>x00000000000005a2 | keeps the number <span class="keyword">of</span> reductions left to execute   </span><br><span class="line">  <span class="number">384</span> | next        | <span class="number">0</span>x0000000000000000 |next ready(runnable) process  in the ready queue <span class="keyword">of</span> scheduler    </span><br><span class="line">   <span class="number">48</span> | reg         | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">56</span> | nlinks      | <span class="number">0</span>x00007f7f3cbc0750 |                    |</span><br><span class="line">  <span class="number">616</span> | mbuf        | <span class="number">0</span>x0000000000000000 |a memory area outside <span class="keyword">of</span> a process heap where other processes can safely write data                    </span><br><span class="line">  <span class="number">640</span> | mbuf_sz     | <span class="number">0</span>x0000000000000000 |Total size <span class="keyword">of</span> heap fragments <span class="keyword">and</span> message fragments</span><br><span class="line">  <span class="number">464</span> | dictionary  | <span class="number">0</span>x0000000000000000 | Process Dictionary                   </span><br><span class="line">  <span class="number">472</span> | seq..clock  | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">480</span> | seq..astcnt | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">488</span> | seq..token  | <span class="number">0</span>xfffffffffffffffb |                    |</span><br><span class="line">  <span class="number">496</span> | intial[<span class="number">0</span>]   | <span class="number">0</span>x000000000000320b |                    |</span><br><span class="line">  <span class="number">504</span> | intial[<span class="number">1</span>]   | <span class="number">0</span>x0000000000000c8b |                    |</span><br><span class="line">  <span class="number">512</span> | intial[<span class="number">2</span>]   | <span class="number">0</span>x0000000000000002 |                    |</span><br><span class="line">  <span class="number">520</span> | current     | <span class="number">0</span>x00007f7f3be87c20 | <span class="number">0</span>x000000000000ed8b |</span><br><span class="line">  <span class="number">296</span> | cp          | <span class="number">0</span>x00007f7f3d3a5100 | <span class="number">0</span>x0000000000440848 |</span><br><span class="line">  <span class="number">304</span> | i           | <span class="number">0</span>x00007f7f3be87c38 | <span class="number">0</span>x000000000044353a |</span><br><span class="line">  <span class="number">312</span> | catches     | <span class="number">0</span>x0000000000000001 |                    |</span><br><span class="line">  <span class="number">224</span> | arity       | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">232</span> | arg_reg     | <span class="number">0</span>x00007f7f3cbc04f8 | <span class="number">0</span>x000000000000320b |</span><br><span class="line">  <span class="number">240</span> | max_arg_reg | <span class="number">0</span>x0000000000000006 |                    |</span><br><span class="line">  <span class="number">248</span> | def..reg[<span class="number">0</span>] | <span class="number">0</span>x000000000000320b |                    |</span><br><span class="line">  <span class="number">256</span> | def..reg[<span class="number">1</span>] | <span class="number">0</span>x0000000000000c8b |                    |</span><br><span class="line">  <span class="number">264</span> | def..reg[<span class="number">2</span>] | <span class="number">0</span>x00007f7f33ec9589 |                    |</span><br><span class="line">  <span class="number">272</span> | def..reg[<span class="number">3</span>] | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">280</span> | def..reg[<span class="number">4</span>] | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">288</span> | def..reg[<span class="number">5</span>] | <span class="number">0</span>x00000000000007d0 |                    |</span><br><span class="line">  <span class="number">136</span> | nsp         | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">144</span> | nstack      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">152</span> | nstend      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">  <span class="number">160</span> | ncallee     | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">56</span> | ncsp        | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">   <span class="number">64</span> | narity      | <span class="number">0</span>x0000000000000000 |                    |</span><br><span class="line">---------------------------------------------------------------</span><br></pre></td></tr></tbody></table></figure>
+<blockquote>
+<p>“dirty” IO threads intended to replace the async thread pool used by the file driver<br>
+but dirty IO not used by OTP today<br>
+字面常量不会再被copy，但是ets中人会被copy <a href="http://www.erlang-factory.com/euc2017/kenneth-lundin">More</a></p>
+</blockquote>
+<ul>
+<li>新增的调试工具</li>
+</ul>
+<blockquote>
+<p>msacc<br>
+新增的参数 +IOt +IOp 可以使用msacc:start/1、msacc:print/0来查看sleep time 如果这个值很低可以增大+IOt</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Erlang</category>
+      </categories>
+      <tags>
+        <tag>Erlang</tag>
       </tags>
   </entry>
   <entry>
